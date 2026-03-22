@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement()) // ユーザーID
+  username  String   @unique                       // ログイン用の名前
+  nickname  String                                 // 表示用
+  email     String   @unique                       // メールアドレス
+  password  String                                 // パスワード
+  createdAt DateTime @default(now())              // 作成日時
+
+  sessions  WorkoutSession[]                      // トレーニング履歴
+  records   Record[]                              // 最高記録
+  goals     Goal[]                                // 目標値
+}
+
+model ExerciseCategory {
+  id   Int    @id @default(autoincrement()) // 部位ID
+  name String                               // 部位名（胸・背中・脚など）
+
+  exercises Exercise[]                      // この部位の種目
+}
+
+model Exercise {
+  id         Int    @id @default(autoincrement()) // 種目ID
+  name       String                               // 種目名（ベンチプレスなど）
+  categoryId Int                                  // 部位ID
+
+  category  ExerciseCategory @relation(fields: [categoryId], references: [id])  // 部位との紐付け
+  trainings Training[]                                                          // トレーニング記録
+  records   Record[]                                                            // 最高記録
+  goals     Goal[]                                                              // 目標値
+}
+
+model WorkoutSession {
+  id     Int      @id @default(autoincrement()) // セッションID
+  userId Int                                   // ユーザーID
+  date   DateTime @default(now())              // 日付
+
+  user      User       @relation(fields: [userId], references: [id])
+  trainings Training[]
+}
+
+model Training {
+  id         Int @id @default(autoincrement()) // トレーニングID
+  sessionId  Int                               // セッションID
+  exerciseId Int                               // 種目ID
+
+  weight     Float   // 重量（kg）
+  reps       Int     // 回数
+
+  createdAt  DateTime @default(now()) // 記録日時
+
+  session  WorkoutSession @relation(fields: [sessionId], references: [id])
+  exercise Exercise       @relation(fields: [exerciseId], references: [id])
+}
+
+model Record {
+  id         Int @id @default(autoincrement()) // レコードID
+  userId     Int                               // ユーザーID
+  exerciseId Int                               // 種目ID
+
+  maxWeight  Float // 最大重量
+  maxReps    Int   // 最大回数
+
+  updatedAt  DateTime @updatedAt // 更新日時
+
+  user     User     @relation(fields: [userId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@unique([userId, exerciseId]) // ユーザー×種目で一意
+}
+
+model Goal {
+  id         Int @id @default(autoincrement()) // 目標ID
+  userId     Int                               // ユーザーID
+  exerciseId Int                               // 種目ID
+
+  targetWeight Float // 目標重量
+  targetReps   Int   // 目標回数
+
+  deadline   DateTime? // 期限（任意）
+
+  createdAt  DateTime @default(now()) // 作成日時
+  updatedAt  DateTime @updatedAt      // 更新日時
+
+  user     User     @relation(fields: [userId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@unique([userId, exerciseId]) // 同じ種目は1つの目標
+}

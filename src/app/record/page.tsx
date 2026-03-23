@@ -1,0 +1,32 @@
+//src/app/record/page.tsx
+//メニューページ
+
+import Link from "next/link";
+
+export default function Home() {
+  const items = [
+    { id: 1, href: "/training/input_RecordTraining", label: "記録をする" },
+    { id: 2, href: "/", label: "目標の設定" },
+    { id: 3, href: "/", label: "目標の確認" },
+    { id: 4, href: "/", label: "今日の記録" },
+    { id: 5, href: "/", label: "グラフ表示" },
+    { id: 6, href: "/", label: "最高記録" },
+  ];
+  return (
+    <div className="min-h-screen">
+      <div className="flex justify-center items-center mt-[30px]">
+        <div className="flex flex-col">
+          {items.map((item) => (
+            <Link
+              key={item.id}
+              href={item.href}
+              className="flex justify-center items-center mt-[25px] w-[120px] h-[40px] rounded-lg font-bold text-white bg-gray-500"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

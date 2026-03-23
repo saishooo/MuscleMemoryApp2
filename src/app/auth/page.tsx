@@ -1,12 +1,12 @@
-//src/app/page.tsx
-//初期ページ
+//src/app/auth/page.tsx
+//ユーザー情報ページ
 
 import Link from "next/link";
 
-export default function Home() {
+export default function UserInfo() {
   const items = [
-    { id: 1, href: "/auth", label: "ユーザー情報" },
-    { id: 2, href: "/record", label: "メニュー" },
+    { id: 1, href: "/auth/login", label: "ログイン" },
+    { id: 2, href: "/auth/signup", label: "新規登録" },
   ];
   return (
     <div className="min-h-screen">

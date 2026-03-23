@@ -2,7 +2,6 @@
 //ヘッダー
 
 export default async function Header() {
-
   return (
     <div className="w-full">
       <div className="bg-red-200">
@@ -12,7 +11,7 @@ export default async function Header() {
           </div>
 
           <div className="mt-[15px]">
-              <p className="font-bold text-base">ゲスト</p>
+            <p className="font-bold text-base">ゲスト</p>
           </div>
         </div>
       </div>

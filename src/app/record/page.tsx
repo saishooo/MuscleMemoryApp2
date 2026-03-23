@@ -5,8 +5,8 @@ import Link from "next/link";
 
 export default function Home() {
   const items = [
-    { id: 1, href: "/training/input_RecordTraining", label: "記録をする" },
-    { id: 2, href: "/", label: "目標の設定" },
+    { id: 1, href: "/record/input", label: "記録をする" },
+    { id: 2, href: "/record/goal/input", label: "目標の設定" },
     { id: 3, href: "/", label: "目標の確認" },
     { id: 4, href: "/", label: "今日の記録" },
     { id: 5, href: "/", label: "グラフ表示" },

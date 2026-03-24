@@ -14,7 +14,7 @@ export default function recordTraining_page() {
               <input
                 name="event"
                 type="text"
-                placeholder="種目を入力"
+                placeholder=" 種目を入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>
@@ -24,7 +24,7 @@ export default function recordTraining_page() {
               <input
                 name="weight"
                 type="text"
-                placeholder="重さを入力"
+                placeholder=" 重さを入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>
@@ -34,7 +34,7 @@ export default function recordTraining_page() {
               <input
                 name="rep"
                 type="text"
-                placeholder="回数を入力"
+                placeholder=" 回数を入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>

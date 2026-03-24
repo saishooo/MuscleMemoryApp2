@@ -14,7 +14,7 @@ export default function SignUp() {
               <input
                 name="userId"
                 type="text"
-                placeholder="ユーザーIDを設定"
+                placeholder=" ユーザーIDを設定"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>
@@ -24,7 +24,7 @@ export default function SignUp() {
               <input
                 name="nickname"
                 type="text"
-                placeholder="山田太郎"
+                placeholder=" 山田太郎"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>
@@ -34,7 +34,7 @@ export default function SignUp() {
               <input
                 name="email"
                 type="text"
-                placeholder="@email.com"
+                placeholder=" @email.com"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>
@@ -44,7 +44,7 @@ export default function SignUp() {
               <input
                 name="password"
                 type="text"
-                placeholder="パスワードを入力"
+                placeholder=" パスワードを入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>
@@ -54,7 +54,7 @@ export default function SignUp() {
               <input
                 name="config_password"
                 type="text"
-                placeholder="確認用パスワードを入力"
+                placeholder=" 確認用パスワードを入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>

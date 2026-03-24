@@ -14,7 +14,7 @@ export default function Login() {
               <input
                 name="event"
                 type="text"
-                placeholder="IDを入力"
+                placeholder=" IDを入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>
@@ -24,7 +24,7 @@ export default function Login() {
               <input
                 name="weight"
                 type="text"
-                placeholder="パスワードを入力"
+                placeholder=" パスワードを入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>

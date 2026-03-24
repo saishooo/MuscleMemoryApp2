@@ -1,6 +1,8 @@
 //src/header.tsx
 //ヘッダー
 
+import Link from "next/link";
+
 export default async function Header() {
   return (
     <div className="w-full">
@@ -11,6 +13,11 @@ export default async function Header() {
 
         <div className="mt-[15px]">
           <p className="font-bold text-base">ゲスト</p>
+        </div>
+
+        <div className="mt-[15px]">
+          <Link href="/record" className="border-b">メニュー</Link>
+          <Link href="/auth" className="ml-[35px] border-b">ログイン・登録</Link>
         </div>
       </div>
     </div>

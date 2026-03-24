@@ -15,7 +15,7 @@ export default async function Header() {
           <p className="font-bold text-base">ゲスト</p>
         </div>
 
-        <div className="mt-[15px]">
+        <div className="mt-[20px]">
           <Link href="/record" className="border-b">メニュー</Link>
           <Link href="/auth" className="ml-[35px] border-b">ログイン・登録</Link>
         </div>

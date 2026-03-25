@@ -1,4 +1,4 @@
-//src/app/page.tsx
+// src/app/page.tsx
 //初期ページ
 
 import Link from "next/link";

@@ -1,5 +1,8 @@
-// src/app/auth/[...nextauth]/route.ts
+// src/app/api/auth/signup/route.ts
 // API(Application Programing Interface)
+
+//⚫︎APIはNodeljs環境で動かすための宣言　これがないとbcryptが動かない
+export const runtime = "nodejs"
 
 import { NextResponse } from "next/server";     //⚫︎NextResponseとは、サーバーからクライアントに返すレスポンス
 import { getPrisma } from "@/lib/prisma";       //⚫︎DBを操作するためのメソッドを使用するためにインポート

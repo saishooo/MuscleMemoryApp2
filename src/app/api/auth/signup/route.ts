@@ -1,5 +1,5 @@
 // src/app/api/auth/signup/route.ts
-// API(Application Programing Interface)
+// ユーザー新規登録のAPI(Application Programing Interface)
 
 //⚫︎APIはNodeljs環境で動かすための宣言　これがないとbcryptが動かない
 export const runtime = "nodejs"
@@ -25,13 +25,21 @@ export async function POST(req: Request) {
         //⚫︎JSON データをやり取りするためのフォーマット(文字列)
         //⚫︎パース 文字列をプログラムに変換すること
         const body = await req.json()
-        const { username, nickname, email, password } = body
+        const { username, nickname, email, password, confirm_password } = body
 
         //入力情報に抜け漏れがないか確認
         if ( !username || !email || !password ) {
             //⚫︎NextResponse.jsonはAPIの戻り値(フロントにデータを送る)
             return NextResponse.json(
                 { error: "全ての項目を入力してください" },
+                { status: 400 }
+            )
+        }
+
+        //パスワードと確認パスワードが一致しない
+        if ( password !== confirm_password ) {
+            return NextResponse.json(
+                { error: "パスワードが一致しません" },
                 { status: 400 }
             )
         }

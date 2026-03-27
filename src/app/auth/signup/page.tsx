@@ -13,6 +13,13 @@ export default function SignUpForm() {
     const formData = new FormData(e.currentTarget)
 
     //◼︎passwordとconfigpasswordが一致しているかの確認をしないと!
+    const l_password = String(formData.get( "password" ));
+    const l_confirm_password = String(formData.get( "confirm_password" ));
+
+    if( l_password !== l_confirm_password){
+      console.log("パスワードが一致しません");
+      return;
+    }
 
     //⚫︎JSONに送るための必要な値を取り出して、オブジェクト化
     const body = {
@@ -20,6 +27,7 @@ export default function SignUpForm() {
       nickname: String(formData.get( "nickname" )),
       email:    String(formData.get( "email" )),
       password: String(formData.get( "password" )),
+      confirm_password: String(formData.get( "confirm_password")),
     }
 
     //⚫︎APIを呼び出し
@@ -89,7 +97,7 @@ export default function SignUpForm() {
             <div className="flex items-center mt-[60px] ml-[10px]">
               <a className="font-bold">パスワードの確認</a>
               <input
-                name="config_password"
+                name="confirm_password"
                 type="text"
                 placeholder=" 確認用パスワードを入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"

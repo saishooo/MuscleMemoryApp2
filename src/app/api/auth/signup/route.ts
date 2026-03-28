@@ -6,7 +6,7 @@ export const runtime = "nodejs"
 
 import { NextResponse } from "next/server";     //⚫︎NextResponseとは、サーバーからクライアントに返すレスポンス
 import { getPrisma } from "@/lib/prisma";       //⚫︎DBを操作するためのメソッドを使用するためにインポート
-import bcrypt from 'bcrypt';                    //⚫︎パスワードをハッシュ化するためにインポート
+import bcrypt from "bcrypt";                    //⚫︎パスワードをハッシュ化するためにインポート
 
 //⚫︎export 外ファイルから呼び出せるようにする
 //⚫︎async 非同期関数（この関数の処理には時間がかかることを宣言）

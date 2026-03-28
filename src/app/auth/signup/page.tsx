@@ -1,4 +1,5 @@
 "use client"
+
 // src/app/auth/signup/page.tsx
 // ユーザー登録ページ
 
@@ -6,13 +7,13 @@ export default function SignUpForm() {
 
   //登録ボタン押下時の処理
   //フォーム入力をJSONに変換してAPI(POST)に送信
-  const handoleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()  //ページのリロード防止
 
     //formの中身を全て取得する
     const formData = new FormData(e.currentTarget)
 
-    //◼︎passwordとconfigpasswordが一致しているかの確認をしないと!
+    //passwordとconfigpasswordが一致しているかの確認
     const l_password = String(formData.get( "password" ));
     const l_confirm_password = String(formData.get( "confirm_password" ));
 
@@ -52,7 +53,7 @@ export default function SignUpForm() {
       <div className="flex flex-col items-center mt-[40px]">
         <a className="font-bold text-xl">新規ユーザー登録</a>
 
-        <form onSubmit={handoleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="w-[380px] h-[500px] mt-[20px] rounded border border-gray-500">
             <div className="flex items-center mt-[35px] ml-[10px]">
               <a className="font-bold w-[px]">ユーザーID</a>
@@ -88,7 +89,7 @@ export default function SignUpForm() {
               <a className="font-bold">パスワード</a>
               <input
                 name="password"
-                type="text"
+                type="password"
                 placeholder=" パスワードを入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
@@ -98,7 +99,7 @@ export default function SignUpForm() {
               <a className="font-bold">パスワードの確認</a>
               <input
                 name="confirm_password"
-                type="text"
+                type="password"
                 placeholder=" 確認用パスワードを入力"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />

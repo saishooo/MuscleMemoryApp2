@@ -39,7 +39,8 @@ export default function Login() {
       return;
     }
 
-    router.replace("/");    //⚫︎ページの置き換え（履歴を残さずに移動）
+    setError("");
+    router.replace("/record");    //⚫︎ページの置き換え（履歴を残さずに移動）
     router.refresh();       //⚫︎再読み込み　これによって、cookieとユーザー名の更新をする
   }
 

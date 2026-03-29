@@ -71,10 +71,33 @@ export async function POST(req: Request) {
                 password: hashedPassword,
             },
         })
-        return NextResponse.json(
-            { message: "ユーザー登録成功", user },
-            { status: 201 }
-        )
+
+        const response = NextResponse.json(
+            {
+                message: "ユーザー登録成功",
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    nickname: user.nickname,
+                },
+            },
+            { status: 201}
+        );
+
+        //ユーザー情報をcookieに保存
+        response.cookies.set("userId", String(user.id), {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            path: "/",
+            sameSite: "lax",
+        });
+
+        return response;
+        // return NextResponse.json(
+        //     { message: "ユーザー登録成功", user },
+        //     { status: 201 }
+        // )
+
     } catch ( error ) {
         //⚫︎開発者のみ閲覧可能なコンソールにエラー内容詳細を出力
         console.error( error )

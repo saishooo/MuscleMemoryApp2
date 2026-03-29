@@ -1,9 +1,14 @@
 "use client"
 
+import { useRouter } from "next/navigation"
+import { useState } from "react";
+
 // src/app/auth/signup/page.tsx
 // ユーザー登録ページ
 
 export default function SignUpForm() {
+  const router = useRouter();
+  const [error, setError] = useState("");
 
   //登録ボタン押下時の処理
   //フォーム入力をJSONに変換してAPI(POST)に送信
@@ -46,6 +51,15 @@ export default function SignUpForm() {
     //⚫︎サーバーからのレスポンスをJSONとして受け取る
     const data = await res.json()
     console.log(data)
+
+    if (!res){
+      setError("新規登録に失敗しました");
+      return;
+    }
+
+    setError("");
+    router.replace("/record");
+    router.refresh();
   }
 
   return (

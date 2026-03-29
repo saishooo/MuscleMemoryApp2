@@ -9,8 +9,9 @@ export default function Home() {
     { id: 2, href: "/record/goal/input", label: "目標の設定" },
     { id: 3, href: "/", label: "目標の確認" },
     { id: 4, href: "/", label: "今日の記録" },
-    { id: 5, href: "/", label: "グラフ表示" },
-    { id: 6, href: "/", label: "最高記録" },
+    { id: 5, href: "/record/all-records", label: "全ての記録"},
+    { id: 6, href: "/", label: "グラフ表示" },
+    { id: 7, href: "/", label: "最高記録" },
   ];
   return (
     <div className="min-h-screen">

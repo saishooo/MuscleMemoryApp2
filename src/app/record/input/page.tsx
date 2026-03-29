@@ -1,7 +1,11 @@
+// src/app/record/input/page.tsx
 //トレーニング内容を記録するページ
-//トレーニング内容を記録するページのとりあえずのUI SQLを導入する予定なので
+
+import { getPrisma } from "@/lib/prisma";
 
 export default function recordTraining_page() {
+  const prisma = getPrisma();
+
   return (
     <div className="min-h-screen">
       <div className="flex flex-col items-center mt-[40px]">

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 // src/app/auth/signup/page.tsx
@@ -13,28 +13,28 @@ export default function SignUpForm() {
   //登録ボタン押下時の処理
   //フォーム入力をJSONに変換してAPI(POST)に送信
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()  //ページのリロード防止
+    e.preventDefault(); //ページのリロード防止
 
     //formの中身を全て取得する
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget);
 
     //passwordとconfigpasswordが一致しているかの確認
-    const l_password = String(formData.get( "password" ));
-    const l_confirm_password = String(formData.get( "confirm_password" ));
+    const l_password = String(formData.get("password"));
+    const l_confirm_password = String(formData.get("confirm_password"));
 
-    if( l_password !== l_confirm_password){
+    if (l_password !== l_confirm_password) {
       console.log("パスワードが一致しません");
       return;
     }
 
     //⚫︎JSONに送るための必要な値を取り出して、オブジェクト化
     const body = {
-      username: String(formData.get( "username" )),
-      nickname: String(formData.get( "nickname" )),
-      email:    String(formData.get( "email" )),
-      password: String(formData.get( "password" )),
-      confirm_password: String(formData.get( "confirm_password")),
-    }
+      username: String(formData.get("username")),
+      nickname: String(formData.get("nickname")),
+      email: String(formData.get("email")),
+      password: String(formData.get("password")),
+      confirm_password: String(formData.get("confirm_password")),
+    };
 
     //⚫︎APIを呼び出し
     //⚫︎fetch APIへ送信
@@ -42,17 +42,17 @@ export default function SignUpForm() {
     //⚫︎データを送信することを伝える method: "POST" ,
     //⚫︎JSON形式で送ることを伝える　headers: { "Content-Type" : "application/json", },
     //⚫︎送るデータをJSONに変換　    body: JSON.stringify(body),
-    const res = await fetch( "/api/auth/signup", {
-      method: "POST" ,
-      headers: { "Content-Type" : "application/json", },
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
-    })
+    });
 
     //⚫︎サーバーからのレスポンスをJSONとして受け取る
-    const data = await res.json()
-    console.log(data)
+    const data = await res.json();
+    console.log(data);
 
-    if (!res){
+    if (!res) {
       setError("新規登録に失敗しました");
       return;
     }
@@ -60,7 +60,7 @@ export default function SignUpForm() {
     setError("");
     router.replace("/record");
     router.refresh();
-  }
+  };
 
   return (
     <div className="min-h-screen">
@@ -120,7 +120,9 @@ export default function SignUpForm() {
             </div>
 
             <div className="flex justify-end mt-[60px] mr-[20px]">
-              <button type="submit" className="font-bold">ログイン</button>
+              <button type="submit" className="font-bold">
+                ログイン
+              </button>
             </div>
           </div>
         </form>

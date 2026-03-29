@@ -1,3 +1,4 @@
+// src/app/record/goal/input/page.tsx
 //トレーニング内容を記録するページ
 //トレーニング内容を記録するページのとりあえずのUI SQLを導入する予定なので
 

@@ -5,13 +5,13 @@ import Link from "next/link";
 
 export default function Home() {
   const items = [
-    { id: 1, href: "/record/input", label: "記録をする" },
-    { id: 2, href: "/record/goal/input", label: "目標の設定" },
-    { id: 3, href: "/", label: "目標の確認" },
-    { id: 4, href: "/", label: "今日の記録" },
-    { id: 5, href: "/record/all-records", label: "全ての記録"},
-    { id: 6, href: "/", label: "グラフ表示" },
-    { id: 7, href: "/", label: "最高記録" },
+    { id: 1, href: "/record/input", label: "記録する" },
+    { id: 2, href: "/record/goal/input", label: "目標を設定" },
+    { id: 3, href: "/", label: "目標を確認" },
+    { id: 4, href: "/", label: "今日を確認" },
+    { id: 5, href: "/record/all-records", label: "全記録の確認"},
+    { id: 6, href: "/", label: "グラフで表示" },
+    { id: 7, href: "/", label: "最高記録の確認" },
   ];
   return (
     <div className="min-h-screen">

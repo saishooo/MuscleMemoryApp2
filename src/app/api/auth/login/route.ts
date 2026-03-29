@@ -6,7 +6,6 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { getPrisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
-import { error } from "console";
 
 export async function POST( req: Request ){
     const prisma = getPrisma();
@@ -20,7 +19,7 @@ export async function POST( req: Request ){
             return NextResponse.json(
                 { error: "全ての項目を入力してください" },
                 { status: 400 },
-            )
+            );
         }
 
         //ユーザー検索
@@ -33,7 +32,7 @@ export async function POST( req: Request ){
             return NextResponse.json(
                 { error: "ユーザー名またはパスワードが違います" },
                 { status: 401 },
-            )
+            );
         }
 
         //パスワードの確認
@@ -43,11 +42,11 @@ export async function POST( req: Request ){
             return NextResponse.json(
                 { error: "ユーザー名またはパスワードが違います" },
                 { status: 401 },
-            )
+            );
         }
 
 
-        return NextResponse.json(
+        const response = NextResponse.json(
             {
                 message: "ログイン成功",
                 user: {
@@ -59,6 +58,17 @@ export async function POST( req: Request ){
             },
             { status: 200 }
         );
+
+        //Cookieに保存する（ブラウザにログイン状態を保存）
+        //⚫︎response.cookies.set("userId", String(user.id), { でuserIdを保存
+        response.cookies.set("userId", String(user.id), {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            path: "/",          //⚫︎全てのページで使用できるようにしている
+            sameSite: "lax",    //⚫︎外部サイトから勝手に送られないようにする
+        });
+
+        return response;
 
     } catch ( error ) {
         console.error( error )

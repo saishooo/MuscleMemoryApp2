@@ -3,26 +3,44 @@
 //src/app/auth/login/page.tsx
 //ログインページ
 
+import { useRouter } from "next/navigation";    //⚫︎ページ遷移を操作するためのフック
+import { useState } from "react";               //⚫︎状態を保存し、画面を更新する
+
 export default function Login() {
+  const router = useRouter();
+  const [ error, setError ] = useState("");
+
+  //ログインボタン押下時の処理
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()  //ページのリロードを防止
+    setError("");
 
     //formの中身を全て取得する
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget);
 
     const body = {
       username: String(formData.get( "username" )),
       password: String(formData.get( "password" )),
-    }
+    };
 
+    //APIにリクエストを送信
     const res = await fetch( "/api/auth/login", {
       method: "POST" ,
       headers: { "Content-Type" : "application/json", },
       body: JSON.stringify(body),
-    })
+    });
 
-    const data = await res.json()
-    console.log(data)
+    //APIのレスポンスを受け取る
+    const data = await res.json();
+    console.log(data);
+
+    if (!res.ok){
+      setError(data.error ?? "ログインに失敗しました");
+      return;
+    }
+
+    router.replace("/");    //⚫︎ページの置き換え（履歴を残さずに移動）
+    router.refresh();       //⚫︎再読み込み　これによって、cookieとユーザー名の更新をする
   }
 
   return (

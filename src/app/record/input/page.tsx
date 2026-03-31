@@ -5,7 +5,7 @@
 import { getPrisma } from "@/lib/prisma";
 import RecordInputForm from "./recordInputForm";
 
-export default async function recordTraining_page() {
+export default async function recordTrainingPage() {
   const prisma = getPrisma();
   const exerciseCategory = await prisma.exerciseCategory.findMany();
   const exercises = await prisma.exercise.findMany();

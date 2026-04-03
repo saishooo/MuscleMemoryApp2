@@ -66,12 +66,13 @@ export default function GoalInputForm({ exerciseCategory, exercises }: Props) {
               </select>
             </div>
 
+            {/* ◼︎今のままだとUXが悪い　改善必要 */}
             <div className="flex items-center mt-[60px] ml-[10px]">
               <a className="font-bold">重さ</a>
               <input
                 name="weight"
                 type="number"
-                placeholder=" XX kg"
+                placeholder=" 自重の場合は0を選択"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
             </div>

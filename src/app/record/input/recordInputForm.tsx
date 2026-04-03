@@ -36,26 +36,26 @@ export default function RecordInputForm({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //ページリロード防止
 
     const formData = new FormData(e.currentTarget);
 
     const formUserId = formData.get("inputUserId");
-    if ( !formUserId ){
+    if (!formUserId) {
       setError("ログインまたは新規登録してから登録してください");
       console.log("ログインまたは新規登録してから登録してください");
       return;
     }
 
     const body = {
-      userId:     String(formUserId),
+      userId: String(formUserId),
       exerciseId: String(formData.get("exercises")),
-      weight:     String(formData.get("weight")),
-      reps:       String(formData.get("reps")),
-    }
+      weight: String(formData.get("weight")),
+      reps: String(formData.get("reps")),
+    };
 
-    if( !body.userId || !body.exerciseId || body.weight==="" || !body.reps ){
+    if (!body.userId || !body.exerciseId || body.weight === "" || !body.reps) {
       setError("未入力の項目があります");
       console.log("未入力の項目があります");
       return;
@@ -64,14 +64,14 @@ export default function RecordInputForm({
     try {
       const res = await fetch("/api/record/input", {
         method: "POST",
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify(body)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
 
       const data = await res.json();
       console.log(data);
 
-      if (!res.ok){
+      if (!res.ok) {
         setError("トレーニング記録に失敗しました");
         return;
       }
@@ -79,12 +79,11 @@ export default function RecordInputForm({
       setError("");
       router.replace("/record/input");
       router.refresh();
-    } catch (error){
+    } catch (error) {
       console.error(error);
       setError("通信に失敗しました");
     }
-    
-  }
+  };
   return (
     <div className="min-h-screen">
       <div className="flex flex-col items-center mt-[40px]">
@@ -155,7 +154,9 @@ export default function RecordInputForm({
             </div>
 
             <div className="flex justify-end mt-[50px] mr-[20px]">
-              <button type="submit" className="font-bold">記録</button>
+              <button type="submit" className="font-bold">
+                記録
+              </button>
             </div>
           </div>
         </form>

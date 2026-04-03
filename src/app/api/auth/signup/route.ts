@@ -93,7 +93,6 @@ export async function POST(req: Request) {
     });
 
     return response;
-
   } catch (error) {
     //⚫︎開発者のみ閲覧可能なコンソールにエラー内容詳細を出力
     console.error(error);

@@ -16,16 +16,16 @@ export default async function recordTrainingPage() {
   //ログイン情報を取得
   const cookiesStore = await cookies();
   const userId = cookiesStore.get("userId")?.value;
-  let islogiUserId = null;
-  if(userId){
-    islogiUserId = Number(userId);
+  let isloginUserId = null;
+  if (userId) {
+    isloginUserId = Number(userId);
   }
 
   return (
     <RecordInputForm
       exerciseCategory={exerciseCategory}
       exercises={exercises}
-      userId={islogiUserId}
+      userId={isloginUserId}
     />
   );
 }

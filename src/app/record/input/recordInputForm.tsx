@@ -52,7 +52,6 @@ export default function RecordInputForm({
 
     const body = {
       userId:     String(formData.get("userId")),
-      categoryId: String(formData.get("exerciseCategory")),
       exerciseId: String(formData.get("exercises")),
       weight:     String(formData.get("weight")),
       reps:       String(formData.get("reps")),

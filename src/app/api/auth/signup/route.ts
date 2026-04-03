@@ -93,10 +93,7 @@ export async function POST(req: Request) {
     });
 
     return response;
-    // return NextResponse.json(
-    //     { message: "ユーザー登録成功", user },
-    //     { status: 201 }
-    // )
+
   } catch (error) {
     //⚫︎開発者のみ閲覧可能なコンソールにエラー内容詳細を出力
     console.error(error);

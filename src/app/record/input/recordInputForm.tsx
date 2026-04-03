@@ -41,40 +41,48 @@ export default function RecordInputForm({
 
     const formData = new FormData(e.currentTarget);
 
-    const userId = formData.get("userId");
-    if ( !userId ){
+    const formUserId = formData.get("inputUserId");
+    if ( !formUserId ){
       setError("ログインまたは新規登録してから登録してください");
       console.log("ログインまたは新規登録してから登録してください");
       return;
     }
 
-    const nowTime = new Date().getTime();
-
     const body = {
-      userId:     String(formData.get("userId")),
+      userId:     String(formUserId),
       exerciseId: String(formData.get("exercises")),
       weight:     String(formData.get("weight")),
       reps:       String(formData.get("reps")),
-      date:       nowTime,
     }
 
-    const res = await fetch("/api/record/input", {
-      method: "POST",
-      headers: {"Content-Type" : "application/json"},
-      body: JSON.stringify(body)
-    });
-
-    const data = await res.json();
-    console.log(data);
-
-    if (!res.ok){
-      setError("トレーニング記録に失敗しました");
+    if( !body.userId || !body.exerciseId || body.weight==="" || !body.reps ){
+      setError("未入力の項目があります");
+      console.log("未入力の項目があります");
       return;
     }
 
-    setError("");
-    router.replace("/");
-    router.refresh();
+    try {
+      const res = await fetch("/api/record/input", {
+        method: "POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(body)
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (!res.ok){
+        setError("トレーニング記録に失敗しました");
+        return;
+      }
+
+      setError("");
+      router.replace("/record/input");
+      router.refresh();
+    } catch (error){
+      console.error(error);
+      setError("通信に失敗しました");
+    }
     
   }
   return (
@@ -84,7 +92,7 @@ export default function RecordInputForm({
 
         <form onSubmit={handleSubmit}>
           <div className="w-[300px] h-[400px] mt-[20px] rounded border border-gray-500">
-            <input type="hidden" name="userId" value={userId ?? ""} />
+            <input type="hidden" name="inputUserId" value={userId ?? ""} />
 
             <div className="flex items-center mt-[35px] ml-[10px]">
               <a className="font-bold w-[px]">部位</a>

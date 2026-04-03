@@ -11,35 +11,66 @@ export async function POST( req: Request ){
 
     try{
         const body = await req.json();
-        const { userId, exerciseId, weight, reps, date } = body;
 
-        if( !userId ){
+        const { userId, exerciseId, weight, reps } = body;
+
+        if( userId==="" ){
             return NextResponse.json(
                 {error: "ログインまたは新規登録してください"},
                 {status: 400},
             );
         }
-
-        if( !exerciseId || !weight || !reps || !date ){
+        if( exerciseId==="" || weight==="" || reps==="" ){
             return NextResponse.json(
                 {error: "未入力の項目があります"},
                 {status: 400},
             );
         }
 
-        const workoutSession = await prisma.workoutSession.create({
-            data: {
-                userId: Number(userId),
-                date: new Date(date),
-            }
+        const userIdNum = Number(body.userId);
+        const exerciseIdNum = Number(body.exerciseId);
+        const weightNum = Number(body.weight);
+        const repsNum = Number(body.reps);
+
+        if(Number.isNaN(userIdNum) || Number.isNaN(exerciseIdNum) || Number.isNaN(weightNum) || Number.isNaN(repsNum) ){
+            return NextResponse.json(
+                {error: "数値が正しくありません"},
+                {status: 400}
+            );
+        }
+        
+        const targetDate = new Date();
+        const startOfDay = new Date(targetDate);
+        startOfDay.setHours(0,0,0,0);
+        const endOfDay = new Date(targetDate);
+        endOfDay.setHours(24,0,0,0);
+
+
+        let workoutSession = await prisma.workoutSession.findFirst({
+            where: {
+                userId: userIdNum,
+                date: {
+                    gte: startOfDay,    //⚫︎gte greater than or equal(以上)
+                    lt: endOfDay,       //⚫︎lt  less than(未満) 
+                },
+            },
         });
+
+        if(!workoutSession){
+            workoutSession = await prisma.workoutSession.create({
+                data: {
+                    userId: userIdNum,
+                    date: targetDate,
+                }
+            });
+        }
 
         const training = await prisma.training.create({
             data:{
-                sessionId: Number(workoutSession.id),
-                exerciseId: Number(exerciseId),
-                weight: Number(weight),
-                reps: Number(reps),
+                sessionId: workoutSession.id,
+                exerciseId: exerciseIdNum,
+                weight: weightNum,
+                reps: repsNum,
             },
         });
 

@@ -29,7 +29,7 @@ export default function TodayRecordsList({ trainings, exercises }: Props) {
   }
 
   return (
-    <div>
+    <div className="h-[340px] overflow-y-auto">
       {trainings.map((t) => (
         <div key={t.id} className="flex w-full mt-[10px]">
           <p className="w-[180px] ml-[20px]">{t.exercise.name}</p>

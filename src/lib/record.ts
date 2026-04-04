@@ -18,7 +18,7 @@ export async function getTodayRecordsByUserId(userId: number | null) {
       },
     },
     include: {
-        exercise: true,
+      exercise: true,
     },
   });
 }

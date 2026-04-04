@@ -1,6 +1,10 @@
 type Training = {
   id: number;
   sessionId: number;
+  exercise: {
+    id: number;
+    name: string;
+  };
   exerciseId: number;
   weight: number;
   reps: number;
@@ -27,10 +31,10 @@ export default function TodayRecordsList({ trainings, exercises }: Props) {
   return (
     <div>
       {trainings.map((t) => (
-        <div key={t.id}>
-          <p>{t.exerciseId}</p>
-          <p>{t.weight}</p>
-          <p>{t.reps}</p>
+        <div key={t.id} className="flex w-full mt-[10px]">
+          <p className="w-[180px] ml-[20px]">{t.exercise.name}</p>
+          <p className="w-[100px] ml-[50px]">{t.weight}</p>
+          <p className="w-[90px] ml-[40px]">{t.reps}</p>
         </div>
       ))}
     </div>

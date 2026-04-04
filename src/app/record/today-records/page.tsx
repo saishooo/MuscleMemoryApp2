@@ -7,7 +7,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import TodayRecordsList from "./todayRecordsList";
 import { getTodayRecordsByUserId } from "@/lib/record";
 
-export default async function todayRecords() {
+export default async function TodayRecords() {
   noStore(); //⚫︎キャッシュ禁止
   const prisma = getPrisma();
   const exercise = await prisma.exercise.findMany();
@@ -15,35 +15,39 @@ export default async function todayRecords() {
   //ログイン情報の取得
   const cookiesStore = await cookies();
   const userId = cookiesStore.get("userId")?.value;
-  let userIdnum: number | null = null;
+  let userIdNum: number | null = null;
 
   //ログインしていない場合
   if (!userId) {
     return (
       <div className="min-h-screen">
         <div className="flex flex-col items-center mt-[40px]">
-          <a className="font-bold text-xl">今日の記録を確認</a>
-
+          <h1 className="font-bold text-xl">今日の記録を確認</h1>
           <div className="w-[380px] h-[400px] mt-[20px] rounded border border-gray-500">
-            <a>ログインまたは新規登録してから登録してください</a>
+            <h2>ログインまたは新規登録してから登録してください</h2>
           </div>
         </div>
       </div>
     );
   } else {
-    userIdnum = Number(userId);
+    userIdNum = Number(userId);
   }
 
   //ユーザーの全てのトレーニング記録の取得
-  const trainings = await getTodayRecordsByUserId(userIdnum);
+  const trainings = await getTodayRecordsByUserId(userIdNum);
 
   //ログインしている場合
   return (
     <div className="min-h-screen">
       <div className="flex flex-col items-center mt-[40px]">
-        <a className="font-bold text-xl">今日の記録を確認</a>
+        <h1 className="font-bold text-xl">今日の記録を確認</h1>
 
         <div className="w-[380px] h-[400px] mt-[20px] rounded border border-gray-500">
+          <div className="flex w-full mt-[20px]">
+            <p className="font-bold w-[180px] ml-[20px]">トレーニング名</p>
+            <p className="font-bold w-[100px] ml-[30px]">重量（kg）</p>
+            <p className="font-bold w-[90px] ml-[30px]">回数</p>
+          </div>
           <TodayRecordsList trainings={trainings} exercises={exercise} />
         </div>
       </div>

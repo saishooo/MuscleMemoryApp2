@@ -8,6 +8,7 @@ export async function getTodayRecordsByUserId(userId: number | null) {
     return [];
   }
 
+  //trainingからsessionに行き、userIdが一致するものを取得する
   return await prisma.training.findMany({
     where: {
       session: {
@@ -15,6 +16,9 @@ export async function getTodayRecordsByUserId(userId: number | null) {
           userId: userId,
         },
       },
+    },
+    include: {
+        exercise: true,
     },
   });
 }

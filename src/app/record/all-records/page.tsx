@@ -8,7 +8,7 @@ import { getAllRecordsByUserId } from "@/lib/record";
 import AllRecordsList from "./allRecordsList";
 
 export default async function AllRecords() {
-  noStore();  //キャッシュ禁止
+  noStore(); //キャッシュ禁止
   const prisma = getPrisma();
   const exercise = await prisma.exercise.findMany();
 
@@ -18,7 +18,7 @@ export default async function AllRecords() {
   let userIdNum: number | null = null;
 
   //ログインしていない場合
-  if (!userId){
+  if (!userId) {
     return (
       <div className="min-h-screen">
         <div className="flex flex-col items-center mt-[40px]">

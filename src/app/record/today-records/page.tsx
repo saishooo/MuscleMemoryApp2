@@ -8,7 +8,7 @@ import TodayRecordsList from "./todayRecordsList";
 import { getTodayRecordsByUserId } from "@/lib/record";
 
 export default async function TodayRecords() {
-  noStore();  //キャッシュ禁止
+  noStore(); //キャッシュ禁止
   const prisma = getPrisma();
   const exercise = await prisma.exercise.findMany();
 

@@ -30,7 +30,7 @@ type Props = {
 
 export default function TodayRecordsList({ trainings, exercises }: Props) {
   if (trainings.length === 0) {
-    return ( <p>記録がありません</p> );
+    return <p>記録がありません</p>;
   }
 
   return (

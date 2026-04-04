@@ -1,3 +1,7 @@
+// src/app/record/today-records/todayRecordsList.tsx
+// 今日登録したトレーニングを表示する
+
+//Trainingテーブルの型定義
 type Training = {
   id: number;
   sessionId: number;
@@ -18,6 +22,7 @@ type Exercises = {
   categoryId: number;
 };
 
+//引数の型定義
 type Props = {
   trainings: Training[];
   exercises: Exercises[];
@@ -25,7 +30,7 @@ type Props = {
 
 export default function TodayRecordsList({ trainings, exercises }: Props) {
   if (trainings.length === 0) {
-    return <p>記録がありません</p>;
+    return ( <p>記録がありません</p> );
   }
 
   return (

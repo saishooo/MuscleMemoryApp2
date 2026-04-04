@@ -8,7 +8,7 @@ import TodayRecordsList from "./todayRecordsList";
 import { getTodayRecordsByUserId } from "@/lib/record";
 
 export default async function TodayRecords() {
-  noStore(); //⚫︎キャッシュ禁止
+  noStore();  //キャッシュ禁止
   const prisma = getPrisma();
   const exercise = await prisma.exercise.findMany();
 
@@ -41,7 +41,6 @@ export default async function TodayRecords() {
     <div className="min-h-screen">
       <div className="flex flex-col items-center mt-[40px]">
         <h1 className="font-bold text-xl">今日の記録を確認</h1>
-
         <div className="w-[380px] h-[400px] mt-[20px] rounded border border-gray-500">
           <div className="flex w-full mt-[20px] h-[30px]">
             <p className="font-bold w-[180px] ml-[20px]">トレーニング名</p>

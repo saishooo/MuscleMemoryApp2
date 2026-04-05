@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 import { unstable_noStore as noStore } from "next/cache";
 import RecordInputForm from "./recordInputForm";
 
-export default async function recordTrainingPage() {
+export default async function RecordTrainingPage() {
   noStore();
   const prisma = getPrisma();
   const exerciseCategory = await prisma.exerciseCategory.findMany();

@@ -18,9 +18,10 @@ type Exercises = {
 type Props = {
   exerciseCategory: ExerciseCategory[];
   exercises: Exercises[];
+  userId: number | null;
 };
 
-export default function GoalInputForm({ exerciseCategory, exercises }: Props) {
+export default function GoalInputForm({ exerciseCategory, exercises, userId }: Props) {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   return (

@@ -22,6 +22,10 @@ export default async function GoalInputPage() {
   }
 
   return (
-    <GoalInputForm exerciseCategory={exerciseCategory} exercises={exercises} userId={isloginUserId} />
+    <GoalInputForm
+      exerciseCategory={exerciseCategory}
+      exercises={exercises}
+      userId={isloginUserId}
+    />
   );
 }

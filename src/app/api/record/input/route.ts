@@ -50,6 +50,7 @@ export async function POST(req: Request) {
     const endOfDay = new Date(targetDate);
     endOfDay.setHours(24, 0, 0, 0);
 
+    //今日の0:00~23:59の日付がないか確認する
     let workoutSession = await prisma.workoutSession.findFirst({
       where: {
         userId: userIdNum,
@@ -60,6 +61,7 @@ export async function POST(req: Request) {
       },
     });
 
+    //今日のworkoutSettionが無ければ、新たに登録する
     if (!workoutSession) {
       workoutSession = await prisma.workoutSession.create({
         data: {
@@ -69,6 +71,7 @@ export async function POST(req: Request) {
       });
     }
 
+    //トレーニング記録を登録
     const training = await prisma.training.create({
       data: {
         sessionId: workoutSession.id,

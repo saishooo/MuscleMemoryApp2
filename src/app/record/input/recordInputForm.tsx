@@ -1,11 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 // src/app/record/input/recordInputForm.tsx
 // Client Component ユーザー側の表示
 //⚫︎useStateはクライアント専用。これがファイルを分ける理由です。
-
-import { useState } from "react";
 
 //ExerciseCategoryテーブルの型定義
 type ExerciseCategory = {
@@ -36,6 +36,7 @@ export default function RecordInputForm({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [error, setError] = useState("");
 
+  //ボタン押下時の処理
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //ページリロード防止
 

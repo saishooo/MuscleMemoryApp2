@@ -10,7 +10,7 @@ export default function Home() {
     { id: 3, href: "/record/all-records", label: "全記録の確認" },
     { id: 4, href: "/record/best-records", label: "最高記録の確認" },
     { id: 5, href: "/record/goal/input", label: "目標を設定" },
-    { id: 6, href: "/record/goal", label: "目標を確認" },
+    { id: 6, href: "/record/goal/output", label: "目標を確認" },
     { id: 7, href: "/", label: "グラフで表示" },
   ];
   return (

@@ -1,4 +1,4 @@
-// src/app/record/goal/page.tsx
+// src/app/record/goal/output/page.tsx
 // 目標値の確認ページ
 
 export default function goalRecords() {

@@ -17,7 +17,7 @@ export default async function Header() {
     const prisma = getPrisma();
 
     const user = await prisma.user.findUnique({
-      where: { id: Number(userId) },
+      where: { id: userId },
     });
 
     if (user) {

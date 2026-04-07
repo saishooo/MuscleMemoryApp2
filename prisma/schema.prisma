@@ -7,76 +7,88 @@ datasource db {
 }
 
 model User {
-  id        Int              @id @default(autoincrement())
+  id        String           @id @default(cuid())
   username  String           @unique
   nickname  String
   email     String           @unique
   password  String
   createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
   goals     Goal[]
   records   Record[]
   sessions  WorkoutSession[]
 }
 
 model ExerciseCategory {
-  id        Int        @id @default(autoincrement())
-  name      String
+  id        String     @id @default(cuid())
+  name      String     @unique
+
   exercises Exercise[]
 }
 
 model Exercise {
-  id         Int              @id @default(autoincrement())
-  name       String
-  categoryId Int
+  id         String           @id @default(cuid())
+  name       String           @unique
+  categoryId String
   category   ExerciseCategory @relation(fields: [categoryId], references: [id])
+
   goals      Goal[]
   records    Record[]
   trainings  Training[]
 }
 
 model WorkoutSession {
-  id        Int        @id @default(autoincrement())
-  userId    Int
-  date      DateTime   @default(now())
-  trainings Training[]
+  id        String     @id @default(cuid())
+  userId    String
+  date      DateTime
   user      User       @relation(fields: [userId], references: [id])
+
+  trainings Training[]
+
+  @@unique([userId, date])
 }
 
 model Training {
-  id         Int            @id @default(autoincrement())
-  sessionId  Int
-  exerciseId Int
+  id         String         @id @default(cuid())
+  sessionId  String
+  exerciseId String
   weight     Float
   reps       Int
   createdAt  DateTime       @default(now())
-  exercise   Exercise       @relation(fields: [exerciseId], references: [id])
+  updatedAt  DateTime       @updatedAt
+
   session    WorkoutSession @relation(fields: [sessionId], references: [id])
+  exercise   Exercise       @relation(fields: [exerciseId], references: [id])
 }
 
 model Record {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  exerciseId Int
+  id         String   @id @default(cuid())
+  userId     String
+  exerciseId String
   maxWeight  Float
   maxReps    Int
+  createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+
   user       User     @relation(fields: [userId], references: [id])
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
 
   @@unique([userId, exerciseId])
 }
 
 model Goal {
-  id           Int       @id @default(autoincrement())
-  userId       Int
-  exerciseId   Int
+  id           String   @id @default(cuid())
+  userId       String
+  exerciseId   String
   targetWeight Float
   targetReps   Int
   deadline     DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  exercise     Exercise  @relation(fields: [exerciseId], references: [id])
-  user         User      @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id])
+  exercise     Exercise @relation(fields: [exerciseId], references: [id])
 
   @@unique([userId, exerciseId])
 }

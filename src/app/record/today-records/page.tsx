@@ -15,7 +15,6 @@ export default async function TodayRecords() {
   //ログイン情報の取得
   const cookiesStore = await cookies();
   const userId = cookiesStore.get("userId")?.value;
-  let userIdNum: number | null = null;
 
   //ログインしていない場合
   if (!userId) {
@@ -29,12 +28,10 @@ export default async function TodayRecords() {
         </div>
       </div>
     );
-  } else {
-    userIdNum = Number(userId);
   }
 
   //ユーザーの全てのトレーニング記録の取得
-  const trainings = await getTodayRecordsByUserId(userIdNum);
+  const trainings = await getTodayRecordsByUserId(userId);
 
   //ログインしている場合
   return (

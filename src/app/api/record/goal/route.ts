@@ -31,21 +31,17 @@ export async function POST(req: Request) {
     }
 
     console.log("body =", body);
-    console.log("userId =", body.userId, Number(body.userId));
-    console.log("exerciseId =", body.exerciseId, Number(body.exerciseId));
+    console.log("userId =", body.userId);
+    console.log("exerciseId =", body.exerciseId);
     console.log("targetWeight =", body.targetWeight, Number(body.targetWeight));
     console.log("targetReps =", body.targetReps, Number(body.targetReps));
     console.log("deadline =", body.deadline, new Date(body.deadline));
 
-    const userIdNum = Number(body.userId);
-    const exerciseIdNum = Number(body.exerciseId);
     const targetWeightNum = Number(body.targetWeight);
     const targetRepsNum = Number(body.targetReps);
     const deadlineDate = new Date(body.deadline);
 
     if (
-      Number.isNaN(userIdNum) ||
-      Number.isNaN(exerciseIdNum) ||
       Number.isNaN(targetWeightNum) ||
       Number.isNaN(targetRepsNum)
     ) {
@@ -58,8 +54,8 @@ export async function POST(req: Request) {
     //目標を登録
     const goal = await prisma.goal.create({
       data: {
-        userId: userIdNum,
-        exerciseId: exerciseIdNum,
+        userId: userId,
+        exerciseId: exerciseId,
         targetWeight: targetWeightNum,
         targetReps: targetRepsNum,
         deadline: deadlineDate,

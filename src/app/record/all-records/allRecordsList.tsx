@@ -3,13 +3,13 @@
 
 //Trainingテーブルの型定義
 type Training = {
-  id: number;
-  sessionId: number;
+  id: string;
+  sessionId: string;
   exercise: {
-    id: number;
+    id: string;
     name: string;
   };
-  exerciseId: number;
+  exerciseId: string;
   weight: number;
   reps: number;
   createdAt: Date;
@@ -17,9 +17,9 @@ type Training = {
 
 //Exercisesテーブルの型定義
 type Exercises = {
-  id: number;
+  id: string;
   name: string;
-  categoryId: number;
+  categoryId: string;
 };
 
 //引数の定義

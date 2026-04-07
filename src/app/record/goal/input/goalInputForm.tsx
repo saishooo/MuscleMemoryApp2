@@ -6,20 +6,20 @@ import { useState } from "react";
 // src/app/record/goal/input/goalInputForm.tsx
 
 type ExerciseCategory = {
-  id: number;
+  id: string;
   name: string;
 };
 
 type Exercises = {
-  id: number;
+  id: string;
   name: string;
-  categoryId: number;
+  categoryId: string;
 };
 
 type Props = {
   exerciseCategory: ExerciseCategory[];
   exercises: Exercises[];
-  userId: number | null;
+  userId: string | null;
 };
 
 export default function GoalInputForm({

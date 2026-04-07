@@ -15,7 +15,6 @@ export default async function AllRecords() {
   //ログイン情報の取得
   const cookiesStore = await cookies();
   const userId = cookiesStore.get("userId")?.value;
-  let userIdNum: number | null = null;
 
   //ログインしていない場合
   if (!userId) {
@@ -29,12 +28,10 @@ export default async function AllRecords() {
         </div>
       </div>
     );
-  } else {
-    userIdNum = Number(userId);
   }
 
   //ユーザーの全てのトレーニング記録の取得
-  const trainings = await getAllRecordsByUserId(userIdNum);
+  const trainings = await getAllRecordsByUserId(userId);
 
   //ログインしている場合
   return (

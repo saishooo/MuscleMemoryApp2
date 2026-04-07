@@ -27,14 +27,10 @@ export async function POST(req: Request) {
       );
     }
 
-    const userIdNum = Number(body.userId);
-    const exerciseIdNum = Number(body.exerciseId);
     const weightNum = Number(body.weight);
     const repsNum = Number(body.reps);
 
     if (
-      Number.isNaN(userIdNum) ||
-      Number.isNaN(exerciseIdNum) ||
       Number.isNaN(weightNum) ||
       Number.isNaN(repsNum)
     ) {
@@ -53,7 +49,7 @@ export async function POST(req: Request) {
     //今日の0:00~23:59の日付がないか確認する
     let workoutSession = await prisma.workoutSession.findFirst({
       where: {
-        userId: userIdNum,
+        userId: userId,
         date: {
           gte: startOfDay, //⚫︎gte greater than or equal(以上)
           lt: endOfDay, //⚫︎lt  less than(未満)
@@ -65,7 +61,7 @@ export async function POST(req: Request) {
     if (!workoutSession) {
       workoutSession = await prisma.workoutSession.create({
         data: {
-          userId: userIdNum,
+          userId: userId,
           date: targetDate,
         },
       });
@@ -75,7 +71,7 @@ export async function POST(req: Request) {
     const training = await prisma.training.create({
       data: {
         sessionId: workoutSession.id,
-        exerciseId: exerciseIdNum,
+        exerciseId: exerciseId,
         weight: weightNum,
         reps: repsNum,
       },

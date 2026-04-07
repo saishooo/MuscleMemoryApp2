@@ -18,7 +18,7 @@ export default async function RecordTrainingPage() {
   const userId = cookiesStore.get("userId")?.value;
   let isloginUserId = null;
   if (userId) {
-    isloginUserId = Number(userId);
+    isloginUserId = userId;
   }
 
   return (

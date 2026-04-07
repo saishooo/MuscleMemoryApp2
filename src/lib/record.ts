@@ -4,7 +4,7 @@
 import { getPrisma } from "./prisma";
 
 //今日の記録を吸い上げる関数
-export async function getTodayRecordsByUserId(userId: number | null) {
+export async function getTodayRecordsByUserId(userId: string | null) {
   const prisma = getPrisma();
 
   if (!userId) {
@@ -39,7 +39,7 @@ export async function getTodayRecordsByUserId(userId: number | null) {
 }
 
 //全ての記録を吸い上げる関数
-export async function getAllRecordsByUserId(userId: number | null) {
+export async function getAllRecordsByUserId(userId: string | null) {
   const prisma = getPrisma();
 
   if (!userId) {

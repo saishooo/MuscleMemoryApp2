@@ -9,22 +9,22 @@ import { useState } from "react";
 
 //ExerciseCategoryテーブルの型定義
 type ExerciseCategory = {
-  id: number;
+  id: string;
   name: string;
 };
 
 //Exrcisesテーブルの型定義
 type Exercises = {
-  id: number;
+  id: string;
   name: string;
-  categoryId: number;
+  categoryId: string;
 };
 
 //RecordInputFormの引数の型定義
 type Props = {
   exerciseCategory: ExerciseCategory[];
   exercises: Exercises[];
-  userId: number | null;
+  userId: string | null;
 };
 
 export default function RecordInputForm({
@@ -56,7 +56,7 @@ export default function RecordInputForm({
       reps: String(formData.get("reps")),
     };
 
-    if (!body.userId || !body.exerciseId || body.weight === "" || !body.reps) {
+    if (body.userId === "" || body.exerciseId === "" || body.weight === "" || !body.reps) {
       setError("未入力の項目があります");
       console.log("未入力の項目があります");
       return;

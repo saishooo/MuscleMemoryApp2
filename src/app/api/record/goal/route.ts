@@ -41,10 +41,7 @@ export async function POST(req: Request) {
     const targetRepsNum = Number(body.targetReps);
     const deadlineDate = new Date(body.deadline);
 
-    if (
-      Number.isNaN(targetWeightNum) ||
-      Number.isNaN(targetRepsNum)
-    ) {
+    if (Number.isNaN(targetWeightNum) || Number.isNaN(targetRepsNum)) {
       return NextResponse.json(
         { error: "数値が正しくありませんas" },
         { status: 400 }

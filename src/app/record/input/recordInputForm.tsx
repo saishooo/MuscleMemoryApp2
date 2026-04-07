@@ -56,7 +56,12 @@ export default function RecordInputForm({
       reps: String(formData.get("reps")),
     };
 
-    if (body.userId === "" || body.exerciseId === "" || body.weight === "" || !body.reps) {
+    if (
+      body.userId === "" ||
+      body.exerciseId === "" ||
+      body.weight === "" ||
+      !body.reps
+    ) {
       setError("未入力の項目があります");
       console.log("未入力の項目があります");
       return;

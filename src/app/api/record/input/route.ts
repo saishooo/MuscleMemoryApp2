@@ -30,10 +30,7 @@ export async function POST(req: Request) {
     const weightNum = Number(body.weight);
     const repsNum = Number(body.reps);
 
-    if (
-      Number.isNaN(weightNum) ||
-      Number.isNaN(repsNum)
-    ) {
+    if (Number.isNaN(weightNum) || Number.isNaN(repsNum)) {
       return NextResponse.json(
         { error: "数値が正しくありません" },
         { status: 400 }

@@ -13,6 +13,7 @@ type Training = {
   weight: number;
   reps: number;
   createdAt: Date;
+  updatedAt: Date;
 };
 
 //Exercisesテーブルの型定義

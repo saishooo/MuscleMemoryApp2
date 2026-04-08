@@ -60,3 +60,21 @@ export async function getAllRecordsByUserId(userId: string | null) {
     },
   });
 }
+
+//ユーザーのトレーニング目標の取得する関数
+export async function getGoalRecordsByUserId(userId: string | null) {
+  const prisma = getPrisma();
+
+  if (!userId) {
+    return [];
+  }
+
+  return await prisma.goal.findMany({
+    where: {
+      userId: userId,
+    },
+    include: {
+      exercise: true,
+    },
+  });
+}

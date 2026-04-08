@@ -13,9 +13,10 @@ type Training = {
   weight: number;
   reps: number;
   createdAt: Date;
+  updatedAt: Date;
 };
 
-//Exrcisesテーブルの型定義
+//Exercisesテーブルの型定義
 type Exercises = {
   id: string;
   name: string;

@@ -80,7 +80,7 @@ export default function GoalInputForm({
       }
 
       setError("");
-      router.replace("/record/goal");
+      router.replace("/record/goal/input");
       router.refresh();
     } catch (error) {
       console.error(error);

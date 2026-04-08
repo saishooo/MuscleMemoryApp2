@@ -91,7 +91,7 @@ export default function GoalInputForm({
   return (
     <div className="min-h-screen">
       <div className="flex flex-col items-center mt-[40px]">
-        <a className="font-bold text-xl">目標値の設定</a>
+        <a className="font-bold text-xl">目標の登録</a>
 
         <form onSubmit={handleSubmit}>
           <div className="w-[300px] h-[400px] mt-[20px] rounded border border-gray-500">

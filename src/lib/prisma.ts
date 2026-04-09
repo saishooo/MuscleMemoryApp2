@@ -12,12 +12,12 @@ const globalForPrisma = global as unknown as {
 };
 
 export function getPrisma() {
-  console.log("DATABASE_URL exists:", !!process.env.DATABASE_URL); // 環境変数の有無だけ確認
-  console.log("ENV:", process.env.DATABASE_URL); //環境変数を出力
+  console.log("DATABASE_URL_NEW exists:", !!process.env.DATABASE_URL_NEW); // 環境変数の有無だけ確認
+  console.log("ENV:", process.env.DATABASE_URL_NEW); //環境変数を出力
 
   //DBにアドレスが入っていなければ終了
-  if (!process.env.DATABASE_URL) {
-    throw new Error("DATABASE_URL が設定されていません");
+  if (!process.env.DATABASE_URL_NEW) {
+    throw new Error("DATABASE_URL_NEW が設定されていません");
   }
   //⚫︎各ファイルごとで[ const prisma = new PrismaClient ]はインスタンスが増殖するためNG
   //⚫︎PrismaClientがない時だけインスタンスを生成し、増殖を防ぐ
@@ -25,7 +25,7 @@ export function getPrisma() {
     //DBに接続する方法を作成
     //adapter
     const adapter = new PrismaPg({
-      connectionString: process.env.DATABASE_URL!,
+      connectionString: process.env.DATABASE_URL_NEW!,
     });
 
     //prismaにPrismaClientのインスタンスを生成

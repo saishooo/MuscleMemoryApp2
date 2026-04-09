@@ -7,7 +7,9 @@ import { PrismaPg } from "@prisma/adapter-pg";
 
 //⚫︎global変数にprismaのプロパティを持たせる
 //⚫︎型のキャストをしている。global型からunknwon型へ、unknown型からprisma:PrismaClient型へ変換
-const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
+const globalForPrisma = global as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
 export function getPrisma() {
   console.log("DATABASE_URL exists:", !!process.env.DATABASE_URL); // 環境変数の有無だけ確認

@@ -20,13 +20,14 @@ export async function POST(req: Request) {
   //⚫︎DBを操作するためにgetPrisma関数を呼び出し、インスタンスをprismaに格納
   //⚫︎これ以降ではDBの操作はprismaに対して行う。正しくデータを扱うためにインスタンスを作成する。
   const prisma = getPrisma();
-  try {
-    //⚫︎req.json()とはリクエストをJSONとしてパースする関数
-    //⚫︎JSON データをやり取りするためのフォーマット(文字列)
-    //⚫︎パース 文字列をプログラムに変換すること
-    const body = await req.json();
-    const { username, nickname, email, password, confirm_password } = body;
 
+  //⚫︎req.json()とはリクエストをJSONとしてパースする関数
+  //⚫︎JSON データをやり取りするためのフォーマット(文字列)
+  //⚫︎パース 文字列をプログラムに変換すること
+  const body = await req.json();
+  const { username, nickname, email, password, confirm_password } = body;
+
+  try {
     //入力情報に抜け漏れがないか確認
     if (!username || !email || !password) {
       //⚫︎NextResponse.jsonはAPIの戻り値(フロントにデータを送る)

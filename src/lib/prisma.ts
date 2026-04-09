@@ -10,6 +10,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
 
 export function getPrisma() {
+  console.log("DATABASE_URL exists:", !!process.env.DATABASE_URL); // 環境変数の有無だけ確認
   console.log("ENV:", process.env.DATABASE_URL); //環境変数を出力
 
   //DBにアドレスが入っていなければ終了

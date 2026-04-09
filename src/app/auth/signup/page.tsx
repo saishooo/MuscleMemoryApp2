@@ -48,6 +48,11 @@ export default function SignUpForm() {
       body: JSON.stringify(body),
     });
 
+    console.log("status:", res.status);
+
+    const raw = await res.text();
+    console.log("raw response:", raw);
+
     //⚫︎サーバーからのレスポンスをJSONとして受け取る
     const data = await res.json();
     console.log(data);

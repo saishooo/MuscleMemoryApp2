@@ -126,7 +126,7 @@ export default function SignUpForm() {
 
             <div className="flex justify-end mt-[60px] mr-[20px]">
               <button type="submit" className="font-bold">
-                ログイン
+                登録
               </button>
             </div>
           </div>

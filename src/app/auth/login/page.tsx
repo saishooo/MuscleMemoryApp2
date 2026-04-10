@@ -4,44 +4,78 @@
 //ログインページ
 
 import { useRouter } from "next/navigation"; //⚫︎ページ遷移を操作するためのフック
-import { useState } from "react"; //⚫︎状態を保存し、画面を更新する
+import { useEffect, useState } from "react"; //⚫︎状態を保存し、画面を更新する
 
-export default function Login() {
+export default function LoginForm() {
   const router = useRouter();
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  //⚫︎useEffect 画面が変わった時に、何か処理をする
+  //⚫︎message,routerが変更されたら実行する
+  //成功メッセージを表示
+  useEffect(() => {
+    if (!message) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      router.replace("/record"); //⚫︎ページの置き換え（履歴を残さずに移動）
+      router.refresh(); //⚫︎再読み込み　これによって、cookieとユーザー名の更新をする
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [message, router]);
+
+  //エラーメッセージ表示
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setError("");
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [error]);
 
   //ログインボタン押下時の処理
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //ページのリロードを防止
+    setMessage("");
     setError("");
 
-    //formの中身を全て取得する
-    const formData = new FormData(e.currentTarget);
+    try {
+      //formの中身を全て取得する
+      const formData = new FormData(e.currentTarget);
 
-    const body = {
-      username: String(formData.get("username")),
-      password: String(formData.get("password")),
-    };
+      const body = {
+        username: String(formData.get("username")),
+        password: String(formData.get("password")),
+      };
 
-    //APIにリクエストを送信
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+      //APIにリクエストを送信
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-    //APIのレスポンスを受け取る
-    const data = await res.json();
-    console.log(data);
+      //APIのレスポンスを受け取る
+      const data = await res.json();
+      console.log(data);
 
-    if (!res.ok) {
-      setError(data.error ?? "ログインに失敗しました");
-      return;
+      if (!res.ok) {
+        setError(data.error ?? "ログインに失敗しました");
+        return;
+      }
+
+      setError("");
+      setMessage("ログイン成功 🎉");
+    } catch {
+      setError("通信エラー");
     }
-
-    setError("");
-    router.replace("/record"); //⚫︎ページの置き換え（履歴を残さずに移動）
-    router.refresh(); //⚫︎再読み込み　これによって、cookieとユーザー名の更新をする
   };
 
   return (
@@ -50,7 +84,7 @@ export default function Login() {
         <a className="font-bold text-xl">ログイン</a>
 
         <form onSubmit={handleSubmit}>
-          <div className="w-[350px] h-[270px] mt-[20px] rounded border border-gray-500">
+          <div className="relative w-[350px] h-[270px] mt-[20px] rounded border border-gray-500">
             <div className="flex items-center mt-[35px] ml-[10px]">
               <a className="font-bold w-[px]">ユーザーID</a>
               <input
@@ -76,9 +110,54 @@ export default function Login() {
                 ログイン
               </button>
             </div>
+
+            {message && (
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 -translate-y-1/2 animate-slideIn">
+                <div className="rounded-xl bg-green-500 px-4 py-3 text-white shadow-lg">
+                  {message}
+                </div>
+              </div>
+            )}
+
+            {error && (
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 -translate-y-1/2 animate-slideIn">
+                <div className="rounded-xl bg-red-500 px-4 py-3 text-white shadow-lg">
+                  {error}
+                </div>
+              </div>
+            )}
           </div>
         </form>
       </div>
+
+      {/* {message && (
+        <div className="fixed top-80 left-1/2 z-50 animate-slideIn rounded-xl bg-green-500 px-4 py-3 text-white shadow-lg">
+          {message}
+        </div>
+      )}
+
+      {error && (
+        <div className="fixed top-80 left-1/2 z-50 animate-slideIn rounded-xl bg-red-500 px-4 py-3 text-white shadow-lg">
+          {error}
+        </div>
+      )} */}
+
+      <style jsx>{`
+        .animate-slideIn {
+          animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 }

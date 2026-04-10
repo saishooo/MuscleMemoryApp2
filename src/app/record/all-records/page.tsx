@@ -41,7 +41,7 @@ export default async function AllRecords() {
         <div className="w-[380px] h-[400px] mt-[20px] rounded border border-gray-500">
           <div className="flex w-full mt-[20px] h-[30px]">
             <p className="font-bold w-[180px] ml-[20px]">トレーニング名</p>
-            <p className="font-bold w-[100px] ml-[30px]">重量（kg）</p>
+            <p className="font-bold w-[100px] ml-[30px]">重量</p>
             <p className="font-bold w-[90px] ml-[30px]">回数</p>
           </div>
           <AllRecordsList trainings={trainings} exercises={exercise} />

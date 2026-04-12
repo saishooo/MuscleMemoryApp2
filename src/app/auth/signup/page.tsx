@@ -53,6 +53,7 @@ export default function SignUpForm() {
       const l_confirm_password = String(formData.get("confirm_password"));
 
       if (l_password !== l_confirm_password) {
+        setError("パスワードが一致しません");
         console.log("パスワードが一致しません");
         return;
       }
@@ -80,15 +81,15 @@ export default function SignUpForm() {
 
       //⚫︎ココ何してるんだっけ？
       console.log("status:", res.status);
-      const raw = await res.text();
-      console.log("raw response:", raw);
+      // const raw = await res.text();
+      // console.log("raw response:", raw);
 
       //⚫︎サーバーからのレスポンスをJSONとして受け取る
       const data = await res.json();
       console.log(data);
 
       //resがなければ登録失敗
-      if (!res) {
+      if (!res.ok) {
         setError("新規登録に失敗しました");
         return;
       }
@@ -175,7 +176,7 @@ export default function SignUpForm() {
               </div>
             )}
             {error && (
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slidIn">
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
                 <div className="rounded-xl bg-red-500 px-4 py-3 text-white shadow-lg">
                   {error}
                 </div>

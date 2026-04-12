@@ -5,8 +5,8 @@ import Link from "next/link";
 
 export default function Home() {
   const items = [
-    { id: 1, href: "/auth", label: "ユーザー情報" },
-    { id: 2, href: "/record", label: "メニュー" },
+    { id: 1, href: "/auth", label: "ログイン・登録" },
+    //{ id: 2, href: "/record", label: "メニュー" },
   ];
   return (
     <div className="min-h-screen">

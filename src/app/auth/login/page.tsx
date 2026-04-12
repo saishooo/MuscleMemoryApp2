@@ -27,7 +27,7 @@ export default function LoginForm() {
     return () => window.clearTimeout(timeoutId);
   }, [message, router]);
 
-  //エラーメッセージ表示
+  //エラーメッセージを表示
   useEffect(() => {
     if (!error) {
       return;
@@ -66,6 +66,7 @@ export default function LoginForm() {
       const data = await res.json();
       console.log(data);
 
+      //resがなければ、ログイン失敗
       if (!res.ok) {
         setError(data.error ?? "ログインに失敗しました");
         return;
@@ -112,7 +113,7 @@ export default function LoginForm() {
             </div>
 
             {message && (
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 -translate-y-1/2 animate-slideIn">
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-y-1/2 animate-slideIn">
                 <div className="rounded-xl bg-green-500 px-4 py-3 text-white shadow-lg">
                   {message}
                 </div>
@@ -120,7 +121,7 @@ export default function LoginForm() {
             )}
 
             {error && (
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 -translate-y-1/2 animate-slideIn">
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-y-1/2 animate-slideIn">
                 <div className="rounded-xl bg-red-500 px-4 py-3 text-white shadow-lg">
                   {error}
                 </div>
@@ -130,17 +131,11 @@ export default function LoginForm() {
         </form>
       </div>
 
-      {/* {message && (
-        <div className="fixed top-80 left-1/2 z-50 animate-slideIn rounded-xl bg-green-500 px-4 py-3 text-white shadow-lg">
-          {message}
-        </div>
-      )}
-
-      {error && (
-        <div className="fixed top-80 left-1/2 z-50 animate-slideIn rounded-xl bg-red-500 px-4 py-3 text-white shadow-lg">
-          {error}
-        </div>
-      )} */}
+      {/* ⚫︎slideIn 動きの名前 */}
+      {/* ⚫︎0.3s 0.3秒で動く */}
+      {/* ⚫︎ease-out 最初早くて、最後ゆっくり止まる */}
+      {/* ⚫︎transform:translateX(100%) 横に100%分ずらす */}
+      {/* ⚫︎opacity: 0; 透明で見えない,  opacity: 1; 完全に見える */}
 
       <style jsx>{`
         .animate-slideIn {

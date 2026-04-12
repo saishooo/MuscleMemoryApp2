@@ -40,19 +40,21 @@ export default async function Header() {
         </div>
 
         <div className="flex mt-[20px]">
-          <Link href="/record" className="border-b">
-            メニュー
-          </Link>
           {!isLogin ? (
-            <Link href="/auth" className="ml-[35px] border-b">
+            <Link href="/auth" className="border-b">
               ログイン・登録
             </Link>
           ) : (
-            <form action="/api/auth/logout" method="POST">
-              <button type="submit" className="ml-[35px] border-b">
-                ログアウト
-              </button>
-            </form>
+            <div className="flex">
+              <Link href="/record" className="border-b">
+                メニュー
+              </Link>
+              <form action="/api/auth/logout" method="POST">
+                <button type="submit" className="ml-[35px] border-b">
+                  ログアウト
+                </button>
+              </form>
+            </div>
           )}
         </div>
       </div>

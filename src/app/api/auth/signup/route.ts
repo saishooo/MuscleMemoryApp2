@@ -44,6 +44,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const regex = /^[a-zA-Z0-9_.]+$/;
+    if (!regex.test(username)) {
+      return NextResponse.json(
+        { error: "ユーザーIDは英数字と「.」「_」のみ使用できます" },
+        { status: 400 }
+      );
+    }
+
     //パスワードと確認パスワードが一致しない
     if (password !== confirm_password) {
       return NextResponse.json(

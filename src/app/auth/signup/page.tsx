@@ -48,10 +48,19 @@ export default function SignUpForm() {
     try {
       //formの中身を全て取得する
       const formData = new FormData(e.currentTarget);
+
+      //usernameが英数字か確認する（正規表現でチェック）
+      const l_username = String(formData.get("username"));
+      //⚫︎正規表現 ^(先頭) $(末尾) a-zA-z0-9(英数字) +(1文字以上)
+      const regex = /^[a-zA-Z0-9_.]+$/;
+      if (!regex.test(l_username)) {
+        setError("ユーザーIDは英数字「.」「_」入力してください");
+        return;
+      }
+
       //passwordとconfigpasswordが一致しているかの確認
       const l_password = String(formData.get("password"));
       const l_confirm_password = String(formData.get("confirm_password"));
-
       if (l_password !== l_confirm_password) {
         setError("パスワードが一致しません");
         console.log("パスワードが一致しません");
@@ -78,11 +87,6 @@ export default function SignUpForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-
-      //⚫︎ココ何してるんだっけ？
-      console.log("status:", res.status);
-      // const raw = await res.text();
-      // console.log("raw response:", raw);
 
       //⚫︎サーバーからのレスポンスをJSONとして受け取る
       const data = await res.json();

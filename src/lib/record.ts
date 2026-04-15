@@ -78,3 +78,21 @@ export async function getGoalRecordsByUserId(userId: string | null) {
     },
   });
 }
+
+//ユーザーのトレーニング最高記録を取得する関数
+export async function getBestRecordsByUserId(userId: string | null) {
+  const prisma = getPrisma();
+
+  if (!userId) {
+    return [];
+  }
+
+  return await prisma.record.findMany({
+    where: {
+      userId: userId,
+    },
+    include: {
+      exercise: true,
+    },
+  });
+}

@@ -74,6 +74,43 @@ export async function POST(req: Request) {
       },
     });
 
+    //最高記録の更新
+    //ログインしているユーザーが今登録した種目の最高記録を既に持っているかを確認
+    const existingRecord = await prisma.record.findUnique({
+      where: {
+        userId_exerciseId: {
+          userId: userId,
+          exerciseId: exerciseId,
+        },
+      },
+    });
+
+    if (!existingRecord) {
+      //初回の種目だった場合
+      await prisma.record.create({
+        data: {
+          userId: userId,
+          exerciseId: exerciseId,
+          maxWeight: weightNum,
+          maxReps: repsNum,
+        },
+      });
+    } else {
+      //既に最高記録がある場合
+      await prisma.record.update({
+        where: {
+          userId_exerciseId: {
+            userId: userId,
+            exerciseId: exerciseId,
+          },
+        },
+        data: {
+          maxWeight: Math.max(existingRecord.maxWeight, weight),
+          maxReps: Math.max(existingRecord.maxReps, reps),
+        },
+      });
+    }
+
     const response = NextResponse.json(
       { message: "トレーニング登録成功" },
       { status: 201 }

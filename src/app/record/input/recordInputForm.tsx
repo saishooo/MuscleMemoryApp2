@@ -35,6 +35,7 @@ export default function RecordInputForm({
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //ボタン押下時の処理
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,6 +69,8 @@ export default function RecordInputForm({
     }
 
     try {
+      setLoading(true); //ローディング開始
+
       const res = await fetch("/api/record/input", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -83,6 +86,7 @@ export default function RecordInputForm({
       }
 
       setError("");
+      setLoading(false); //ローディング終了
       router.replace("/record/input");
       router.refresh();
     } catch (error) {
@@ -92,6 +96,15 @@ export default function RecordInputForm({
   };
   return (
     <div className="min-h-screen">
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="rounded-xl bg-gray-500">
+            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+              登録中...
+            </p>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-center mt-[40px]">
         <a className="font-bold text-xl">記録</a>
 

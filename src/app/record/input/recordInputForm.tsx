@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { setegid } from "process";
+import { useEffect, useState } from "react";
 
 // src/app/record/input/recordInputForm.tsx
 // Client Component ユーザー側の表示
@@ -34,41 +35,72 @@ export default function RecordInputForm({
 }: Props) {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  //ボタン押下時の処理
+  //------------------成功メッセージを表示------------------
+  useEffect(() => {
+    if (!message) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setMessage("");
+      router.replace("/record/input");
+      router.refresh();
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId); //⚫︎timeoutの予約削除
+  }, [message, router]);
+
+  //------------------エラーメッセージを表示------------------
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setError("");
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [error]);
+
+  //------------------ボタン押下時の処理------------------
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //ページリロード防止
-
-    const formData = new FormData(e.currentTarget);
-
-    const formUserId = formData.get("inputUserId");
-    if (!formUserId) {
-      setError("ログインまたは新規登録してから登録してください");
-      console.log("ログインまたは新規登録してから登録してください");
-      return;
-    }
-
-    const body = {
-      userId: String(formUserId),
-      exerciseId: String(formData.get("exercises")),
-      weight: String(formData.get("weight")),
-      reps: String(formData.get("reps")),
-    };
-
-    if (
-      body.userId === "" ||
-      body.exerciseId === "" ||
-      body.weight === "" ||
-      !body.reps
-    ) {
-      setError("未入力の項目があります");
-      console.log("未入力の項目があります");
-      return;
-    }
+    setMessage("");
+    setError("");
 
     try {
+      const formData = new FormData(e.currentTarget);
+
+      const formUserId = formData.get("inputUserId");
+      if (!formUserId) {
+        setError("ログインまたは新規登録してから登録してください");
+        console.log("ログインまたは新規登録してから登録してください");
+        return;
+      }
+
+      const body = {
+        userId: String(formUserId),
+        exerciseId: String(formData.get("exercises")),
+        weight: String(formData.get("weight")),
+        reps: String(formData.get("reps")),
+      };
+
+      if (
+        body.userId === "" ||
+        body.exerciseId === "" ||
+        body.weight === "" ||
+        !body.reps
+      ) {
+        setError("未入力の項目があります");
+        console.log("未入力の項目があります");
+        return;
+      }
+
       setLoading(true); //ローディング開始
 
       const res = await fetch("/api/record/input", {
@@ -87,8 +119,7 @@ export default function RecordInputForm({
 
       setError("");
       setLoading(false); //ローディング終了
-      router.replace("/record/input");
-      router.refresh();
+      setMessage("記録成功🎉");
     } catch (error) {
       console.error(error);
       setError("通信に失敗しました");
@@ -109,7 +140,7 @@ export default function RecordInputForm({
         <a className="font-bold text-xl">記録</a>
 
         <form onSubmit={handleSubmit}>
-          <div className="w-[300px] h-[400px] mt-[20px] rounded border border-gray-500">
+          <div className="relative w-[300px] h-[400px] mt-[20px] rounded border border-gray-500">
             <input type="hidden" name="inputUserId" value={userId ?? ""} />
 
             <div className="flex items-center mt-[35px] ml-[10px]">
@@ -177,6 +208,21 @@ export default function RecordInputForm({
                 記録
               </button>
             </div>
+
+            {message && (
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+                <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
+                  {message}
+                </div>
+              </div>
+            )}
+            {error && (
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+                <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
+                  {error}
+                </div>
+              </div>
+            )}
           </div>
         </form>
       </div>

@@ -24,3 +24,23 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ⚫︎slideIn 動きの名前 */
+/* ⚫︎0.3s 0.3秒で動く */
+/* ⚫︎ease-out 最初早くて、最後ゆっくり止まる */
+/* ⚫︎transform:translateX(100%) 横に100%分ずらす */
+/* ⚫︎opacity: 0; 透明で見えない,  opacity: 1; 完全に見える */
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

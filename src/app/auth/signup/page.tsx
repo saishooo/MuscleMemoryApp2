@@ -11,7 +11,7 @@ export default function SignUpForm() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  //成功メッセージを表示
+  //------------------成功メッセージを表示------------------
   useEffect(() => {
     if (!message) {
       return;
@@ -25,7 +25,7 @@ export default function SignUpForm() {
     return () => window.clearTimeout(timeoutId);
   }, [message, router]);
 
-  //エラーメッセージを表示
+  //------------------エラーメッセージを表示------------------
   useEffect(() => {
     if (!error) {
       return;
@@ -38,7 +38,7 @@ export default function SignUpForm() {
     return () => window.clearTimeout(timeoutId);
   }, [error]);
 
-  //登録ボタン押下時の処理
+  //------------------登録ボタン押下時の処理------------------
   //フォーム入力をJSONに変換してAPI(POST)に送信
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //ページのリロード防止
@@ -189,23 +189,6 @@ export default function SignUpForm() {
           </div>
         </form>
       </div>
-
-      <style jsx>{`
-        .animate-slideIn {
-          animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-      `}</style>
     </div>
   );
 }

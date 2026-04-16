@@ -11,9 +11,9 @@ export default function LoginForm() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  //------------------成功メッセージを表示------------------
   //⚫︎useEffect 画面が変わった時に、何か処理をする
   //⚫︎message,routerが変更されたら実行する
-  //成功メッセージを表示
   useEffect(() => {
     if (!message) {
       return;
@@ -27,7 +27,7 @@ export default function LoginForm() {
     return () => window.clearTimeout(timeoutId);
   }, [message, router]);
 
-  //エラーメッセージを表示
+  //------------------エラーメッセージを表示------------------
   useEffect(() => {
     if (!error) {
       return;
@@ -40,7 +40,7 @@ export default function LoginForm() {
     return () => window.clearTimeout(timeoutId);
   }, [error]);
 
-  //ログインボタン押下時の処理
+  //------------------ログインボタン押下時の処理------------------
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //ページのリロードを防止
     setMessage("");
@@ -130,29 +130,6 @@ export default function LoginForm() {
           </div>
         </form>
       </div>
-
-      {/* ⚫︎slideIn 動きの名前 */}
-      {/* ⚫︎0.3s 0.3秒で動く */}
-      {/* ⚫︎ease-out 最初早くて、最後ゆっくり止まる */}
-      {/* ⚫︎transform:translateX(100%) 横に100%分ずらす */}
-      {/* ⚫︎opacity: 0; 透明で見えない,  opacity: 1; 完全に見える */}
-
-      <style jsx>{`
-        .animate-slideIn {
-          animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-      `}</style>
     </div>
   );
 }

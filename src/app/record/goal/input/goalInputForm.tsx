@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // src/app/record/goal/input/goalInputForm.tsx
 
@@ -29,42 +29,75 @@ export default function GoalInputForm({
 }: Props) {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  //ボタン押下時の処理
+  //------------------成功メッセージを表示------------------
+  useEffect(() => {
+    if (!message) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setMessage("");
+      router.replace("/record/goal/input");
+      router.refresh();
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [message, router]);
+
+  //------------------エラーメッセージを表示------------------
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+    const timeoutId = window.setTimeout(() => {
+      setError("");
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [error]);
+
+  //------------------ボタン押下時の処理------------------
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //ページリロード防止
-
-    const formData = new FormData(e.currentTarget);
-
-    const formUserId = formData.get("inputUserId");
-    if (!formUserId) {
-      setError("ログインまたは新規登録してから登録してください");
-      console.log("ログインまたは新規登録してから登録してください");
-      return;
-    }
-
-    const body = {
-      userId: String(formUserId),
-      exerciseId: String(formData.get("exercises")),
-      targetWeight: String(formData.get("targetWeight")),
-      targetReps: String(formData.get("targetReps")),
-      deadline: String(formData.get("deadline")),
-    };
-
-    if (
-      !body.userId ||
-      !body.exerciseId ||
-      body.targetWeight === "" ||
-      !body.targetReps ||
-      !body.deadline
-    ) {
-      setError("未入力の項目があります");
-      console.log("未入力の項目があります");
-      return;
-    }
+    setMessage("");
+    setError("");
 
     try {
+      const formData = new FormData(e.currentTarget);
+
+      const formUserId = formData.get("inputUserId");
+      if (!formUserId) {
+        setError("ログインまたは新規登録してから登録してください");
+        console.log("ログインまたは新規登録してから登録してください");
+        return;
+      }
+
+      const body = {
+        userId: String(formUserId),
+        exerciseId: String(formData.get("exercises")),
+        targetWeight: String(formData.get("targetWeight")),
+        targetReps: String(formData.get("targetReps")),
+        deadline: String(formData.get("deadline")),
+      };
+
+      if (
+        !body.userId ||
+        !body.exerciseId ||
+        body.targetWeight === "" ||
+        !body.targetReps ||
+        !body.deadline
+      ) {
+        setError("未入力の項目があります");
+        console.log("未入力の項目があります");
+        return;
+      }
+
+      setLoading(true); //ローディング開始
+
       const res = await fetch("/api/record/goal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -80,8 +113,8 @@ export default function GoalInputForm({
       }
 
       setError("");
-      router.replace("/record/goal/input");
-      router.refresh();
+      setLoading(false); //ローディング終了
+      setMessage("登録成功🎉");
     } catch (error) {
       console.error(error);
       setError("通信に失敗しました");
@@ -90,6 +123,15 @@ export default function GoalInputForm({
 
   return (
     <div className="min-h-screen">
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="rounded-xl bg-gray-500">
+            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+              登録中...
+            </p>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-center mt-[40px]">
         <a className="font-bold text-xl">目標の登録</a>
 
@@ -171,6 +213,21 @@ export default function GoalInputForm({
                 登録
               </button>
             </div>
+
+            {message && (
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+                <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
+                  {message}
+                </div>
+              </div>
+            )}
+            {error && (
+              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+                <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
+                  {error}
+                </div>
+              </div>
+            )}
           </div>
         </form>
       </div>

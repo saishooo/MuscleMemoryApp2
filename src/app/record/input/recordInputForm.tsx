@@ -125,6 +125,7 @@ export default function RecordInputForm({
       setError("通信に失敗しました");
     }
   };
+
   return (
     <div className="min-h-screen">
       {loading && (

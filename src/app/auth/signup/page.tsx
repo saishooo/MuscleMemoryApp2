@@ -10,6 +10,7 @@ export default function SignUpForm() {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //------------------成功メッセージを表示------------------
   useEffect(() => {
@@ -76,6 +77,8 @@ export default function SignUpForm() {
         confirm_password: String(formData.get("confirm_password")),
       };
 
+      setLoading(true); //ローディング開始
+
       //⚫︎APIを呼び出し
       //⚫︎fetch APIへ送信
       //⚫︎サーバーへリクエストを送る const res = await fetch( "/api/auth/signup", {
@@ -99,6 +102,7 @@ export default function SignUpForm() {
       }
 
       setError("");
+      setLoading(false); //ローディング終了
       setMessage("ユーザー登録成功🎉");
     } catch {
       setError("通信エラー");
@@ -107,6 +111,15 @@ export default function SignUpForm() {
 
   return (
     <div className="min-h-screen">
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="rounded-xl bg-gray-500">
+            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+              登録中...
+            </p>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-center mt-[40px]">
         <a className="font-bold text-xl">新規ユーザー登録</a>
 

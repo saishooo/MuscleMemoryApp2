@@ -10,6 +10,7 @@ export default function LoginForm() {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //------------------成功メッセージを表示------------------
   //⚫︎useEffect 画面が変わった時に、何か処理をする
@@ -55,6 +56,8 @@ export default function LoginForm() {
         password: String(formData.get("password")),
       };
 
+      setLoading(true); //ローディング開始
+
       //APIにリクエストを送信
       const res = await fetch("/api/auth/login", {
         method: "POST",
@@ -73,6 +76,7 @@ export default function LoginForm() {
       }
 
       setError("");
+      setLoading(false); //ローティング終了
       setMessage("ログイン成功 🎉");
     } catch {
       setError("通信エラー");
@@ -81,6 +85,15 @@ export default function LoginForm() {
 
   return (
     <div className="min-h-screen">
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="rounded-xl bg-gray-500">
+            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+              登録中...
+            </p>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-center mt-[40px]">
         <a className="font-bold text-xl">ログイン</a>
 

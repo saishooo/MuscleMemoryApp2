@@ -96,6 +96,19 @@ export default function GoalInputForm({
         return;
       }
 
+      const targetWeightNum = Number(body.targetWeight);
+      if (targetWeightNum > 500){
+        setError("重量は500kg以下にしてください");
+        console.log("重量は500kg以下にしてください")
+        return;
+      }
+      if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)){
+        setError("重量は小数点2桁までです");
+        console.log("重量は小数点2桁までです");
+        return;
+        }
+
+
       setLoading(true); //ローディング開始
 
       const res = await fetch("/api/record/goal", {
@@ -181,6 +194,9 @@ export default function GoalInputForm({
               <input
                 name="targetWeight"
                 type="number"
+                step="0.01"
+                min="0"
+                max="500"
                 placeholder=" 自重の場合は0を選択"
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />

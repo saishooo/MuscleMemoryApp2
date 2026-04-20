@@ -3,6 +3,7 @@
 
 import { NextResponse } from "next/server";
 import { getPrisma } from "@/lib/prisma";
+import { error } from "console";
 
 export async function POST(req: Request) {
   const prisma = getPrisma();
@@ -41,10 +42,26 @@ export async function POST(req: Request) {
     const targetRepsNum = Number(body.targetReps);
     const deadlineDate = new Date(body.deadline);
 
+    //数値が入力されているかの確認
     if (Number.isNaN(targetWeightNum) || Number.isNaN(targetRepsNum)) {
       return NextResponse.json(
-        { error: "数値が正しくありませんas" },
+        { error: "数値が正しくありません" },
         { status: 400 }
+      );
+    }
+
+    //500kg以上の重量が入力されていないか確認
+    if (targetWeight > 500){
+      return NextResponse.json(
+        { error: "重量は500kgまでです"},
+        { status: 400}
+      );
+    }
+    //小数点2桁以上の重量が入力されていないかの確認
+    if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)){
+      return NextResponse.json(
+        { error: "重量は小数点2桁までです" },
+        { status: 400}
       );
     }
 

@@ -97,17 +97,16 @@ export default function GoalInputForm({
       }
 
       const targetWeightNum = Number(body.targetWeight);
-      if (targetWeightNum > 500){
+      if (targetWeightNum > 500) {
         setError("重量は500kg以下にしてください");
-        console.log("重量は500kg以下にしてください")
+        console.log("重量は500kg以下にしてください");
         return;
       }
-      if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)){
+      if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)) {
         setError("重量は小数点2桁までです");
         console.log("重量は小数点2桁までです");
         return;
-        }
-
+      }
 
       setLoading(true); //ローディング開始
 

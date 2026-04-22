@@ -133,7 +133,7 @@ export default function TodayRecordsList({
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>, id: string) => {
     const endX = e.changedTouches[0].clientX; //指を離した瞬間の横座標
     const diff = startX.current - endX;
-    
+
     if (diff > 60) {
       //左へ60px以上動いたかの判定
       setSwipedId(id); //削除ボタンを表示
@@ -203,6 +203,20 @@ export default function TodayRecordsList({
           </div>
         </div>
       )}
+      {message && (
+        <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+          <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
+            {message}
+          </div>
+        </div>
+      )}
+      {error && (
+        <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+          <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
+            {error}
+          </div>
+        </div>
+      )}
       {trainings.map((t) => (
         <div
           key={t.id}
@@ -217,22 +231,6 @@ export default function TodayRecordsList({
               削除
             </button>
           </div>
-
-          {message && (
-            <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
-              <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
-                {message}
-              </div>
-            </div>
-          )}
-          {error && (
-            <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
-              <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
-                {error}
-              </div>
-            </div>
-          )}
-
           <div
             className={`relative z-10 flex w-full bg-white transition-transform duration-200 
                 ${swipedId === t.id ? "-translate-x-[80px]" : "translate-x-0"}`}

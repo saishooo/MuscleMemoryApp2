@@ -59,7 +59,6 @@ export default function TodayRecordsList({
 
     const timeoutId = window.setTimeout(() => {
       setMessage("");
-      router.replace("/record/today-records");
       router.refresh();
     }, 1200);
 

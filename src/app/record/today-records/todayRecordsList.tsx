@@ -208,7 +208,7 @@ export default function TodayRecordsList({
           key={t.id}
           className="relative mt-[10px] overflow-hidden rounded-md"
         >
-          <div className="absolute inset-y-0 -right-20 flex w-[80px] items-center justify-center bg-red-500">
+          <div className="absolute inset-y-0 -right-0 flex w-[80px] items-center justify-center bg-red-500">
             <button
               type="button"
               className="h-full w-full text-white"

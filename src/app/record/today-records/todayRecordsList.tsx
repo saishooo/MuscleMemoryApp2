@@ -133,7 +133,7 @@ export default function TodayRecordsList({
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>, id: string) => {
     const endX = e.changedTouches[0].clientX; //指を離した瞬間の横座標
     const diff = startX.current - endX;
-
+    
     if (diff > 60) {
       //左へ60px以上動いたかの判定
       setSwipedId(id); //削除ボタンを表示
@@ -168,7 +168,7 @@ export default function TodayRecordsList({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ body }),
+        body: JSON.stringify(body),
       });
 
       if (!res.ok) {
@@ -208,7 +208,7 @@ export default function TodayRecordsList({
           key={t.id}
           className="relative mt-[10px] overflow-hidden rounded-md"
         >
-          <div className="absolute inset-y-0 -right-0 flex w-[80px] items-center justify-center bg-red-500">
+          <div className="absolute inset-y-0 -right-20 flex w-[80px] items-center justify-center bg-red-500">
             <button
               type="button"
               className="h-full w-full text-white"

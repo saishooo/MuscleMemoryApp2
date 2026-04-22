@@ -59,7 +59,7 @@ export default function TodayRecordsList({
 
     const timeoutId = window.setTimeout(() => {
       setMessage("");
-      router.replace("/record/input");
+      router.replace("/record/today-records");
       router.refresh();
     }, 1200);
 
@@ -163,7 +163,7 @@ export default function TodayRecordsList({
 
       setLoading(true); //ローティング開始
 
-      const res = await fetch("/api/list/delete", {
+      const res = await fetch("/api/record/list", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

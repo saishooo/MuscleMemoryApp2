@@ -198,7 +198,7 @@ export default function TodayRecordsList({
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="rounded-xl bg-gray-500">
             <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
-              登録中...
+              削除中...
             </p>
           </div>
         </div>
@@ -208,7 +208,7 @@ export default function TodayRecordsList({
           key={t.id}
           className="relative mt-[10px] overflow-hidden rounded-md"
         >
-          <div className="absolute inset-y-0 -right-[80px] flex w-[80px] items-center justify-center bg-red-500">
+          <div className="absolute inset-y-0 -right-0 flex w-[80px] items-center justify-center bg-red-500">
             <button
               type="button"
               className="h-full w-full text-white"

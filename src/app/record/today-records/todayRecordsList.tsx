@@ -51,6 +51,34 @@ export default function TodayRecordsList({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  //------------------成功メッセージを表示------------------
+  useEffect(() => {
+    if (!message) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setMessage("");
+      router.replace("/record/input");
+      router.refresh();
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId); //⚫︎timeoutの予約削除
+  }, [message, router]);
+
+  //------------------エラーメッセージを表示------------------
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setError("");
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [error]);
+
   //------------------押下した（指が触れた）瞬間の処理------------------
   const handlePressStart = (training: Training) => {
     moved.current = false; //⚫︎currentとはuseRefの中身
@@ -117,34 +145,47 @@ export default function TodayRecordsList({
     handlePressEnd(); //長押しカウントリセット
   };
 
-  //------------------サーバーへ削除依頼------------------
+  //------------------削除ボタン押下時の処理------------------
   const handleDelete = async (training: Training) => {
-    const body = {
-      userId: String(loginUserId),
-      trainingId: String(training.id),
-    };
+    setMessage("");
+    setError("");
+    try {
+      const body = {
+        userId: String(loginUserId),
+        trainingId: String(training.id),
+      };
 
-    if (typeof body.userId !== "string" || body.userId === null) {
-      setError("不正なIDです");
-      console.log("不正なIDです");
-      return;
+      if (typeof body.userId !== "string" || body.userId === null) {
+        setError("不正なIDです");
+        console.log("不正なIDです");
+        return;
+      }
+
+      setLoading(true); //ローティング開始
+
+      const res = await fetch("/api/list/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ body }),
+      });
+
+      if (!res.ok) {
+        setError("削除に失敗しました");
+        console.error("削除に失敗しました");
+        return;
+      }
+
+      setError("");
+      setLoading(false); //ローディング終了
+      setSwipedId(null);
+      setMessage("削除成功🎉");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      setError("通信に失敗しました");
     }
-
-    const res = await fetch("/api/list/delete", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ body }),
-    });
-
-    if (!res.ok) {
-      console.error("削除に失敗しました");
-      return;
-    }
-
-    setSwipedId(null);
-    router.refresh();
   };
 
   if (trainings.length === 0) {
@@ -153,6 +194,15 @@ export default function TodayRecordsList({
 
   return (
     <div className="h-[340px] overflow-y-auto">
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="rounded-xl bg-gray-500">
+            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+              登録中...
+            </p>
+          </div>
+        </div>
+      )}
       {trainings.map((t) => (
         <div
           key={t.id}
@@ -167,6 +217,21 @@ export default function TodayRecordsList({
               削除
             </button>
           </div>
+
+          {message && (
+            <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+              <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
+                {message}
+              </div>
+            </div>
+          )}
+          {error && (
+            <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+              <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
+                {error}
+              </div>
+            </div>
+          )}
 
           <div
             className={`relative z-10 flex w-full bg-white transition-transform duration-200 

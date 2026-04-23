@@ -106,7 +106,10 @@ export async function POST(req: Request) {
         },
         data: {
           maxWeight: Math.max(existingRecord.maxWeight, weightNum), //⚫︎Math.max(a.b) aとbを比較して大きい方を返す
-          maxReps: repsNum,
+          maxReps:
+            existingRecord.maxWeight < weight
+              ? repsNum
+              : existingRecord.maxReps,
         },
       });
     }

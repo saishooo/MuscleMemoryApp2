@@ -78,11 +78,11 @@ export async function DELETE(req: Request) {
           userId: userId,
         },
       },
-      orderBy: [{ weight: "desc" }, { reps: "desc" }],
+      orderBy: [{ weight: "desc" }, { reps: "desc" }], //重さと回数を多い順に（重さが優先）
     });
 
-    //同種目の記録が1件も残っていない場合はRecordからも削除
     if (!maxWeightTraining) {
+      //同種目の記録が1件も残っていない場合はRecordからも削除
       await prisma.record.deleteMany({
         where: {
           userId: userId,
@@ -90,7 +90,9 @@ export async function DELETE(req: Request) {
         },
       });
     } else {
+      //記録が残っていた場合
       await prisma.record.upsert({
+        //更新または作成
         where: {
           userId_exerciseId: {
             userId: userId,
@@ -98,10 +100,12 @@ export async function DELETE(req: Request) {
           },
         },
         update: {
+          //記録(userId+exerciseId)があり、重量と回数の更新
           maxWeight: maxWeightTraining.weight,
           maxReps: maxWeightTraining.reps,
         },
         create: {
+          //記録を作成(保険)
           userId: userId,
           exerciseId: exerciseId,
           maxWeight: maxWeightTraining.weight,

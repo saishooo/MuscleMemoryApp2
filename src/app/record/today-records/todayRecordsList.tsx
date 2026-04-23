@@ -162,7 +162,7 @@ export default function TodayRecordsList({
 
       setLoading(true); //ローティング開始
 
-      const res = await fetch("/api/record/list", {
+      const res = await fetch("/api/record/delete", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

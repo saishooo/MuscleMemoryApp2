@@ -102,12 +102,12 @@ export default function RecordInputForm({
       }
 
       const weightNum = Number(body.weight);
-      if (weightNum > 500){
+      if (weightNum > 500) {
         setError("重量は500kg以下にしてください");
         console.log("重量は500kg以下にしてください");
         return;
       }
-      if (!/^\d+(\.\d{1,2})?$/.test(body.weight)){
+      if (!/^\d+(\.\d{1,2})?$/.test(body.weight)) {
         setError("重量は小数点2桁までです");
         console.log("重量は小数点2桁までです");
         return;

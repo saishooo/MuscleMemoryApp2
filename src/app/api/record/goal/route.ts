@@ -51,17 +51,17 @@ export async function POST(req: Request) {
     }
 
     //500kg以上の重量が入力されていないか確認
-    if (targetWeight > 500){
+    if (targetWeight > 500) {
       return NextResponse.json(
-        { error: "重量は500kgまでです"},
-        { status: 400}
+        { error: "重量は500kgまでです" },
+        { status: 400 }
       );
     }
     //小数点2桁以上の重量が入力されていないかの確認
-    if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)){
+    if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)) {
       return NextResponse.json(
         { error: "重量は小数点2桁までです" },
-        { status: 400}
+        { status: 400 }
       );
     }
 

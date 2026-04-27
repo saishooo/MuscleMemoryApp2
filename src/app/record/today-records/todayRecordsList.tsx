@@ -50,6 +50,9 @@ export default function TodayRecordsList({
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [editingTraining, setEditingTraining] = useState<Training | null>(null);
+  const [editWeight, setEditWeight] = useState("");
+  const [editReps, setEditReps] = useState("");
 
   //------------------成功メッセージを表示------------------
   useEffect(() => {
@@ -88,6 +91,9 @@ export default function TodayRecordsList({
       if (!moved.current) {
         //動いていない(moved.currentがfalse)ならば実行
         console.log("編集対象", training);
+        setEditingTraining(training);
+        setEditWeight(String(training.weight));
+        setEditReps(String(training.reps));
       }
     }, 600);
   };
@@ -142,6 +148,61 @@ export default function TodayRecordsList({
     }
 
     handlePressEnd(); //長押しカウントリセット
+  };
+
+  //------------------編集内容保存処理------------------
+  const handleUpdate = async () => {
+    if (!editingTraining) {
+      return;
+    }
+
+    setMessage("");
+    setError("");
+
+    if (!loginUserId) {
+      setError("ログイン情報がありません");
+      return;
+    }
+    if (!/^\d+(\.\d{1,2})?$/.test(editWeight) || Number(editWeight) > 500) {
+      setError("重量は500kg以下、小数点2桁まで入力してください");
+      return;
+    }
+
+    if (!/^\d+$/.test(editReps)) {
+      setError("回数は整数で入力してください");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const body = {
+        userId: String(loginUserId),
+        trainingId: editingTraining.id,
+        weight: Number(editWeight),
+        reps: Number(editReps),
+      };
+
+      const res = await fetch("/api/record/update", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        setError("更新に失敗しました");
+        return;
+      }
+      setEditingTraining(null);
+      setLoading(false);
+      setEditWeight("");
+      setEditReps("");
+      setMessage("更新成功🎉");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      setError("通信に失敗しました");
+    }
   };
 
   //------------------削除ボタン押下時の処理------------------
@@ -246,6 +307,65 @@ export default function TodayRecordsList({
           </div>
         </div>
       ))}
+
+      {editingTraining && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="w-full max-w-[360px] rounded-xl bg-white p-4 shadow-lg">
+            <h2 className="mb-4 text-lg font-bold">記録を編集</h2>
+            <p className="mb-3 text-sm text-gray-700">
+              {editingTraining.exercise.name}
+            </p>
+            <div className="mb-3">
+              <label className="mb-1 block text-sm font-medium">
+                重量
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                max="500"
+                value={editWeight}
+                onChange={(e) => setEditWeight(e.target.value)}
+                className="w-full rounded border border-gray-300 px-3 py-2"
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="mb-1 block text-sm font-medium">回数</label>
+              <input
+                type="number"
+                step="1"
+                min="1"
+                value={editReps}
+                onChange={(e) => setEditReps(e.target.value)}
+                className="w-full rounded border border-gray-300 px-3 py-2"
+              />
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                className="rounded border border-gray-300 px-4 py-2"
+                onClick={() => {
+                  setEditingTraining(null);
+                  setEditWeight("");
+                  setEditReps("");
+                }}
+              >
+                キャンセル
+              </button>
+              <button
+                type="button"
+                className="rounded bg-blue-500 px-4 py-2 text-white"
+                onClick={handleUpdate}
+              >
+                保存
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

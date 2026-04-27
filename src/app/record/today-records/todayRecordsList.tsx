@@ -316,9 +316,7 @@ export default function TodayRecordsList({
               {editingTraining.exercise.name}
             </p>
             <div className="mb-3">
-              <label className="mb-1 block text-sm font-medium">
-                重量
-              </label>
+              <label className="mb-1 block text-sm font-medium">重量</label>
               <input
                 type="number"
                 step="0.01"
@@ -365,7 +363,6 @@ export default function TodayRecordsList({
           </div>
         </div>
       )}
-
     </div>
   );
 }

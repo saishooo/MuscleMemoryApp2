@@ -319,7 +319,7 @@ export default function GoalRecordsList({
                 type="date"
                 value={editDeadline}
                 onChange={(e) => setEditingDeadline(e.target.value)}
-                className="w-full min-w-0 max-w-full rounded border border-gray-300 px-3 py-2 box-border"
+                className="block w-full min-w-0 max-w-full appearance-none rounded border border-gray-300 px-3 py-2 text-sm"
               />
             </div>
 

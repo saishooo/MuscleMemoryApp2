@@ -45,7 +45,11 @@ export default async function goalRecords() {
             <p className="font-bold w-[50px] ml-[5px]">重量</p>
             <p className="font-bold w-[50px] ml-[15px]">回数</p>
           </div>
-          <GoalRecordsList goals={goals} exercises={exercise} />
+          <GoalRecordsList
+            goals={goals}
+            exercises={exercise}
+            loginUserId={userId}
+          />
         </div>
       </div>
     </div>

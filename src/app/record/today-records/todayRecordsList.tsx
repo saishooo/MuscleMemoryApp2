@@ -164,7 +164,7 @@ export default function TodayRecordsList({
       return;
     }
     if (!/^\d+(\.\d{1,2})?$/.test(editWeight) || Number(editWeight) > 500) {
-      setError("重量は500kg以下、小数点2桁まで入力してください");
+      setError("重量は500kg以下、小数点2桁までで入力してください");
       return;
     }
 
@@ -177,6 +177,7 @@ export default function TodayRecordsList({
       setLoading(true);
 
       const body = {
+        type: "todayTraining",
         userId: String(loginUserId),
         trainingId: editingTraining.id,
         weight: Number(editWeight),
@@ -211,6 +212,7 @@ export default function TodayRecordsList({
     setError("");
     try {
       const body = {
+        type: "todayTraining",
         userId: String(loginUserId),
         trainingId: String(training.id),
       };

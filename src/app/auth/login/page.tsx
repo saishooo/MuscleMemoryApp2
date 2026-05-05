@@ -11,6 +11,7 @@ export default function LoginForm() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
 
   //------------------成功メッセージを表示------------------
   //⚫︎useEffect 画面が変わった時に、何か処理をする
@@ -109,14 +110,20 @@ export default function LoginForm() {
               />
             </div>
 
-            <div className="flex items-center mt-[60px] ml-[10px]">
+            <div className="relative flex items-center mt-[60px] ml-[10px]">
               <a className="font-bold">パスワード</a>
               <input
                 name="password"
-                type="password"
-                placeholder=" パスワードを入力"
+                type={show ? "text" : "password"}
                 className="w-[200px] mr-[10px] ml-auto border rounded"
               />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                onClick={() => setShow(!show)}
+              >
+                {show ? "非表示" : "表示"}
+              </button>
             </div>
 
             <div className="flex justify-end mt-[60px] mr-[20px]">

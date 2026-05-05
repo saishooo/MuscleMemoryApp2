@@ -19,7 +19,7 @@ export async function PATCH(req: Request) {
         { status: 400 }
       );
     }
-    //今日の記録を編集
+    //------------------今日の記録を編集------------------
     if (type === "todayTraining") {
       const { trainingId, weight, reps } = body;
       if (trainingId === "" || weight === "" || reps === "") {
@@ -108,10 +108,15 @@ export async function PATCH(req: Request) {
       return response;
     }
 
-    //目標を編集
+    //------------------目標を編集------------------
     if (type === "goal") {
-      const { goalId, targetWeight, targetReps } = body;
-      if (goalId === "" || targetWeight === "" || targetReps === "") {
+      const { goalId, targetWeight, targetReps, deadline } = body;
+      if (
+        goalId === "" ||
+        targetWeight === "" ||
+        targetReps === "" ||
+        deadline === ""
+      ) {
         return NextResponse.json(
           { error: "未入力の項目があります" },
           { status: 400 }
@@ -120,14 +125,29 @@ export async function PATCH(req: Request) {
 
       const targetWeightNum = Number(body.targetWeight);
       const targetRepsNum = Number(body.targetReps);
+      const deadlineDate = new Date(body.deadline);
 
+      //数値が入力されているかの確認
       if (Number.isNaN(targetWeightNum) || Number.isNaN(targetRepsNum)) {
         return NextResponse.json(
           { error: "数値が正しくありません" },
           { status: 400 }
         );
       }
-
+      //500kg以上の重量が入力されていないか確認
+      if (targetWeight > 500) {
+        return NextResponse.json(
+          { error: "重量は500kgまでです" },
+          { status: 400 }
+        );
+      }
+      //小数点2桁以上の重量が入力されていないかの確認
+      if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)) {
+        return NextResponse.json(
+          { error: "重量は小数点2桁までです" },
+          { status: 400 }
+        );
+      }
       //編集対象のトレーニングを取得
       const goal = await prisma.goal.findFirst({
         where: {
@@ -149,6 +169,7 @@ export async function PATCH(req: Request) {
           id: goal.id,
         },
         data: {
+          deadline: deadlineDate,
           targetWeight: targetWeightNum,
           targetReps: targetRepsNum,
         },

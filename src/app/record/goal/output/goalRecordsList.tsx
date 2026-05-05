@@ -50,6 +50,7 @@ export default function GoalRecordsList({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
+  const [editDeadline, setEditingDeadline] = useState("");
   const [editTargetWeight, setEditTargetWeight] = useState("");
   const [editTargetReps, setEditTargetReps] = useState("");
 
@@ -63,6 +64,8 @@ export default function GoalRecordsList({
       setMessage("");
       router.refresh();
     }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
   }, [message, router]);
 
   //------------------エラーメッセージを表示------------------
@@ -86,6 +89,7 @@ export default function GoalRecordsList({
       if (!moved.current) {
         console.log("編集対象", goal);
         setEditingGoal(goal);
+        setEditingDeadline(String(goal.deadline));
         setEditTargetWeight(String(goal.targetWeight));
         setEditTargetReps(String(goal.targetReps));
       }
@@ -165,6 +169,7 @@ export default function GoalRecordsList({
         type: "goal",
         userId: String(loginUserId),
         goalId: editingGoal.id,
+        deadline: String(editDeadline),
         targetWeight: Number(editTargetWeight),
         targetReps: Number(editTargetReps),
       };
@@ -181,6 +186,7 @@ export default function GoalRecordsList({
       }
       setEditingGoal(null);
       setLoading(false);
+      setEditingDeadline("");
       setEditTargetWeight("");
       setEditTargetReps("");
       setMessage("更新成功🎉");
@@ -306,6 +312,17 @@ export default function GoalRecordsList({
             <p className="mb-3 text-sm text-gray-700">
               {editingGoal.exercise.name}
             </p>
+
+            <div className="mb-3">
+              <label className="mb-1 block text-sm font-medium">期日</label>
+              <input
+                type="date"
+                value={editDeadline}
+                onChange={(e) => setEditingDeadline(e.target.value)}
+                className="w-full rounded border border-gray-300 px-3 py-2"
+              />
+            </div>
+
             <div className="mb-3">
               <label className="mb-1 block text-sm font-medium">重量</label>
               <input
@@ -337,6 +354,7 @@ export default function GoalRecordsList({
                 className="rounded border border-gray-300 px-4 py-2"
                 onClick={() => {
                   setEditingGoal(null);
+                  setEditingDeadline("");
                   setEditTargetWeight("");
                   setEditTargetReps("");
                 }}

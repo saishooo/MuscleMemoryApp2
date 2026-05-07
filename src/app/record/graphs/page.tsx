@@ -39,6 +39,7 @@ export default async function TestChart() {
         <div className="w-[450px] h-[400px] mt-[20px]">
           <GlaphOutput
             trainings={trainings}
+            exerciseCategory={exerciseCategory}
             exercises={exercises}
             loginUserId={userId}
           />

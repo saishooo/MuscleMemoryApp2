@@ -8,6 +8,7 @@ export async function GET(req: Request) {
   const prisma = getPrisma();
 
   try {
+    //⚫︎↓これ何？
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
     const exerciseId = searchParams.get("exerciseId");

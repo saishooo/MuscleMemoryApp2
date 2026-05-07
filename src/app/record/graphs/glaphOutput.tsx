@@ -55,46 +55,58 @@ export default function GlaphOutput({
     { day: "水", weight: 65 },
   ];
 
-  return (
-    <div>
-      <div className="flex flex-col items-center">
-        <div className="flex">
-          <a className="font-bold w-[50px]">部位:</a>
-          <select
-            name="exerciseCategory"
-            className="w-[200px]"
-            onChange={(e) => setSelectCategory(e.target.value)}
-          >
-            <option value="">選択してください</option>
-            {exerciseCategory.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        <div className="flex mt-[10px]">
-          <a className="font-bold w-[50px]">種目:</a>
-          <select name="exercises" className="w-[200px]">
-            <option value="">選択してください</option>
-            {exercises
-              .filter(
-                (exercise) => String(exercise.categoryId) === selectedCategory
-              )
-              .map((exercise) => (
-                <option key={exercise.id} value={exercise.id}>
-                  {exercise.name}
+    try {
+      const formData = new FormData(e.currentTarget);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen">
+      <div className="flex flex-col items-center">
+        <form onSubmit={handleSubmit}>
+          <div className="flex">
+            <a className="font-bold w-[50px]">部位:</a>
+            <select
+              name="exerciseCategory"
+              className="w-[200px]"
+              onChange={(e) => setSelectCategory(e.target.value)}
+            >
+              <option value="">選択してください</option>
+              {exerciseCategory.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
                 </option>
               ))}
-          </select>
-        </div>
+            </select>
+          </div>
 
-        <div className="mt-[15px]">
-          <button type="submit" className="w-[50px] border rounded font-bold">
-            描写
-          </button>
-        </div>
+          <div className="flex mt-[10px]">
+            <a className="font-bold w-[50px]">種目:</a>
+            <select name="exercises" className="w-[200px]">
+              <option value="">選択してください</option>
+              {exercises
+                .filter(
+                  (exercise) => String(exercise.categoryId) === selectedCategory
+                )
+                .map((exercise) => (
+                  <option key={exercise.id} value={exercise.id}>
+                    {exercise.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          <div className="flex justify-center mt-[15px]">
+            <button type="submit" className="w-[50px] border rounded font-bold">
+              描写
+            </button>
+          </div>
+        </form>
       </div>
 
       <div className="mt-[25px]">

@@ -4,7 +4,6 @@
 // 記録を表示する
 
 import { LineChart, Line, XAxis, YAxis } from "recharts";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 //Trainingテーブルの型定義
@@ -49,17 +48,47 @@ export default function GlaphOutput({
   loginUserId,
 }: Props) {
   const [selectedCategory, setSelectCategory] = useState("");
+
   const data = [
     { day: "月", weight: 60 },
     { day: "火", weight: 62.5 },
     { day: "水", weight: 65 },
   ];
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const formData = new FormData(e.currentTarget);
+
+      if (!loginUserId) {
+        console.log("ログインまたは新規登録してから描写ボタンを押してください");
+        return;
+      }
+
+      const body = {
+        userId: String(loginUserId),
+        exerciseId: String(formData.get("exercise")),
+      };
+
+      if (!body.userId || !body.exerciseId) {
+        console.log(
+          "ログインまたは新規登録してから描写ボタンを押してしてください"
+        );
+        return;
+      }
+
+      //⚫︎fetchの箇所の意味
+      const res = await fetch(
+        `/api/graph?userId=${loginUserId}&exerciseId=${body.exerciseId}`
+      );
+
+      const dataCheck = await res.json();
+      console.log(dataCheck);
+
+      if (!res.ok) {
+        console.log("更新に失敗しました");
+        return;
+      }
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +116,7 @@ export default function GlaphOutput({
 
           <div className="flex mt-[10px]">
             <a className="font-bold w-[50px]">種目:</a>
-            <select name="exercises" className="w-[200px]">
+            <select name="exercise" className="w-[200px]">
               <option value="">選択してください</option>
               {exercises
                 .filter(

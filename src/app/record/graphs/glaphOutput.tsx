@@ -48,6 +48,7 @@ export default function GlaphOutput({
   loginUserId,
 }: Props) {
   const [selectedCategory, setSelectCategory] = useState("");
+  const [graphData, setGraphData] = useState<Training[]>([]);
 
   const data = [
     { day: "月", weight: 60 },
@@ -77,18 +78,19 @@ export default function GlaphOutput({
         return;
       }
 
-      //⚫︎fetchの箇所の意味
+      //apiにurlを渡す
       const res = await fetch(
         `/api/graph?userId=${loginUserId}&exerciseId=${body.exerciseId}`
       );
-
-      const dataCheck = await res.json();
-      console.log(dataCheck);
 
       if (!res.ok) {
         console.log("更新に失敗しました");
         return;
       }
+
+      const dataCheck = await res.json();
+      console.log(dataCheck);
+      setGraphData(dataCheck.trainings);
     } catch (error) {
       console.error(error);
     }
@@ -139,8 +141,16 @@ export default function GlaphOutput({
       </div>
 
       <div className="mt-[25px]">
-        <LineChart width={400} height={300} data={data}>
-          <XAxis dataKey="day" />
+        <LineChart width={400} height={300} data={graphData}>
+          <XAxis
+            dataKey="createdAt"
+            tickFormatter={(value) =>
+              new Date(value).toLocaleDateString("ja-JP", {
+                month: "numeric",
+                day: "numeric",
+              })
+            }
+          />
           <YAxis />
           <Line type="monotone" dataKey="weight" />
         </LineChart>

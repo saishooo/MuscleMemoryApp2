@@ -8,7 +8,7 @@ export async function GET(req: Request) {
   const prisma = getPrisma();
 
   try {
-    //⚫︎↓これ何？
+    //urlから値を取得する
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
     const exerciseId = searchParams.get("exerciseId");

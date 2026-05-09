@@ -41,7 +41,7 @@ type Props = {
   loginUserId: string | null;
 };
 
-export default function GlaphOutputForm({
+export default function GlaphOutput({
   trainings,
   exerciseCategory,
   exercises,

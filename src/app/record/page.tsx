@@ -12,6 +12,7 @@ export default function Home() {
     { id: 5, href: "/record/goal/input", label: "目標を登録" },
     { id: 6, href: "/record/goal/output", label: "目標を確認" },
     { id: 7, href: "/record/graphs", label: "グラフで表示" },
+    { id: 8, href: "/", label: "new ui" },
   ];
   return (
     <div className="min-h-screen">

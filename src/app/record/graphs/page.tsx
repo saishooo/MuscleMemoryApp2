@@ -5,7 +5,7 @@ import { getPrisma } from "@/lib/prisma";
 import { unstable_noStore as noStore } from "next/cache";
 import { cookies } from "next/headers";
 import GlaphOutput from "./glaphOutput";
-import { getTodayRecordsByUserId } from "@/lib/record";
+import { getAllRecordsByUserId, getTodayRecordsByUserId } from "@/lib/record";
 
 export default async function TestChart() {
   noStore(); //キャッシュ禁止
@@ -30,7 +30,7 @@ export default async function TestChart() {
     );
   }
 
-  const trainings = await getTodayRecordsByUserId(userId);
+  const trainings = await getAllRecordsByUserId(userId);
 
   return (
     <div className="min-h-screen">

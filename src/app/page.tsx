@@ -13,6 +13,7 @@ import {
 import GlaphOutput from "./record/graphs/glaphOutput_new";
 import BestRecordsList from "./record/best-records/bestRecordsList_new";
 import GoalRecordsList from "./record/goal/output/goalRecordsList_new";
+import AllRecordsList from "./record/all-records/allRecordsList_new";
 
 export default async function Home() {
   noStore();
@@ -55,18 +56,19 @@ export default async function Home() {
   return (
     <div className="min-h-screen min-w-full">
       <div className="flex flex-col justify-center items-center mx-auto ">
-        <div className="flex justify-center items-center mt-20 w-full">
+        <div className="h-5"></div>
+        <div className="flex justify-center items-center pt-20 w-full">
           <div className="flex items-center justify-center rounded border w-22 h-8">
             <button className="">記録する🖊️</button>
           </div>
-          <div className="flex items-center justify-center rounded border ml-10 w-22 h-8">
+          <div className="flex items-center justify-center rounded border w-22 h-8">
             <button className="">確認する👀</button>
           </div>
         </div>
 
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center pt-5">
           <div className="rounded border w-98 h-130">
-            <p className="w-full mt-2 ml-3 text-lg font-bold">記録推移</p>
+            <p className="w-full pt-2 pl-3 text-lg font-bold">記録推移</p>
             <GlaphOutput
               trainings={trainings}
               exerciseCategory={exerciseCategory}
@@ -76,16 +78,16 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center pt-5">
           <div className="rounded border w-98 h-100">
-            <p className="w-full mt-2 ml-3 text-lg font-bold">最高記録</p>
+            <p className="w-full pt-2 pl-3 text-lg font-bold">最高記録</p>
             <BestRecordsList records={records} exercises={exercise} />
           </div>
         </div>
 
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center pt-5">
           <div className="rounded border w-98 h-100">
-            <p className="w-full mt-2 ml-3 text-lg font-bold">目標</p>
+            <p className="w-full pt-2 pl-2 text-lg font-bold">目標</p>
             <GoalRecordsList
               goals={goals}
               exercises={exercise}
@@ -93,7 +95,14 @@ export default async function Home() {
             />
           </div>
         </div>
-        <div className="mt-12"></div>
+
+        <div className="flex justify-center pt-5">
+          <div className="rounded border w-98 h-100">
+            <p className="w-full pt-2 pl-2 text-lg font-bold">すべての記録</p>
+            <AllRecordsList trainings={trainings} exercises={exercise} />
+          </div>
+        </div>
+        <div className="pt-12"></div>
       </div>
     </div>
   );

@@ -37,9 +37,9 @@ export default function BestRecordsList({ records, exercises }: Props) {
   return (
     <>
       <div className="flex mt-2">
-        <p className="ml-3 font-bold">トレーニング</p>
-        <p className="ml-37 font-bold">重量</p>
-        <p className="ml-8 font-bold">回数</p>
+        <p className="w-60 pl-2 font-bold">トレーニング</p>
+        <p className="w-18 text-center font-bold">重量</p>
+        <p className="w-18 text-center font-bold">回数</p>
       </div>
       <div className="h-80 overflow-y-auto">
         {records.map((t, index) => {
@@ -49,11 +49,11 @@ export default function BestRecordsList({ records, exercises }: Props) {
 
           return (
             <div key={t.id}>
-              <div className="flex w-full mt-3">
+              <div className="flex w-full">
                 {/* <p className="w-[90px] ml-[7px]">{formattedDate}</p> */}
-                <p className="w-58 ml-3">{t.exercise.name}</p>
-                <p className="w-14 text-center">{t.maxWeight}</p>
-                <p className="w-14 ml-2 text-center">{t.maxReps}</p>
+                <p className="w-62 pl-2">{t.exercise.name}</p>
+                <p className="w-14 pl-1 text-center">{t.maxWeight}</p>
+                <p className="w-16 pl-7 text-center">{t.maxReps}</p>
               </div>
             </div>
           );

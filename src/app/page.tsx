@@ -5,9 +5,14 @@ import Link from "next/link";
 import { getPrisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { unstable_noStore as noStore } from "next/cache";
-import { getAllRecordsByUserId, getBestRecordsByUserId } from "@/lib/record";
+import {
+  getAllRecordsByUserId,
+  getBestRecordsByUserId,
+  getGoalRecordsByUserId,
+} from "@/lib/record";
 import GlaphOutput from "./record/graphs/glaphOutput_new";
 import BestRecordsList from "./record/best-records/bestRecordsList_new";
+import GoalRecordsList from "./record/goal/output/goalRecordsList_new";
 
 export default async function Home() {
   noStore();
@@ -45,6 +50,7 @@ export default async function Home() {
 
   const trainings = await getAllRecordsByUserId(userId);
   const records = await getBestRecordsByUserId(userId);
+  const goals = await getGoalRecordsByUserId(userId);
 
   return (
     <div className="min-h-screen min-w-full">
@@ -60,7 +66,7 @@ export default async function Home() {
 
         <div className="flex justify-center mt-5">
           <div className="rounded border w-98 h-130">
-            <p className="w-full mt-2 ml-3 font-bold">記録推移</p>
+            <p className="w-full mt-2 ml-3 text-lg font-bold">記録推移</p>
             <GlaphOutput
               trainings={trainings}
               exerciseCategory={exerciseCategory}
@@ -72,8 +78,19 @@ export default async function Home() {
 
         <div className="flex justify-center mt-5">
           <div className="rounded border w-98 h-100">
-            <p className="w-full mt-2 ml-3 font-bold">最高記録</p>
+            <p className="w-full mt-2 ml-3 text-lg font-bold">最高記録</p>
             <BestRecordsList records={records} exercises={exercise} />
+          </div>
+        </div>
+
+        <div className="flex justify-center mt-5">
+          <div className="rounded border w-98 h-100">
+            <p className="w-full mt-2 ml-3 text-lg font-bold">目標</p>
+            <GoalRecordsList
+              goals={goals}
+              exercises={exercise}
+              loginUserId={userId}
+            />
           </div>
         </div>
         <div className="mt-12"></div>

@@ -28,6 +28,7 @@ export default function RecordInputform({
   exercises,
   userId,
 }: Props) {
+  const router = useRouter();
   const [inputTraining, setInputTraining] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -41,7 +42,64 @@ export default function RecordInputform({
   };
 
   //「保存ボタン」押下時の処理
-  const handleSubmit = () => {};
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData(e.currentTarget);
+
+      const formUserId = formData.get("userId");
+      if (!formUserId) {
+        console.log("ログインまたは新規登録してください");
+        console.log(userId);
+        return;
+      }
+
+      const body = {
+        userId: String(formUserId),
+        exerciseId: String(formData.get("exercises")),
+        weight: String(formData.get("weight")),
+        reps: String(formData.get("reps")),
+      };
+
+      if (
+        body.userId === "" ||
+        body.exerciseId === "" ||
+        body.weight === "" ||
+        !body.reps
+      ) {
+        console.log("未入力の項目があります");
+      }
+
+      const weightNum = Number(body.weight);
+      if (weightNum > 500) {
+        console.log("重量は500kg以下にしてください");
+        return;
+      }
+      if (!/^\d+(\.\d{1,2})?$/.test(body.weight)) {
+        console.log("重量は小数点2桁までです");
+        return;
+      }
+
+      const res = await fetch("/api/record/input", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (!res.ok) {
+        return;
+      }
+
+      console.log("記録成功🎉");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -91,7 +149,7 @@ export default function RecordInputform({
               </div>
 
               <div className="mb-3">
-                <a className="mb-1 block text-sm font-medium">重量：</a>
+                <a className="mb-1 block text-sm font-medium">重量</a>
                 <input
                   name="weight"
                   type="number"
@@ -104,7 +162,7 @@ export default function RecordInputform({
               </div>
 
               <div className="mb-3">
-                <a className="mb-1 block text-sm font-medium">回数：</a>
+                <a className="mb-1 block text-sm font-medium">回数</a>
                 <select
                   name="reps"
                   className="w-full rounded border border-gray-300 px-3 py-2"

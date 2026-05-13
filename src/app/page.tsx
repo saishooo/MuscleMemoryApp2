@@ -14,6 +14,7 @@ import GlaphOutput from "./record/graphs/glaphOutput_new";
 import BestRecordsList from "./record/best-records/bestRecordsList_new";
 import GoalRecordsList from "./record/goal/output/goalRecordsList_new";
 import AllRecordsList from "./record/all-records/allRecordsList_new";
+import RecordInputform from "./record/input/recordInputForm_new";
 
 export default async function Home() {
   noStore();
@@ -59,11 +60,15 @@ export default async function Home() {
         <div className="h-5"></div>
         <div className="flex justify-center items-center pt-20 w-full">
           <div className="flex items-center justify-center rounded border w-22 h-8">
-            <button className="">記録する🖊️</button>
+            <RecordInputform
+              exerciseCategory={exerciseCategory}
+              exercises={exercise}
+              userId={userId}
+            />
           </div>
-          <div className="flex items-center justify-center rounded border w-22 h-8">
+          {/* <div className="flex items-center justify-center rounded border w-22 h-8">
             <button className="">確認する👀</button>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex justify-center pt-5">

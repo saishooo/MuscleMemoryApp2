@@ -106,7 +106,7 @@ export default function GlaphOutput({
             <a className="w-12">部位:</a>
             <select
               name="exerciseCategory"
-              className="w-53"
+              className="w-53 rounded border border-gray-300"
               onChange={(e) => setSelectCategory(e.target.value)}
             >
               <option value="">選択してください</option>
@@ -120,7 +120,10 @@ export default function GlaphOutput({
 
           <div className="flex pt-2">
             <a className="w-12">種目:</a>
-            <select name="exercise" className="w-53">
+            <select
+              name="exercise"
+              className="w-53 rounded border border-gray-300"
+            >
               <option value="">選択してください</option>
               {exercises
                 .filter(
@@ -135,8 +138,8 @@ export default function GlaphOutput({
           </div>
 
           <div className="flex justify-center pt-4">
-            <button type="submit" className="w-12 border rounded font-bold">
-              描写
+            <button type="submit" className="w-12 border rounded">
+              表示
             </button>
           </div>
         </form>

@@ -57,8 +57,11 @@ export default async function Home() {
   return (
     <div className="min-h-screen min-w-full">
       <div className="flex flex-col justify-center items-center mx-auto ">
-        <div className="h-5"></div>
-        <div className="flex justify-center items-center pt-20 w-full">
+        <div className="flex justify-center pt-5">
+          <div className="rounded border w-98 h-100"></div>
+        </div>
+
+        <div className="flex justify-center items-center pt-5 w-full">
           <div className="flex items-center justify-center rounded border w-22 h-8">
             <RecordInputform
               exerciseCategory={exerciseCategory}

@@ -106,7 +106,7 @@ export default function GlaphOutput({
             <a className="w-12">部位:</a>
             <select
               name="exerciseCategory"
-              className="w-53 rounded border border-gray-300"
+              className="w-53 rounded border border-gray-300 px-2 text-sm"
               onChange={(e) => setSelectCategory(e.target.value)}
             >
               <option value="">選択してください</option>
@@ -122,7 +122,7 @@ export default function GlaphOutput({
             <a className="w-12">種目:</a>
             <select
               name="exercise"
-              className="w-53 rounded border border-gray-300"
+              className="w-53 rounded border border-gray-300 px-2 text-sm"
             >
               <option value="">選択してください</option>
               {exercises

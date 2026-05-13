@@ -39,9 +39,9 @@ export default function AllRecordsList({ trainings, exercises }: Props) {
   return (
     <>
       <div className="flex mt-2">
-        <p className="w-60 pl-2 font-bold">トレーニング</p>
-        <p className="w-18 text-center font-bold">重量</p>
-        <p className="w-18 text-center font-bold">回数</p>
+        <p className="w-62 pl-2 font-bold">トレーニング</p>
+        <p className="w-16 text-center font-bold">重量</p>
+        <p className="w-16 text-center font-bold">回数</p>
       </div>
       <div className="h-80 overflow-y-auto">
         {reversedTrainings.map((t, index) => {
@@ -66,8 +66,8 @@ export default function AllRecordsList({ trainings, exercises }: Props) {
               {/* トレーニング */}
               <div className="flex w-full">
                 <p className="w-62 pl-2">{t.exercise.name}</p>
-                <p className="w-14 pl-1 text-center">{t.weight}</p>
-                <p className="w-16 pl-7 text-center">{t.reps}</p>
+                <p className="w-14 pl-2 text-center">{t.weight}</p>
+                <p className="w-16 pl-3 text-center">{t.reps}</p>
               </div>
             </div>
           );

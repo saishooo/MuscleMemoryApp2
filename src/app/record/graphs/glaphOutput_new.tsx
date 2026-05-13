@@ -49,6 +49,7 @@ export default function GlaphOutput({
 }: Props) {
   const [selectedCategory, setSelectCategory] = useState("");
   const [graphData, setGraphData] = useState<Training[]>([]);
+  const [graphSwitch, setGraphSwitch] = useState(0); //0=初期値 1=グラフ表示成功 2=登録されている種目がない場合
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,7 +81,13 @@ export default function GlaphOutput({
 
       const dataCheck = await res.json();
       console.log(dataCheck);
-      setGraphData(dataCheck.trainings);
+
+      if (dataCheck.trainings.length !== 0) {
+        setGraphData(dataCheck.trainings);
+        setGraphSwitch(1);
+      } else {
+        setGraphSwitch(2);
+      }
 
       if (!res.ok) {
         console.log("更新に失敗しました");
@@ -93,13 +100,13 @@ export default function GlaphOutput({
 
   return (
     <div className="min-h-screen">
-      <div className="flex flex-col ml-3 mt-2">
+      <div className="flex flex-col pl-3 pt-2">
         <form onSubmit={handleSubmit}>
           <div className="flex">
             <a className="w-12">部位:</a>
             <select
               name="exerciseCategory"
-              className="w-50"
+              className="w-53"
               onChange={(e) => setSelectCategory(e.target.value)}
             >
               <option value="">選択してください</option>
@@ -111,9 +118,9 @@ export default function GlaphOutput({
             </select>
           </div>
 
-          <div className="flex mt-2">
+          <div className="flex pt-2">
             <a className="w-12">種目:</a>
-            <select name="exercise" className="w-50">
+            <select name="exercise" className="w-53">
               <option value="">選択してください</option>
               {exercises
                 .filter(
@@ -127,29 +134,41 @@ export default function GlaphOutput({
             </select>
           </div>
 
-          <div className="flex justify-center mt-[15px]">
-            <button type="submit" className="w-[50px] border rounded font-bold">
+          <div className="flex justify-center pt-4">
+            <button type="submit" className="w-12 border rounded font-bold">
               描写
             </button>
           </div>
         </form>
       </div>
 
-      <div className="mt-15 -ml-4">
-        <LineChart width={380} height={300} data={graphData}>
-          <XAxis
-            dataKey="createdAt"
-            tickFormatter={(value) =>
-              new Date(value).toLocaleDateString("ja-JP", {
-                month: "numeric",
-                day: "numeric",
-              })
-            }
-          />
-          <YAxis />
-          <Line type="monotone" dataKey="weight" />
-        </LineChart>
-      </div>
+      {graphSwitch === 1 && (
+        <div className="pt-15 -ml-5">
+          <LineChart width={380} height={300} data={graphData}>
+            <XAxis
+              dataKey="createdAt"
+              tickFormatter={(value) =>
+                new Date(value).toLocaleDateString("ja-JP", {
+                  month: "numeric",
+                  day: "numeric",
+                })
+              }
+            />
+            <YAxis />
+            <Line type="monotone" dataKey="weight" />
+          </LineChart>
+        </div>
+      )}
+      {graphSwitch === 0 && (
+        <div className="flex justify-center pt-15">
+          <a>部位と種目を入れてください</a>
+        </div>
+      )}
+      {graphSwitch === 2 && (
+        <div className="flex justify-center pt-15">
+          <a>選択された種目での記録がありません</a>
+        </div>
+      )}
     </div>
   );
 }

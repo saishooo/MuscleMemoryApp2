@@ -30,6 +30,8 @@ type Props = {
 };
 
 export default function AllRecordsList({ trainings, exercises }: Props) {
+  const reversedTrainings = [...trainings].reverse();
+
   if (trainings.length === 0) {
     return <p>記録がありません</p>;
   }
@@ -42,17 +44,17 @@ export default function AllRecordsList({ trainings, exercises }: Props) {
         <p className="w-18 text-center font-bold">回数</p>
       </div>
       <div className="h-80 overflow-y-auto">
-        {trainings.map((t, index) => {
-          const date = new Date(t.createdAt); //⚫︎今の日付オブジェクトに変換
-          const formattedDate = `${date.getMonth() + 1}月${date.getDate()}日`; //⚫︎今の日付を表示する形に変換
+        {reversedTrainings.map((t, index) => {
+          const date = new Date(t.createdAt);
 
-          const prevTraining = trainings[index - 1]; //⚫︎今見ている一個前のデータ
-          //⚫︎prevTrainingの値があれば日付を作成し、なければ空にする
-          const prevFormattedDate = prevTraining
-            ? `${new Date(prevTraining.createdAt).getMonth() + 1}月${new Date(prevTraining.createdAt).getDate()}日`
-            : "";
-          const showDate = formattedDate !== prevFormattedDate; //違うならtrue,同じならfalse
+          const formattedDate = `${date.getMonth() + 1}月${date.getDate()}日`;
 
+          const prevTraining = reversedTrainings[index - 1];
+
+          const showDate =
+            !prevTraining ||
+            new Date(prevTraining.createdAt).toDateString() !==
+              date.toDateString();
           return (
             <div key={t.id}>
               {/* 日付（変わった時だけ表示） */}

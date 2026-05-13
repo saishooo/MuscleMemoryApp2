@@ -33,13 +33,13 @@ export default async function Home() {
   if (!userId) {
     return (
       <div className="min-h-screen">
-        <div className="flex justify-center items-center mt-[80px]">
+        <div className="flex justify-center items-center pt-20">
           <div className="flex flex-col">
             {items.map((item) => (
               <Link
                 key={item.id}
                 href={item.href}
-                className="flex justify-center items-center mt-[50px] w-[120px] h-[40px] rounded-lg font-bold text-white bg-gray-500"
+                className="flex justify-center items-center pt-12 w-30 h-10 rounded-lg font-bold text-white bg-gray-500"
               >
                 {item.label}
               </Link>

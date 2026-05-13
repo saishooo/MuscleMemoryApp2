@@ -108,12 +108,12 @@ export default function RecordInputform({
       {inputTraining && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-90 rounded-xl bg-white p-4 shadow-lg">
-            <h2 className="mb-4 text-lg font-bold">記録する</h2>
+            <h2 className="pb-4 text-lg font-bold">記録する</h2>
             <form onSubmit={handleSubmit}>
               <input type="hidden" name="userId" value={userId ?? ""} />
 
-              <div className="mb-3">
-                <a className="mb-1 block text-sm font-medium">部位</a>
+              <div className="pb-3">
+                <a className="pb-1 block text-sm font-medium">部位</a>
                 <select
                   name="exerciseCategory"
                   className="block w-full min-w-0 max-w-full appearance-none rounded border border-gray-300 px-3 py-2 text-sm"
@@ -128,8 +128,8 @@ export default function RecordInputform({
                 </select>
               </div>
 
-              <div className="mb-3">
-                <a className="mb-1 block text-sm font-medium">種目</a>
+              <div className="pb-3">
+                <a className="pb-1 block text-sm font-medium">種目</a>
                 <select
                   name="exercises"
                   className="w-full rounded border border-gray-300 px-3 py-2"
@@ -148,8 +148,8 @@ export default function RecordInputform({
                 </select>
               </div>
 
-              <div className="mb-3">
-                <a className="mb-1 block text-sm font-medium">重量</a>
+              <div className="pb-3">
+                <a className="pb-1 block text-sm font-medium">重量</a>
                 <input
                   name="weight"
                   type="number"
@@ -161,8 +161,8 @@ export default function RecordInputform({
                 />
               </div>
 
-              <div className="mb-3">
-                <a className="mb-1 block text-sm font-medium">回数</a>
+              <div className="pb-3">
+                <a className="pb-1 block text-sm font-medium">回数</a>
                 <select
                   name="reps"
                   className="w-full rounded border border-gray-300 px-3 py-2"

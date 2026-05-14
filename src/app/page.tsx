@@ -15,6 +15,7 @@ import BestRecordsList from "./record/best-records/bestRecordsList_new";
 import GoalRecordsList from "./record/goal/output/goalRecordsList_new";
 import AllRecordsList from "./record/all-records/allRecordsList_new";
 import RecordInputform from "./record/input/recordInputForm_new";
+import GoalInputForm from "./record/goal/input/goalInputForm_new";
 
 export default async function Home() {
   noStore();
@@ -69,9 +70,16 @@ export default async function Home() {
               userId={userId}
             />
           </div>
-          {/* <div className="flex items-center justify-center rounded border w-22 h-8">
-            <button className="">確認する👀</button>
-          </div> */}
+
+          <div className="pl-6">
+            <div className="flex items-center justify-center rounded border w-22 h-8">
+              <GoalInputForm
+                exerciseCategory={exerciseCategory}
+                exercises={exercise}
+                userId={userId}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-center pt-5">

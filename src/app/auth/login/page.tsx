@@ -73,6 +73,7 @@ export default function LoginForm() {
       //resがなければ、ログイン失敗
       if (!res.ok) {
         setError(data.error ?? "ログインに失敗しました");
+        setLoading(false);
         return;
       }
 
@@ -133,7 +134,7 @@ export default function LoginForm() {
             </div>
 
             {message && (
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-y-1/2 animate-slideIn">
+              <div className="fixed inset-0 z-50 flex items-center justify-center animate-slideIn">
                 <div className="rounded-xl bg-green-500 px-4 py-3 text-white shadow-lg">
                   {message}
                 </div>
@@ -141,7 +142,7 @@ export default function LoginForm() {
             )}
 
             {error && (
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-y-1/2 animate-slideIn">
+              <div className="fixed inset-0 z-50 flex items-center justify-center animate-slideIn">
                 <div className="rounded-xl bg-red-500 px-4 py-3 text-white shadow-lg">
                   {error}
                 </div>

@@ -92,7 +92,7 @@ export default function GoalInputForm({
       const data = await res.json();
       console.log(data);
 
-      if (!data.ok || !res.ok) {
+      if (!res.ok) {
         setLoading(false);
         return;
       }

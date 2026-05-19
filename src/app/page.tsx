@@ -27,8 +27,8 @@ export default async function Home() {
   const userId = cookiesStore.get("userId")?.value;
 
   const items = [
-    { id: 1, href: "/auth", label: "ログイン・登録" },
-    //{ id: 2, href: "/record", label: "メニュー" },
+    { id: 1, href: "/auth/login", label: "ログイン" },
+    { id: 2, href: "/auth/signup", label: "登録" },
   ];
 
   if (!userId) {
@@ -37,13 +37,15 @@ export default async function Home() {
         <div className="flex justify-center items-center pt-20">
           <div className="flex flex-col">
             {items.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className="flex justify-center items-center pt-12 w-30 h-10 rounded-lg font-bold text-white bg-gray-500"
-              >
-                {item.label}
-              </Link>
+              <div key={item.id} className="pt-10">
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className="flex justify-center items-center w-30 h-10 rounded-lg font-bold text-white bg-gray-500"
+                >
+                  {item.label}
+                </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -96,7 +98,7 @@ export default async function Home() {
 
         <div className="flex justify-center pt-5">
           <div className="rounded border w-96 h-100">
-            <p className="w-full pt-2 pl-3 text-lg font-bold">最高記録</p>
+            <p className="w-full pt-2 pl-2 text-lg font-bold">最高記録</p>
             <BestRecordsList records={records} exercises={exercise} />
           </div>
         </div>

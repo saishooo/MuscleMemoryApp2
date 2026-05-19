@@ -90,7 +90,7 @@ export default function LoginForm() {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="rounded-xl bg-gray-500">
             <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
-              登録中...
+              ログイン中...
             </p>
           </div>
         </div>

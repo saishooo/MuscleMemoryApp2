@@ -30,35 +30,39 @@ type Props = {
 };
 
 export default function BestRecordsList({ records, exercises }: Props) {
-  if (records.length === 0) {
-    return <p>記録がありません</p>;
-  }
-
   return (
     <>
-      <div className="flex mt-2">
-        <p className="w-62 pl-2 font-bold">トレーニング</p>
-        <p className="w-16 text-center font-bold">重量</p>
-        <p className="w-16 text-center font-bold">回数</p>
-      </div>
-      <div className="h-80 overflow-y-auto">
-        {records.map((t, index) => {
-          let formattedDate = "";
-          const updatedAt = new Date(t.updatedAt);
-          formattedDate = `${updatedAt.getMonth() + 1}月${updatedAt.getDate()}日`;
+      {records.length === 0 ? (
+        <div className="w-full">
+          <p className="pl-2">記録がありません</p>
+        </div>
+      ) : (
+        <>
+          <div className="flex mt-2">
+            <p className="w-62 pl-2 font-bold">トレーニング</p>
+            <p className="w-16 text-center font-bold">重量</p>
+            <p className="w-16 text-center font-bold">回数</p>
+          </div>
+          <div className="h-80 overflow-y-auto">
+            {records.map((t, index) => {
+              let formattedDate = "";
+              const updatedAt = new Date(t.updatedAt);
+              formattedDate = `${updatedAt.getMonth() + 1}月${updatedAt.getDate()}日`;
 
-          return (
-            <div key={t.id}>
-              <div className="flex w-full">
-                {/* <p className="w-[90px] ml-[7px]">{formattedDate}</p> */}
-                <p className="w-62 pl-2">{t.exercise.name}</p>
-                <p className="w-14 pl-2 text-center">{t.maxWeight}</p>
-                <p className="w-16 pl-3 text-center">{t.maxReps}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+              return (
+                <div key={t.id}>
+                  <div className="flex w-full">
+                    {/* <p className="w-[90px] ml-[7px]">{formattedDate}</p> */}
+                    <p className="w-62 pl-2">{t.exercise.name}</p>
+                    <p className="w-14 pl-2 text-center">{t.maxWeight}</p>
+                    <p className="w-16 pl-3 text-center">{t.maxReps}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </>
   );
 }

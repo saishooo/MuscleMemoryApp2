@@ -31,6 +31,7 @@ export default function RecordInputform({
   const router = useRouter();
   const [inputTraining, setInputTraining] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //「記録するボタン」押下時の処理
   const handleClick_true = () => {
@@ -81,6 +82,7 @@ export default function RecordInputform({
         return;
       }
 
+      setLoading(true);
       const res = await fetch("/api/record/input", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -91,9 +93,11 @@ export default function RecordInputform({
       console.log(data);
 
       if (!res.ok) {
+        setLoading(false);
         return;
       }
 
+      setLoading(false);
       console.log("記録成功🎉");
       router.refresh();
     } catch (error) {
@@ -103,6 +107,15 @@ export default function RecordInputform({
 
   return (
     <>
+      {loading && (
+        <div className="fixed inset-0 z-60 flex items-center justify-center">
+          <div className="rounded-xl bg-gray-500">
+            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+              登録中...
+            </p>
+          </div>
+        </div>
+      )}
       <button onClick={handleClick_true}>記録する🖊️</button>
 
       {inputTraining && (

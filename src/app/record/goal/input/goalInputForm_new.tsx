@@ -30,6 +30,7 @@ export default function GoalInputForm({
   const router = useRouter();
   const [inputGoal, setInputGoal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleClick_true = () => {
     setInputGoal(true);
@@ -43,14 +44,79 @@ export default function GoalInputForm({
     e.preventDefault(); //ページリロード防止
 
     try {
+      const formData = new FormData(e.currentTarget);
+      const formUserId = formData.get("userId");
+      if (!formUserId) {
+        console.log("ログインまたは新規登録してから登録してください");
+        return;
+      }
+
+      const body = {
+        userId: String(formUserId),
+        exerciseId: String(formData.get("exercise")),
+        targetWeight: String(formData.get("targetWeight")),
+        targetReps: String(formData.get("targetReps")),
+        deadline: String(formData.get("deadline")),
+      };
+
+      console.log(body.exerciseId);
+      if (
+        !body.userId ||
+        !body.exerciseId ||
+        body.targetWeight === "" ||
+        !body.targetReps ||
+        !body.deadline
+      ) {
+        console.log("未入力の項目があります");
+        return;
+      }
+
+      const targetWeightNum = Number(body.targetWeight);
+      if (targetWeightNum > 500) {
+        console.log("重量は500kg以下にしてください");
+        return;
+      }
+      if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)) {
+        console.log("重量は小数点2桁までです");
+        return;
+      }
+
+      setLoading(true);
+
+      const res = await fetch("/api/record/goal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (!data.ok || !res.ok) {
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+      console.log("記録成功🎉");
+      router.refresh();
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   };
 
   return (
     <>
-      <button onClick={handleClick_true}>目標設定</button>
+      {loading && (
+        <div className="fixed inset-0 z-60 flex items-center justify-center">
+          <div className="rounded-xl bg-gray-500">
+            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+              登録中...
+            </p>
+          </div>
+        </div>
+      )}
+      <button onClick={handleClick_true}>目標設定↗️</button>
 
       {inputGoal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -98,7 +164,7 @@ export default function GoalInputForm({
               <div className="pb-3">
                 <a className="pb-1 block text-sm font-medium">重量</a>
                 <input
-                  name="weight"
+                  name="targetWeight"
                   type="number"
                   step="0.01"
                   min="0"
@@ -110,7 +176,7 @@ export default function GoalInputForm({
               <div className="pb-3">
                 <a className="pb-1 block text-sm font-medium">回数</a>
                 <select
-                  name="reps"
+                  name="targetReps"
                   className="w-full ronded border border-gray-300 px-3 py-2"
                 >
                   <option value="">選択してください</option>
@@ -118,6 +184,15 @@ export default function GoalInputForm({
                     <option key={i}>{i + 1}</option>
                   ))}
                 </select>
+              </div>
+
+              <div className="pb-3">
+                <a className="pb-1 block text-sm font-medium">期限</a>
+                <input
+                  name="deadline"
+                  type="date"
+                  className="w-full ronded border border-gray-300 px-3 py-2"
+                />
               </div>
 
               <div className="flex justify-end gap-2">

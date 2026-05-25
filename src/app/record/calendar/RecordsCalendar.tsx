@@ -39,40 +39,45 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
   });
 
   return (
-    <div className="flex justify-center pt-10">
+    <div className="flex justify-center">
       <div className="bg-white p-5 rounded-xl shadow-lg">
-        <Calendar
-          locale="ja-JP"
-          onChange={(value) => setDate(value as Date)}
-          value={date}
-        />
+        <div className="flex justify-center">
+          <Calendar
+            locale="ja-JP"
+            onChange={(value) => setDate(value as Date)}
+            value={date}
+          />
+        </div>
         <p className="pt-4 text-center">
-          選択日：
           {date.toLocaleDateString("ja-JP", {
             year: "numeric",
             month: "numeric",
             day: "numeric",
-          })}
+          })}{" "}
+          の記録
         </p>
 
-        <div className="pt-5">
+        <div className="pt-2">
           {selectedTrainings.length === 0 ? (
-            <p className="text-center text-gray-500">
+            <p className="flex justify-center items-center h-30 text-center text-gray-500">
               この日の記録はありません
             </p>
           ) : (
-            <div className="space-y-3">
-              {selectedTrainings.map((training) => (
-                <div
-                  key={training.id}
-                  className="rounded-lg border border-gray-200 p-3"
-                >
-                  <p className="font-bold">{training.exercise.name}</p>
-                  <p className="text-gray-700">
-                    {training.weight}kg {training.reps}回
-                  </p>
-                </div>
-              ))}
+            <div className="space-y-1">
+              <div className="flex mt-2">
+                <p className="w-62 pl-2 font-bold">トレーニング</p>
+                <p className="w-16 text-center font-bold">重量</p>
+                <p className="w-16 text-center font-bold">回数</p>
+              </div>
+              <div className="h-30 overflow-y-auto">
+                {selectedTrainings.map((training) => (
+                  <div key={training.id} className="flex w-full">
+                    <p className="w-62 pl-2">{training.exercise.name}</p>
+                    <p className="w-14 pl-2 text-center">{training.weight}</p>
+                    <p className="w-16 pl-3 text-center">{training.reps}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

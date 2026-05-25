@@ -60,7 +60,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen min-w-full">
-      <div className="flex flex-col justify-center items-center mx-auto ">
+      <div className="flex flex-col justify-center items-center mx-auto">
         <div className="flex justify-center pt-5">
           <RecordsCalendar trainings={trainings} userId={userId} />
         </div>

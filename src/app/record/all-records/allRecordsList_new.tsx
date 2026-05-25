@@ -30,8 +30,6 @@ type Props = {
 };
 
 export default function AllRecordsList({ trainings, exercises }: Props) {
-  //const reversedTrainings = [...trainings].reverse();
-
   return (
     <>
       {trainings.length === 0 ? (

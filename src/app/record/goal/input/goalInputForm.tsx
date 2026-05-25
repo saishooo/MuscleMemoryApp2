@@ -230,14 +230,14 @@ export default function GoalInputForm({
             </div>
 
             {message && (
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+              <div className="fixed inset-0 z-50 flex items-center justify-center animate-slideIn">
                 <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
                   {message}
                 </div>
               </div>
             )}
             {error && (
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+              <div className="fixed inset-0 z-50 flex items-center justify-center animate-slideIn">
                 <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
                   {error}
                 </div>

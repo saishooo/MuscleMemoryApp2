@@ -20,7 +20,7 @@ export default function SignUpForm() {
     }
 
     const timeoutId = window.setTimeout(() => {
-      router.replace("/record");
+      router.replace("/");
       router.refresh();
     }, 1200);
 
@@ -35,7 +35,7 @@ export default function SignUpForm() {
 
     const timeoutId = window.setTimeout(() => {
       setError("");
-    }, 1200);
+    }, 600);
 
     return () => window.clearTimeout(timeoutId);
   }, [error]);

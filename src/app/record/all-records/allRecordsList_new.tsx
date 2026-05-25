@@ -30,7 +30,7 @@ type Props = {
 };
 
 export default function AllRecordsList({ trainings, exercises }: Props) {
-  const reversedTrainings = [...trainings].reverse();
+  //const reversedTrainings = [...trainings].reverse();
 
   return (
     <>
@@ -46,17 +46,18 @@ export default function AllRecordsList({ trainings, exercises }: Props) {
             <p className="w-16 text-center font-bold">回数</p>
           </div>
           <div className="h-80 overflow-y-auto">
-            {reversedTrainings.map((t, index) => {
+            {trainings.map((t, index) => {
               const date = new Date(t.createdAt);
 
               const formattedDate = `${date.getMonth() + 1}月${date.getDate()}日`;
 
-              const prevTraining = reversedTrainings[index - 1];
+              const prevTraining = trainings[index - 1];
 
-              const showDate =
-                !prevTraining ||
-                new Date(prevTraining.createdAt).toDateString() !==
-                  date.toDateString();
+              const prevFormattedDate = prevTraining
+                ? `${new Date(prevTraining.createdAt).getMonth() + 1}月${new Date(prevTraining.createdAt).getDate()}日`
+                : "";
+              const showDate = formattedDate !== prevFormattedDate; //違うならtrue,同じならfalse
+
               return (
                 <div key={t.id}>
                   {/* 日付（変わった時だけ表示） */}

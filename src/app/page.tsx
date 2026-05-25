@@ -16,6 +16,7 @@ import GoalRecordsList from "./record/goal/output/goalRecordsList_new";
 import AllRecordsList from "./record/all-records/allRecordsList_new";
 import RecordInputform from "./record/input/recordInputForm_new";
 import GoalInputForm from "./record/goal/input/goalInputForm_new";
+import RecordsCalendar from "./record/calendar/RecordsCalendar";
 
 export default async function Home() {
   noStore();
@@ -61,7 +62,7 @@ export default async function Home() {
     <div className="min-h-screen min-w-full">
       <div className="flex flex-col justify-center items-center mx-auto ">
         <div className="flex justify-center pt-5">
-          <div className="rounded border w-96 h-100"></div>
+          <RecordsCalendar trainings={trainings} userId={userId} />
         </div>
 
         <div className="flex justify-center items-center pt-5 w-full">

@@ -22,10 +22,10 @@ type Training = {
 
 type Props = {
   trainings: Training[];
-  loginUserId: string | null;
+  userId: string | null;
 };
 
-export default function RecordsCalendar({ trainings, loginUserId }: Props) {
+export default function RecordsCalendar({ trainings, userId }: Props) {
   const [date, setDate] = useState(new Date());
   const [training, setTrainings] = useState<Training[]>([]);
   const [trainingDates, setTrainingDates] = useState<string[]>([]);
@@ -37,4 +37,24 @@ export default function RecordsCalendar({ trainings, loginUserId }: Props) {
       setTrainingDates(data);
     };
   }, []);
+
+  return (
+    <div className="flex justify-center pt-10">
+      <div className="bg-white p-5 rounded-xl shadow-lg">
+        <Calendar
+          locale="ja-JP"
+          onChange={(value) => setDate(value as Date)}
+          value={date}
+        />
+        <p className="pt-4 text-center">
+          選択日：
+          {date.toLocaleDateString("ja-JP", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+          })}
+        </p>
+      </div>
+    </div>
+  );
 }

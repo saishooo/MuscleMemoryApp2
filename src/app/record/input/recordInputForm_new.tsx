@@ -116,7 +116,9 @@ export default function RecordInputform({
           </div>
         </div>
       )}
-      <button onClick={handleClick_true}>記録する🖊️</button>
+      <button onClick={handleClick_true} className="font-bold">
+        記録する🖊️
+      </button>
 
       {inputTraining && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">

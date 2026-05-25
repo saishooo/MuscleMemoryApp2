@@ -116,7 +116,9 @@ export default function GoalInputForm({
           </div>
         </div>
       )}
-      <button onClick={handleClick_true}>目標設定↗️</button>
+      <button onClick={handleClick_true} className="font-bold">
+        目標設定↗️
+      </button>
 
       {inputGoal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">

@@ -1,7 +1,7 @@
 "use client";
 
 // src/app/record/calendar/RecordsCalendar.tsx
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -27,16 +27,16 @@ type Props = {
 
 export default function RecordsCalendar({ trainings, userId }: Props) {
   const [date, setDate] = useState(new Date());
-  const [training, setTrainings] = useState<Training[]>([]);
-  const [trainingDates, setTrainingDates] = useState<string[]>([]);
 
-  useEffect(() => {
-    const fetchTrainingDates = async () => {
-      const res = await fetch("/api/training/dates");
-      const data = await res.json();
-      setTrainingDates(data);
-    };
-  }, []);
+  const selectedTrainings = trainings.filter((training) => {
+    const trainingDate = new Date(training.createdAt);
+
+    return (
+      trainingDate.getFullYear() === date.getFullYear() &&
+      trainingDate.getMonth() === date.getMonth() &&
+      trainingDate.getDate() === date.getDate()
+    );
+  });
 
   return (
     <div className="flex justify-center pt-10">
@@ -54,6 +54,28 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
             day: "numeric",
           })}
         </p>
+
+        <div className="pt-5">
+          {selectedTrainings.length === 0 ? (
+            <p className="text-center text-gray-500">
+              この日の記録はありません
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {selectedTrainings.map((training) => (
+                <div
+                  key={training.id}
+                  className="rounded-lg border border-gray-200 p-3"
+                >
+                  <p className="font-bold">{training.exercise.name}</p>
+                  <p className="text-gray-700">
+                    {training.weight}kg {training.reps}回
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

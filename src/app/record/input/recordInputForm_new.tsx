@@ -32,8 +32,38 @@ export default function RecordInputform({
   const [inputTraining, setInputTraining] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-  //「記録するボタン」押下時の処理
+  //------------------成功メッセージを表示------------------
+  useEffect(() => {
+    if (!message) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setMessage("");
+      router.replace("/");
+      router.refresh();
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId); //⚫︎timeoutの予約削除
+  }, [message, router]);
+
+  //------------------エラーメッセージを表示------------------
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setError("");
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [error]);
+
+  //------------------「記録するボタン」押下時の処理------------------
   const handleClick_true = () => {
     setInputTraining(true);
   };
@@ -52,6 +82,7 @@ export default function RecordInputform({
       const formUserId = formData.get("userId");
       if (!formUserId) {
         console.log("ログインまたは新規登録してください");
+        setError("ログインまたは新規登録してから登録してください");
         console.log(userId);
         return;
       }
@@ -70,15 +101,18 @@ export default function RecordInputform({
         !body.reps
       ) {
         console.log("未入力の項目があります");
+        setError("未入力の項目があります");
       }
 
       const weightNum = Number(body.weight);
       if (weightNum > 500) {
         console.log("重量は500kg以下にしてください");
+        setError("重量は500kg以下にしてください");
         return;
       }
       if (!/^\d+(\.\d{1,2})?$/.test(body.weight)) {
         console.log("重量は小数点2桁までです");
+        setError("重量は小数点2桁までです");
         return;
       }
 
@@ -99,9 +133,12 @@ export default function RecordInputform({
 
       setLoading(false);
       console.log("記録成功🎉");
+      setMessage("記録成功🎉");
       router.refresh();
     } catch (error) {
+      setLoading(false);
       console.error(error);
+      setError("通信に失敗しました");
     }
   };
 
@@ -116,7 +153,9 @@ export default function RecordInputform({
           </div>
         </div>
       )}
-      <button onClick={handleClick_true}>記録する🖊️</button>
+      <button onClick={handleClick_true} className="font-bold">
+        記録する🖊️
+      </button>
 
       {inputTraining && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -202,6 +241,20 @@ export default function RecordInputform({
                   記録
                 </button>
               </div>
+              {message && (
+                <div className="fixed inset-0 z-60 flex items-center justify-center animate-slideIn">
+                  <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
+                    {message}
+                  </div>
+                </div>
+              )}
+              {error && (
+                <div className="fixed inset-0 z-60 flex items-center justify-center animate-slideIn">
+                  <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
+                    {error}
+                  </div>
+                </div>
+              )}
             </form>
           </div>
         </div>

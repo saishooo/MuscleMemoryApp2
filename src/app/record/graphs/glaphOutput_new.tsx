@@ -138,7 +138,10 @@ export default function GlaphOutput({
           </div>
 
           <div className="flex justify-center pt-4">
-            <button type="submit" className="w-12 border rounded">
+            <button
+              type="submit"
+              className="w-15 h-7 border border-gray-500 rounded shadow-lg font-bold"
+            >
               表示
             </button>
           </div>

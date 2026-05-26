@@ -31,15 +31,48 @@ export default function GoalInputForm({
   const [inputGoal, setInputGoal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
+  //------------------成功メッセージを表示------------------
+  useEffect(() => {
+    if (!message) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setMessage("");
+      router.replace("/");
+      router.refresh();
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId); //⚫︎timeoutの予約削除
+  }, [message, router]);
+
+  //------------------エラーメッセージを表示------------------
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setError("");
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [error]);
+
+  //------------------「目標設定」ボタン押下時処理------------------
   const handleClick_true = () => {
     setInputGoal(true);
   };
 
+  //------------------「キャンセル」ボタン押下時処理------------------
   const handleClick_false = () => {
     setInputGoal(false);
   };
 
+  //------------------「目標登録」ボタン押下時処理------------------
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //ページリロード防止
 
@@ -48,6 +81,7 @@ export default function GoalInputForm({
       const formUserId = formData.get("userId");
       if (!formUserId) {
         console.log("ログインまたは新規登録してから登録してください");
+        setError("ログインまたは新規登録してから登録してください");
         return;
       }
 
@@ -68,16 +102,19 @@ export default function GoalInputForm({
         !body.deadline
       ) {
         console.log("未入力の項目があります");
+        setError("未入力の項目があります");
         return;
       }
 
       const targetWeightNum = Number(body.targetWeight);
       if (targetWeightNum > 500) {
         console.log("重量は500kg以下にしてください");
+        setError("重量は500kg以下にしてください");
         return;
       }
       if (!/^\d+(\.\d{1,2})?$/.test(body.targetWeight)) {
         console.log("重量は小数点2桁までです");
+        setError("重量は小数点2桁までです");
         return;
       }
 
@@ -98,10 +135,12 @@ export default function GoalInputForm({
       }
       setLoading(false);
       console.log("記録成功🎉");
+      setMessage("記録成功🎉");
       router.refresh();
     } catch (error) {
       setLoading(false);
       console.error(error);
+      setError("通信に失敗しました");
     }
   };
 
@@ -179,7 +218,7 @@ export default function GoalInputForm({
                 <a className="pb-1 block text-sm font-medium">回数</a>
                 <select
                   name="targetReps"
-                  className="w-full ronded border border-gray-300 px-3 py-2"
+                  className="w-full rounded border border-gray-300 px-3 py-2"
                 >
                   <option value="">選択してください</option>
                   {Array.from({ length: 30 }, (_, i) => (
@@ -193,7 +232,7 @@ export default function GoalInputForm({
                 <input
                   name="deadline"
                   type="date"
-                  className="w-full ronded border border-gray-300 px-3 py-2"
+                  className="w-full rounded border border-gray-300 px-3 py-2"
                 />
               </div>
 
@@ -212,6 +251,20 @@ export default function GoalInputForm({
                   記録
                 </button>
               </div>
+              {message && (
+                <div className="fixed inset-0 z-60 flex items-center justify-center animate-slideIn">
+                  <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
+                    {message}
+                  </div>
+                </div>
+              )}
+              {error && (
+                <div className="fixed inset-0 z-60 flex items-center justify-center animate-slideIn">
+                  <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
+                    {error}
+                  </div>
+                </div>
+              )}
             </form>
           </div>
         </div>

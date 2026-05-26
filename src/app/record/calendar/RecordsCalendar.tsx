@@ -69,15 +69,13 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
                 <p className="w-16 text-center font-bold">重量</p>
                 <p className="w-16 text-center font-bold">回数</p>
               </div>
-              <div className="h-30 overflow-y-auto">
-                {selectedTrainings.map((training) => (
-                  <div key={training.id} className="flex w-full">
-                    <p className="w-62 pl-2">{training.exercise.name}</p>
-                    <p className="w-14 pl-2 text-center">{training.weight}</p>
-                    <p className="w-16 pl-3 text-center">{training.reps}</p>
-                  </div>
-                ))}
-              </div>
+              {selectedTrainings.map((training) => (
+                <div key={training.id} className="flex w-full">
+                  <p className="w-62 pl-2">{training.exercise.name}</p>
+                  <p className="w-14 pl-2 text-center">{training.weight}</p>
+                  <p className="w-16 pl-3 text-center">{training.reps}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>

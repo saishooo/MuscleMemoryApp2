@@ -30,6 +30,10 @@ type Props = {
 };
 
 export default function AllRecordsList({ trainings, exercises }: Props) {
+  const sortedTrainings = [...trainings].sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+
   return (
     <>
       {trainings.length === 0 ? (
@@ -44,12 +48,12 @@ export default function AllRecordsList({ trainings, exercises }: Props) {
             <p className="w-16 text-center font-bold">回数</p>
           </div>
           <div className="h-80 overflow-y-auto">
-            {trainings.map((t, index) => {
+            {sortedTrainings.map((t, index) => {
               const date = new Date(t.createdAt);
 
               const formattedDate = `${date.getMonth() + 1}月${date.getDate()}日`;
 
-              const prevTraining = trainings[index - 1];
+              const prevTraining = sortedTrainings[index - 1];
 
               const prevFormattedDate = prevTraining
                 ? `${new Date(prevTraining.createdAt).getMonth() + 1}月${new Date(prevTraining.createdAt).getDate()}日`

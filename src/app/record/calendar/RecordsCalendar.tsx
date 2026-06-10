@@ -41,10 +41,12 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
     return null; //一瞬だけ何も表示しない
   }
 
+  //ユーザーのトレーニング記録数が増えた場合、下記の処理はAPIに移行する(ここでAPIを呼ぶ)
   const selectedTrainings = trainings.filter((training) => {
-    const trainingDate = new Date(training.createdAt);
+    const trainingDate = new Date(training.createdAt);  //⚫︎new Date(training.createdAt)はlocal(日本時間)に変換して代入している
 
     return (
+      //local(日本時刻)で比較
       trainingDate.getFullYear() === date.getFullYear() &&
       trainingDate.getMonth() === date.getMonth() &&
       trainingDate.getDate() === date.getDate()

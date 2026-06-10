@@ -1,9 +1,13 @@
 "use client";
 
 // src/app/record/calendar/RecordsCalendar.tsx
-import { useState } from "react";
-import Calendar from "react-calendar";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import "react-calendar/dist/Calendar.css";
+
+const Calendar = dynamic(() => import("react-calendar"), {
+  ssr: false,
+});
 
 //Trainingテーブルの型定義
 type Training = {
@@ -26,7 +30,16 @@ type Props = {
 };
 
 export default function RecordsCalendar({ trainings, userId }: Props) {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState<Date | null>(null);
+
+  useEffect(() => {
+    const today = new Date();
+    setDate(new Date(today.getFullYear(), today.getMonth(), today.getDate())); //"Hydration Error"対策
+  }, []);
+
+  if (!date) {
+    return null; //一瞬だけ何も表示しない
+  }
 
   const selectedTrainings = trainings.filter((training) => {
     const trainingDate = new Date(training.createdAt);

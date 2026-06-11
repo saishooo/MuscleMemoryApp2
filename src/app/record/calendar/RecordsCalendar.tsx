@@ -31,10 +31,27 @@ type Props = {
 
 export default function RecordsCalendar({ trainings, userId }: Props) {
   const [date, setDate] = useState<Date | null>(null);
+  const [selectedTrainings, setSelectedTrainings] = useState<Training[]>([]);
+
+  const fetchTrainingsByDate = async (selectedDate: Date) => {
+    if (!userId) return;
+
+    const res = await fetch(
+      `/api/trainings/by-date?userId=${userId}&date=${selectedDate.toISOString()}`
+    );
+
+    if (!res.ok) {
+      console.error("Failed to fetch trainings by date");
+    }
+
+    const data = await res.json();
+    setSelectedTrainings(data);
+  };
 
   useEffect(() => {
     const today = new Date();
     setDate(new Date(today.getFullYear(), today.getMonth(), today.getDate())); //"Hydration Error"対策
+    fetchTrainingsByDate(today); //初期描画のために追加
   }, []);
 
   if (!date) {
@@ -42,16 +59,16 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
   }
 
   //ユーザーのトレーニング記録数が増えた場合、下記の処理はAPIに移行する(ここでAPIを呼ぶ)
-  const selectedTrainings = trainings.filter((training) => {
-    const trainingDate = new Date(training.createdAt);  //⚫︎new Date(training.createdAt)はlocal(日本時間)に変換して代入している
+  // const selectedTrainings = trainings.filter((training) => {
+  //   const trainingDate = new Date(training.createdAt);  //⚫︎new Date(training.createdAt)はlocal(日本時間)に変換して代入している
 
-    return (
-      //local(日本時刻)で比較
-      trainingDate.getFullYear() === date.getFullYear() &&
-      trainingDate.getMonth() === date.getMonth() &&
-      trainingDate.getDate() === date.getDate()
-    );
-  });
+  //   return (
+  //     //local(日本時刻)で比較
+  //     trainingDate.getFullYear() === date.getFullYear() &&
+  //     trainingDate.getMonth() === date.getMonth() &&
+  //     trainingDate.getDate() === date.getDate()
+  //   );
+  // });
 
   const sortedTrainings = [...selectedTrainings].sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -63,7 +80,11 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
         <div className="flex justify-center">
           <Calendar
             locale="ja-JP"
-            onChange={(value) => setDate(value as Date)}
+            onChange={(value) => {
+              const selectedDate = value as Date;
+              setDate(selectedDate);
+              fetchTrainingsByDate(selectedDate);
+            }}
             value={date}
           />
         </div>

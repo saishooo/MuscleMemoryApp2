@@ -37,9 +37,9 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
   const fetchTrainingsByDate = async (selectedDate: Date) => {
     if (!userId) return;
 
-    const year  = selectedDate.getFullYear();
-    const month = String(selectedDate.getMonth()+1).padStart(2, "0");
-    const day   = String(selectedDate.getDate()).padStart(2,"0");
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(selectedDate.getDate()).padStart(2, "0");
 
     const dateText = `${year}-${month}-${day}`;
 
@@ -60,7 +60,11 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
   //"Hydration Error"対策
   useEffect(() => {
     const today = new Date();
-    const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const todayDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
     setDate(todayDate);
     fetchTrainingsByDate(todayDate); //初期描画のために追加
   }, []); //⚫︎[]だと初回のみ実行

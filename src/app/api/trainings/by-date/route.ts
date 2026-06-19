@@ -21,10 +21,10 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const start = fromZonedTime(`${date} 00:00:00`, timeZone);
+  const start = fromZonedTime(`${date}T00:00:00`, timeZone);
 
   const nextDateText = format(addDays(parseISO(date), 1), "yyyy-MM-dd");
-  const end = fromZonedTime(`${nextDateText} 00:00:00`, timeZone);
+  const end = fromZonedTime(`${nextDateText}T00:00:00`, timeZone);
 
   const trainings = await prisma.training.findMany({
     where: {

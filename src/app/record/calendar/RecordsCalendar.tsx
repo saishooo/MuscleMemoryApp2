@@ -33,11 +33,20 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
   const [date, setDate] = useState<Date | null>(null);
   const [selectedTrainings, setSelectedTrainings] = useState<Training[]>([]);
 
+  //ブラウザコンポーネントではローカル時間で扱い、サーバーに送る時にUTCに変換して送る。
   const fetchTrainingsByDate = async (selectedDate: Date) => {
     if (!userId) return;
 
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(selectedDate.getDate()).padStart(2, "0");
+
+    const dateText = `${year}-${month}-${day}`;
+
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
     const res = await fetch(
-      `/api/trainings/by-date?userId=${userId}&date=${selectedDate.toISOString()}`
+      `/api/trainings/by-date?userId=${userId}&date=${dateText}&timeZone=${encodeURIComponent(timeZone)}`
     );
 
     if (!res.ok) {
@@ -48,27 +57,21 @@ export default function RecordsCalendar({ trainings, userId }: Props) {
     setSelectedTrainings(data);
   };
 
+  //"Hydration Error"対策
   useEffect(() => {
     const today = new Date();
-    setDate(new Date(today.getFullYear(), today.getMonth(), today.getDate())); //"Hydration Error"対策
-    fetchTrainingsByDate(today); //初期描画のために追加
-  }, []);
+    const todayDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+    setDate(todayDate);
+    fetchTrainingsByDate(todayDate); //初期描画のために追加
+  }, []); //⚫︎[]だと初回のみ実行
 
   if (!date) {
     return null; //一瞬だけ何も表示しない
   }
-
-  //ユーザーのトレーニング記録数が増えた場合、下記の処理はAPIに移行する(ここでAPIを呼ぶ)
-  // const selectedTrainings = trainings.filter((training) => {
-  //   const trainingDate = new Date(training.createdAt);  //⚫︎new Date(training.createdAt)はlocal(日本時間)に変換して代入している
-
-  //   return (
-  //     //local(日本時刻)で比較
-  //     trainingDate.getFullYear() === date.getFullYear() &&
-  //     trainingDate.getMonth() === date.getMonth() &&
-  //     trainingDate.getDate() === date.getDate()
-  //   );
-  // });
 
   const sortedTrainings = [...selectedTrainings].sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()

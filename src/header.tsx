@@ -14,7 +14,7 @@ export default async function Header() {
     { id: 1, href: "/", label: "ホーム" },
     { id: 2, href: "/record", label: "トレーニング" },
     { id: 3, href: "/record/graphs", label: "グラフ" },
-    { id: 4, href: "/auth", label: "アカウント" },
+    { id: 4, href: "/account", label: "アカウント" },
   ];
 
   let username = "ゲスト";

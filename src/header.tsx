@@ -12,8 +12,8 @@ export default async function Header() {
 
   const items = [
     { id: 1, href: "/", label: "ホーム" },
-    { id: 2, href: "/", label: "トレーニング" },
-    { id: 3, href: "/", label: "グラフ" },
+    { id: 2, href: "/record", label: "トレーニング" },
+    { id: 3, href: "/record/graphs", label: "グラフ" },
     { id: 4, href: "/", label: "アカウント" },
   ];
 

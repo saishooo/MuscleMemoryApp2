@@ -14,7 +14,7 @@ export default async function Header() {
     { id: 1, href: "/", label: "ホーム" },
     { id: 2, href: "/record", label: "トレーニング" },
     { id: 3, href: "/record/graphs", label: "グラフ" },
-    { id: 4, href: "/", label: "アカウント" },
+    { id: 4, href: "/auth", label: "アカウント" },
   ];
 
   let username = "ゲスト";
@@ -47,11 +47,7 @@ export default async function Header() {
         </div>
 
         <div className="flex mt-[20px]">
-          {!isLogin ? (
-            <Link href="/auth" className="border-b">
-              ログイン・登録
-            </Link>
-          ) : (
+          {isLogin && (
             <>
               {items.map((item) => (
                 <Link key={item.id} href={item.href} className="ml-3 border-b">

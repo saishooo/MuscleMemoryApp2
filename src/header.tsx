@@ -28,7 +28,7 @@ export default async function Header() {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col w-full ml-[10px]">
+      <div className="flex flex-col w-full pl-[10px]">
         <div className="h-[30px] mt-[15px]">
           <Link href="/" className="font-bold text-2xl">
             MUSCLE MEMORY

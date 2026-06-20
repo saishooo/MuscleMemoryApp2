@@ -1,6 +1,6 @@
 "use client";
 
-// src/app/record/goal/output/goalRecordsList.tsx
+// src/app/record/goal/output/goalRecordsList_new.tsx
 // 設定した目標を表示する
 
 import { useRouter } from "next/navigation";
@@ -222,6 +222,7 @@ export default function GoalRecordsList({
 
       if (!res.ok) {
         setError("削除に失敗しました");
+        setLoading(false);
         return;
       }
 
@@ -235,143 +236,160 @@ export default function GoalRecordsList({
     }
   };
 
-  if (goals.length === 0) {
-    return <p>目標がありません</p>;
-  }
-
   return (
-    <div className="h-[340px] overflow-y-auto">
-      {loading && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="rounded-xl bg-gray-500">
-            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
-              削除中...
-            </p>
-          </div>
+    <>
+      {goals.length === 0 ? (
+        <div className="w-full">
+          <p className="pl-2">目標がありません</p>
         </div>
-      )}
-      {message && (
-        <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animates-slideIn">
-          <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
-            {message}
+      ) : (
+        <>
+          <div className="flex mt-2">
+            <p className="w-62 pl-2 font-bold">トレーニング</p>
+            <p className="w-16 text-center font-bold">重量</p>
+            <p className="w-16 text-center font-bold">回数</p>
           </div>
-        </div>
-      )}
-      {error && (
-        <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
-          <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
-            {error}
+          <div className="h-80 overflow-y-auto">
+            {loading && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center">
+                <div className="rounded-xl bg-gray-500">
+                  <p className="flex items-center justify-center h-12 w-25 text-sm font-bold text-white">
+                    削除中...
+                  </p>
+                </div>
+              </div>
+            )}
+            {message && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center animates-slideIn">
+                <div className="rounded-xl bg-green-500 py-3 text-white shadow-lg">
+                  {message}
+                </div>
+              </div>
+            )}
+            {error && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center animate-slideIn">
+                <div className="rounded-xl bg-red-500 py-3 text-white shadow-lg">
+                  {error}
+                </div>
+              </div>
+            )}
+            {goals.map((t) => {
+              let formattedDate = "";
+
+              if (t.deadline !== null) {
+                const deadline = new Date(t.deadline);
+                formattedDate = `${deadline.getMonth() + 1}月${deadline.getDate()}日`;
+              }
+
+              return (
+                <div
+                  key={t.id}
+                  className="relative mt-2 overflow-hidden rounded-md"
+                >
+                  <div className="absolute inset-y-0 -right-0 flex w-20 items-center justify-center bg-red-500">
+                    <button
+                      type="button"
+                      className="h-full w-full text-white"
+                      onClick={() => handleDelete(t)}
+                    >
+                      削除
+                    </button>
+                  </div>
+                  <div
+                    className={`relative z-10 flex w-full bg-white transition-transform duration-200
+                    ${swipedId === t.id ? "-translate-x-20" : "translate-x-0"}`}
+                    onMouseDown={() => handlePressStart(t)}
+                    onMouseUp={handlePressEnd}
+                    onMouseLeave={handlePressEnd}
+                    onTouchStart={(e) => handleTouchStart(e, t)}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={(e) => handleTouchEnd(e, t.id)}
+                  >
+                    {/* <p className="w-[90px] ml-[7px]">{formattedDate}</p> */}
+                    <p className="w-62 pl-2">{t.exercise.name}</p>
+                    <p className="w-14 pl-2 text-center">{t.targetWeight}</p>
+                    <p className="w-16 pl-3 text-center">{t.targetReps}</p>
+                  </div>
+                </div>
+              );
+            })}
+
+            {editingGoal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+                <div className="w-full max-w-90 rounded-xl bg-white p-4 shadow-lg">
+                  <h2 className="mb-4 text-lg font-bold">目標を編集</h2>
+                  <p className="mb-3 text-sm text-gray-700">
+                    {editingGoal.exercise.name}
+                  </p>
+
+                  <div className="mb-3">
+                    <label className="mb-1 block text-sm font-medium">
+                      期日
+                    </label>
+                    <input
+                      type="date"
+                      value={editDeadline}
+                      onChange={(e) => setEditingDeadline(e.target.value)}
+                      className="block w-full min-w-0 max-w-full appearance-none rounded border border-gray-300 px-3 py-2 text-sm"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="mb-1 block text-sm font-medium">
+                      重量
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="500"
+                      value={editTargetWeight}
+                      onChange={(e) => setEditTargetWeight(e.target.value)}
+                      className="w-full rounded border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="mb-1 block text-sm font-medium">
+                      回数
+                    </label>
+                    <input
+                      type="number"
+                      step="1"
+                      min="1"
+                      value={editTargetReps}
+                      onChange={(e) => setEditTargetReps(e.target.value)}
+                      className="w-full rounded border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+
+                  <div className="flex justify-end gap-2">
+                    <button
+                      type="button"
+                      className="rounded border border-gray-300 px-4 py-2"
+                      onClick={() => {
+                        setEditingGoal(null);
+                        setEditingDeadline("");
+                        setEditTargetWeight("");
+                        setEditTargetReps("");
+                      }}
+                    >
+                      キャンセル
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded bg-blue-500 px-4 py-2 text-white"
+                      onClick={handleUpdate}
+                    >
+                      保存
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
+        </>
       )}
-      {goals.map((t) => {
-        let formattedDate = "";
-
-        if (t.deadline !== null) {
-          const deadline = new Date(t.deadline);
-          formattedDate = `${deadline.getMonth() + 1}月${deadline.getDate()}日`;
-        }
-
-        return (
-          <div
-            key={t.id}
-            className="relative mt-[10px] overflow-hidden rounded-md"
-          >
-            <div className="absolute inset-y-0 -right-0 flex w-[80px] items-center justify-center bg-red-500">
-              <button
-                type="button"
-                className="h-full w-full text-white"
-                onClick={() => handleDelete(t)}
-              >
-                削除
-              </button>
-            </div>
-            <div
-              className={`relative z-10 flex w-full bg-white transition-transform duration-200
-                  ${swipedId === t.id ? "-translate-x-[80px]" : "translate-x-0"}`}
-              onMouseDown={() => handlePressStart(t)}
-              onMouseUp={handlePressEnd}
-              onMouseLeave={handlePressEnd}
-              onTouchStart={(e) => handleTouchStart(e, t)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={(e) => handleTouchEnd(e, t.id)}
-            >
-              <p className="w-[90px] ml-[7px]">{formattedDate}</p>
-              <p className="w-[180px] ml-[5px]">{t.exercise.name}</p>
-              <p className="w-[50px] ml-[5px]">{t.targetWeight}</p>
-              <p className="w-[50px] ml-[15px]">{t.targetReps}</p>
-            </div>
-          </div>
-        );
-      })}
-
-      {editingGoal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-[360px] rounded-xl bg-white p-4 shadow-lg">
-            <h2 className="mb-4 text-lg font-bold">記録を編集</h2>
-            <p className="mb-3 text-sm text-gray-700">
-              {editingGoal.exercise.name}
-            </p>
-
-            <div className="mb-3">
-              <label className="mb-1 block text-sm font-medium">期日</label>
-              <input
-                type="date"
-                value={editDeadline}
-                onChange={(e) => setEditingDeadline(e.target.value)}
-                className="block w-full min-w-0 max-w-full appearance-none rounded border border-gray-300 px-3 py-2 text-sm"
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="mb-1 block text-sm font-medium">重量</label>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                max="500"
-                value={editTargetWeight}
-                onChange={(e) => setEditTargetWeight(e.target.value)}
-                className="w-full rounded border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="mb-1 block text-sm font-medium">回数</label>
-              <input
-                type="number"
-                step="1"
-                min="1"
-                value={editTargetReps}
-                onChange={(e) => setEditTargetReps(e.target.value)}
-                className="w-full rounded border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                className="rounded border border-gray-300 px-4 py-2"
-                onClick={() => {
-                  setEditingGoal(null);
-                  setEditingDeadline("");
-                  setEditTargetWeight("");
-                  setEditTargetReps("");
-                }}
-              >
-                キャンセル
-              </button>
-              <button
-                type="button"
-                className="rounded bg-blue-500 px-4 py-2 text-white"
-                onClick={handleUpdate}
-              >
-                保存
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   );
 }

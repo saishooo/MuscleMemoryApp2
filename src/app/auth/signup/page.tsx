@@ -20,7 +20,7 @@ export default function SignUpForm() {
     }
 
     const timeoutId = window.setTimeout(() => {
-      router.replace("/record");
+      router.replace("/");
       router.refresh();
     }, 1200);
 
@@ -35,7 +35,7 @@ export default function SignUpForm() {
 
     const timeoutId = window.setTimeout(() => {
       setError("");
-    }, 1200);
+    }, 600);
 
     return () => window.clearTimeout(timeoutId);
   }, [error]);
@@ -199,14 +199,14 @@ export default function SignUpForm() {
               //⚫︎-translate-x-1/2 開始位置を半分だけ左にずらす
               //⚫︎-translate-y-1/2 縦の開始位置を半分だけ上にずらす
               //⚫︎shadow-lg 影をつけて、浮いて見せる
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+              <div className="fixed inset-0 z-50 flex items-center justify-center animate-slideIn">
                 <div className="rounded-xl bg-green-500 px-4 py-3 text-white shadow-lg">
                   {message}
                 </div>
               </div>
             )}
             {error && (
-              <div className="absolute left-1/2 top-[145px] z-50 -translate-x-1/2 animate-slideIn">
+              <div className="fixed inset-0 z-50 flex items-center justify-center animate-slideIn">
                 <div className="rounded-xl bg-red-500 px-4 py-3 text-white shadow-lg">
                   {error}
                 </div>

@@ -1,5 +1,5 @@
 // src/app/api/record/list/route.ts
-// 編集機能API
+// トレーニング内容削除のAPI
 
 import { NextResponse } from "next/server";
 import { getPrisma } from "@/lib/prisma";

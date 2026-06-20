@@ -13,7 +13,7 @@ const globalForPrisma = global as unknown as {
 
 export function getPrisma() {
   console.log("DATABASE_URL_NEW exists:", !!process.env.DATABASE_URL_NEW); // 環境変数の有無だけ確認
-  console.log("ENV:", process.env.DATABASE_URL_NEW); //環境変数を出力
+  //console.log("ENV:", process.env.DATABASE_URL_NEW); //環境変数を出力
 
   //DBにアドレスが入っていなければ終了
   if (!process.env.DATABASE_URL_NEW) {

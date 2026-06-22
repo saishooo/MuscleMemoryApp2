@@ -35,14 +35,12 @@ type Exercises = {
 
 //引数の型定義
 type Props = {
-  trainings: Training[];
   exerciseCategory: ExerciseCategory[];
   exercises: Exercises[];
   loginUserId: string | null;
 };
 
 export default function GlaphOutput({
-  trainings,
   exerciseCategory,
   exercises,
   loginUserId,

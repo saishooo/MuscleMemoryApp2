@@ -23,25 +23,13 @@ type Training = {
   updatedAt: Date;
 };
 
-//Exercisesテーブルの型定義
-type Exercises = {
-  id: string;
-  name: string;
-  categoryId: string;
-};
-
 //引数の型定義
 type Props = {
   trainings: Training[];
-  exercises: Exercises[];
   loginUserId: string | null;
 };
 
-export default function TodayRecordsList({
-  trainings,
-  exercises,
-  loginUserId,
-}: Props) {
+export default function TodayRecordsList({ trainings, loginUserId }: Props) {
   const router = useRouter();
   const [swipedId, setSwipedId] = useState<string | null>(null); //今スワイプされ、削除ボタンが出ている行のIDを記録
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null); //長押し判定用タイマー
@@ -255,11 +243,11 @@ export default function TodayRecordsList({
   }
 
   return (
-    <div className="h-[340px] overflow-y-auto">
+    <div className="h-85 overflow-y-auto">
       {loading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="rounded-xl bg-gray-500">
-            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+            <p className="flex items-center justify-center h-12 w-25 text-sm font-bold text-white">
               削除中...
             </p>
           </div>
@@ -280,11 +268,8 @@ export default function TodayRecordsList({
         </div>
       )}
       {trainings.map((t) => (
-        <div
-          key={t.id}
-          className="relative mt-[10px] overflow-hidden rounded-md"
-        >
-          <div className="absolute inset-y-0 -right-0 flex w-[80px] items-center justify-center bg-red-500">
+        <div key={t.id} className="relative mt-2 overflow-hidden rounded-md">
+          <div className="absolute inset-y-0 -right-0 flex w-20 items-center justify-center bg-red-500">
             <button
               type="button"
               className="h-full w-full text-white"
@@ -295,7 +280,7 @@ export default function TodayRecordsList({
           </div>
           <div
             className={`relative z-10 flex w-full bg-white transition-transform duration-200 
-                ${swipedId === t.id ? "-translate-x-[80px]" : "translate-x-0"}`}
+                ${swipedId === t.id ? "-translate-x-20" : "translate-x-0"}`}
             onMouseDown={() => handlePressStart(t)} //onMouseDown マウスボタンを押した瞬間
             onMouseUp={handlePressEnd} //onMouseUp マウスボタンを離した瞬間
             onMouseLeave={handlePressEnd} //onMouseLeave 押したままマウスが要素外へ出た
@@ -303,16 +288,16 @@ export default function TodayRecordsList({
             onTouchMove={handleTouchMove} //onTouchMove 指を画面上で動かしている途中
             onTouchEnd={(e) => handleTouchEnd(e, t.id)} //onTouchEnd 指を離した瞬間
           >
-            <p className="w-[180px] ml-[20px]">{t.exercise.name}</p>
-            <p className="w-[100px] ml-[50px]">{t.weight}</p>
-            <p className="w-[90px] ml-[40px]">{t.reps}</p>
+            <p className="w-45 ml-5">{t.exercise.name}</p>
+            <p className="w-25 ml-12">{t.weight}</p>
+            <p className="w-22 ml-10">{t.reps}</p>
           </div>
         </div>
       ))}
 
       {editingTraining && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-[360px] rounded-xl bg-white p-4 shadow-lg">
+          <div className="w-full max-w-90 rounded-xl bg-white p-4 shadow-lg">
             <h2 className="mb-4 text-lg font-bold">記録を編集</h2>
             <p className="mb-3 text-sm text-gray-700">
               {editingTraining.exercise.name}

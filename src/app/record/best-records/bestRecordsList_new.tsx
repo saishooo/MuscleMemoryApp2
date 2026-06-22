@@ -16,20 +16,12 @@ type Record = {
   updatedAt: Date;
 };
 
-//Exerciseテーブルの型定義
-type Exercises = {
-  id: string;
-  name: string;
-  categoryId: string;
-};
-
 //引数の定義
 type Props = {
   records: Record[];
-  exercises: Exercises[];
 };
 
-export default function BestRecordsList({ records, exercises }: Props) {
+export default function BestRecordsList({ records }: Props) {
   return (
     <>
       {records.length === 0 ? (

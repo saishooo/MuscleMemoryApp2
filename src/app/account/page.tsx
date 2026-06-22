@@ -26,11 +26,11 @@ export default async function UserInfo() {
 
     return (
       <div className="min-h-screen">
-        <div className="flex flex-col items-center mt-[40px]">
+        <div className="flex flex-col items-center mt-10">
           <a className="font-bold text-xl">ユーザー情報</a>
 
-          <div className="relative w-[380px] h-[300px] mt-[20px] rounded border border-gray-500">
-            <div className="flex flex-col mt-[35px] ml-[10px]">
+          <div className="relative w-95 h-75 mt-5 rounded border border-gray-500">
+            <div className="flex flex-col mt-8 ml-2">
               <div className="flex">
                 <p className="font-bold w-34">ユーザーID：</p>
                 <p>{username}</p>
@@ -40,7 +40,7 @@ export default async function UserInfo() {
                 <p className="font-bold w-34">ユーザー名：</p>
                 <p>{nickname}</p>
               </div>
-              
+
               <div className="flex">
                 <p className="font-bold w-34">メールアドレス：</p>
                 <p>{email}</p>

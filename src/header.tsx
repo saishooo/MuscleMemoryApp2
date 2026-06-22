@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { getPrisma } from "./lib/prisma";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
+import { getUserInfoByUserId } from "./lib/record";
 
 export default async function Header() {
   noStore();
@@ -14,23 +15,17 @@ export default async function Header() {
     { id: 1, href: "/", label: "ホーム" },
     { id: 2, href: "/record", label: "トレーニング" },
     { id: 3, href: "/record/graphs", label: "グラフ" },
-    { id: 4, href: "/", label: "アカウント" },
+    { id: 4, href: "/account", label: "アカウント" },
   ];
 
   let username = "ゲスト";
   let isLogin = false;
 
-  if (userId) {
-    const prisma = getPrisma();
+  const userInfo = await getUserInfoByUserId(userId);
 
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
-
-    if (user) {
-      username = user.username;
-      isLogin = true;
-    }
+  if (userInfo){
+    username = userInfo.username;
+    isLogin = true;
   }
 
   return (
@@ -47,11 +42,7 @@ export default async function Header() {
         </div>
 
         <div className="flex mt-[20px]">
-          {!isLogin ? (
-            <Link href="/auth" className="border-b">
-              ログイン・登録
-            </Link>
-          ) : (
+          {isLogin && (
             <>
               {items.map((item) => (
                 <Link key={item.id} href={item.href} className="ml-3 border-b">

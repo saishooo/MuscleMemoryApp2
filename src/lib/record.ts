@@ -96,3 +96,18 @@ export async function getBestRecordsByUserId(userId: string | null) {
     },
   });
 }
+
+//ユーザー情報を取得する関数
+export async function getUserInfoByUserId(userId: string | null | undefined) {
+  if (!userId) {
+    return null;
+  }
+
+  const prisma = getPrisma();
+
+  return await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+}

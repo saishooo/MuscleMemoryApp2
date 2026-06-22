@@ -1,0 +1,65 @@
+//src/app/auth/page.tsx
+//ユーザー情報ページ
+
+import { getPrisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
+import { unstable_noStore as noStore } from "next/cache";
+import { getUserInfoByUserId } from "@/lib/record";
+
+export default async function UserInfo() {
+  noStore();
+  const prisma = getPrisma();
+
+  const cookiesStore = await cookies();
+  const userId = cookiesStore.get("userId")?.value;
+
+  if (!userId) {
+    return <p>ログインしてください。</p>;
+  }
+
+  const userInfo = await getUserInfoByUserId(userId);
+
+  if (userInfo) {
+    const username = userInfo.username;
+    const nickname = userInfo.nickname;
+    const email = userInfo.email;
+
+    return (
+      <div className="min-h-screen">
+        <div className="flex flex-col items-center mt-[40px]">
+          <a className="font-bold text-xl">ユーザー情報</a>
+
+          <div className="relative w-[380px] h-[300px] mt-[20px] rounded border border-gray-500">
+            <div className="flex flex-col mt-[35px] ml-[10px]">
+              <div className="flex">
+                <p className="font-bold w-34">ユーザーID：</p>
+                <p>{username}</p>
+              </div>
+
+              <div className="flex">
+                <p className="font-bold w-34">ユーザー名：</p>
+                <p>{nickname}</p>
+              </div>
+              
+              <div className="flex">
+                <p className="font-bold w-34">メールアドレス：</p>
+                <p>{email}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <form action="/api/auth/logout" method="POST">
+              <button
+                type="submit"
+                className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
+              >
+                ログアウト
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

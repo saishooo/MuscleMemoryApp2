@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { getPrisma } from "./lib/prisma";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
+import { getUserInfoByUserId } from "./lib/record";
 
 export default async function Header() {
   noStore();
@@ -20,17 +21,11 @@ export default async function Header() {
   let username = "ゲスト";
   let isLogin = false;
 
-  if (userId) {
-    const prisma = getPrisma();
+  const userInfo = await getUserInfoByUserId(userId);
 
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
-
-    if (user) {
-      username = user.username;
-      isLogin = true;
-    }
+  if (userInfo){
+    username = userInfo.username;
+    isLogin = true;
   }
 
   return (

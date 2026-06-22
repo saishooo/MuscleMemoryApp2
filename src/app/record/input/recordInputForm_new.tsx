@@ -147,7 +147,7 @@ export default function RecordInputform({
       {loading && (
         <div className="fixed inset-0 z-60 flex items-center justify-center">
           <div className="rounded-xl bg-gray-500">
-            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+            <p className="flex items-center justify-center h-12 w-25 text-sm font-bold text-white">
               登録中...
             </p>
           </div>

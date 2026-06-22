@@ -1,7 +1,6 @@
 // src/app/record/today-records/page.tsx
 // 今日の記録を表示するページ
 
-import { getPrisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { unstable_noStore as noStore } from "next/cache";
 import TodayRecordsList from "./todayRecordsList";
@@ -9,8 +8,6 @@ import { getTodayRecordsByUserId } from "@/lib/record";
 
 export default async function TodayRecords() {
   noStore(); //キャッシュ禁止
-  const prisma = getPrisma();
-  const exercise = await prisma.exercise.findMany();
 
   //ログイン情報の取得
   const cookiesStore = await cookies();

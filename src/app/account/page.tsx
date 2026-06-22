@@ -1,14 +1,12 @@
 //src/app/auth/page.tsx
 //ユーザー情報ページ
 
-import { getPrisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { unstable_noStore as noStore } from "next/cache";
 import { getUserInfoByUserId } from "@/lib/record";
 
 export default async function UserInfo() {
   noStore();
-  const prisma = getPrisma();
 
   const cookiesStore = await cookies();
   const userId = cookiesStore.get("userId")?.value;

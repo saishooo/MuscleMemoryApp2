@@ -63,7 +63,7 @@ export default async function Home() {
       <div className="flex flex-col justify-center items-center mx-auto">
         <div className="pt-14">
           <div className="flex justify-center rounded border border-gray-500">
-            <RecordsCalendar trainings={trainings} userId={userId} />
+            <RecordsCalendar userId={userId} />
           </div>
         </div>
 
@@ -91,7 +91,6 @@ export default async function Home() {
           <div className="rounded border border-gray-500 w-96 h-130 shadow-lg">
             <p className="w-full pt-2 pl-3 text-lg font-bold">記録推移</p>
             <GlaphOutput
-              trainings={trainings}
               exerciseCategory={exerciseCategory}
               exercises={exercise}
               loginUserId={userId}
@@ -102,7 +101,7 @@ export default async function Home() {
         <div className="flex justify-center pt-5">
           <div className="rounded border border-gray-500 w-96 max-h-100 shadow-lg">
             <p className="w-full pt-2 pl-2 text-lg font-bold">最高記録</p>
-            <BestRecordsList records={records} exercises={exercise} />
+            <BestRecordsList records={records} />
           </div>
         </div>
 
@@ -120,7 +119,7 @@ export default async function Home() {
         <div className="flex justify-center pt-5">
           <div className="rounded border border-gray-500 w-96 h-100 shadow-lg">
             <p className="w-full pt-2 pl-2 text-lg font-bold">すべての記録</p>
-            <AllRecordsList trainings={trainings} exercises={exercise} />
+            <AllRecordsList trainings={trainings} />
           </div>
         </div>
         <div className="pt-12"></div>

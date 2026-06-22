@@ -16,20 +16,12 @@ type Training = {
   updatedAt: Date;
 };
 
-//Exercisesテーブルの型定義
-type Exercises = {
-  id: string;
-  name: string;
-  categoryId: string;
-};
-
 //引数の定義
 type Props = {
   trainings: Training[];
-  exercises: Exercises[];
 };
 
-export default function AllRecordsList({ trainings, exercises }: Props) {
+export default function AllRecordsList({ trainings }: Props) {
   const sortedTrainings = [...trainings].sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });

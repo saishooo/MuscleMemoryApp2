@@ -1,7 +1,6 @@
 //src/header.tsx
 //ヘッダー
 import { cookies } from "next/headers";
-import { getPrisma } from "./lib/prisma";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
 import { getUserInfoByUserId } from "./lib/record";
@@ -23,25 +22,25 @@ export default async function Header() {
 
   const userInfo = await getUserInfoByUserId(userId);
 
-  if (userInfo){
+  if (userInfo) {
     username = userInfo.username;
     isLogin = true;
   }
 
   return (
     <div className="w-full">
-      <div className="flex flex-col w-full pl-[10px]">
-        <div className="h-[30px] mt-[15px]">
+      <div className="flex flex-col w-full pl-3">
+        <div className="h-7 mt-4">
           <Link href="/" className="font-bold text-2xl">
             MUSCLE MEMORY
           </Link>
         </div>
 
-        <div className="mt-[15px]">
+        <div className="mt-4">
           <p className="font-bold text-base">{username}</p>
         </div>
 
-        <div className="flex mt-[20px]">
+        <div className="flex mt-5">
           {isLogin && (
             <>
               {items.map((item) => (

@@ -7,7 +7,6 @@ import Link from "next/link";
 import { getPrisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { unstable_noStore as noStore } from "next/cache";
-import { getAllRecordsByUserId } from "@/lib/record";
 import GlaphOutput from "./glaphOutput_new";
 
 export default async function Home() {
@@ -46,8 +45,6 @@ export default async function Home() {
     );
   }
 
-  const trainings = await getAllRecordsByUserId(userId);
-
   return (
     <div className="min-h-screen min-w-full">
       <div className="flex flex-col justify-center items-center mx-auto">
@@ -55,7 +52,6 @@ export default async function Home() {
           <div className="rounded border border-gray-500 w-96 h-130 shadow-lg">
             <p className="w-full pt-2 pl-3 text-lg font-bold">記録推移</p>
             <GlaphOutput
-              trainings={trainings}
               exerciseCategory={exerciseCategory}
               exercises={exercise}
               loginUserId={userId}

@@ -25,11 +25,10 @@ type Training = {
 };
 
 type Props = {
-  trainings: Training[];
   userId: string | null;
 };
 
-export default function RecordsCalendar({ trainings, userId }: Props) {
+export default function RecordsCalendar({ userId }: Props) {
   const [date, setDate] = useState<Date | null>(null);
   const [selectedTrainings, setSelectedTrainings] = useState<Training[]>([]);
 

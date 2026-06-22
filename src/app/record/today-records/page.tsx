@@ -20,9 +20,9 @@ export default async function TodayRecords() {
   if (!userId) {
     return (
       <div className="min-h-screen">
-        <div className="flex flex-col items-center mt-[40px]">
+        <div className="flex flex-col items-center mt-10">
           <h1 className="font-bold text-xl">今日の記録を確認</h1>
-          <div className="w-[380px] h-[400px] mt-[20px] rounded border border-gray-500">
+          <div className="w-95 h-100 mt-5 rounded border border-gray-500">
             <h2>ログインまたは新規登録してから登録してください</h2>
           </div>
         </div>
@@ -36,19 +36,15 @@ export default async function TodayRecords() {
   //ログインしている場合
   return (
     <div className="min-h-screen">
-      <div className="flex flex-col items-center mt-[40px]">
+      <div className="flex flex-col items-center mt-10">
         <h1 className="font-bold text-xl">今日の記録を確認</h1>
-        <div className="w-[380px] h-[400px] mt-[20px] rounded border border-gray-500">
-          <div className="flex w-full mt-[20px] h-[30px]">
-            <p className="font-bold w-[180px] ml-[20px]">トレーニング名</p>
-            <p className="font-bold w-[100px] ml-[30px]">重量</p>
-            <p className="font-bold w-[90px] ml-[30px]">回数</p>
+        <div className="w-95 h-100 mt-5 rounded border border-gray-500">
+          <div className="flex w-full mt-5 h-7">
+            <p className="font-bold w-45 ml-5">トレーニング名</p>
+            <p className="font-bold w-100 ml-7">重量</p>
+            <p className="font-bold w-22 ml-7">回数</p>
           </div>
-          <TodayRecordsList
-            trainings={trainings}
-            exercises={exercise}
-            loginUserId={userId}
-          />
+          <TodayRecordsList trainings={trainings} loginUserId={userId} />
         </div>
       </div>
     </div>

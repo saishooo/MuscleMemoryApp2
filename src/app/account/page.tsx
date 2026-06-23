@@ -27,7 +27,7 @@ export default async function UserInfo() {
         <div className="flex flex-col items-center mt-10">
           <a className="font-bold text-xl">ユーザー情報</a>
 
-          <div className="relative w-95 h-75 mt-5 rounded border border-gray-500">
+          <div className="relative w-95 h-50 mt-5 rounded border border-gray-500">
             <div className="flex flex-col mt-8 ml-2">
               <div className="flex">
                 <p className="font-bold w-34">ユーザーID：</p>
@@ -42,6 +42,17 @@ export default async function UserInfo() {
               <div className="flex">
                 <p className="font-bold w-34">メールアドレス：</p>
                 <p>{email}</p>
+              </div>
+            </div>
+
+            <div className="flex justify-center pt-8">
+              <button className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg">
+                編集
+              </button>
+              <div className="pl-4">
+                <button className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg">
+                  パスワード変更
+                </button>
               </div>
             </div>
           </div>

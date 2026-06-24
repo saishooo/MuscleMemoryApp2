@@ -90,29 +90,70 @@ export default function AccountInfo({ userInfo }: Props) {
           </div>
 
           <div className="flex justify-center pt-8">
-            <button
-              className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
-              onClick={() => {
-                if (isEditPass === false) {
-                  setIsEditInfo(!isEditInfo);
-                }
-              }}
-            >
-              {isEditInfo ? "更新" : "編集"}
-            </button>
-
-            <div className="pl-4">
+            {/* ユーザー情報またはパスワードが編集中でなければ表示 */}
+            {(isEditInfo || isEditPass) && (
               <button
                 className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
                 onClick={() => {
-                  if (isEditInfo === false) {
-                    setIsEditPass(!isEditPass);
-                  }
+                  setIsEditInfo(false);
+                  setIsEditPass(false);
                 }}
               >
-                {isEditPass ? "更新" : "パスワード変更"}
+                戻る
               </button>
-            </div>
+            )}
+
+            {/* パスワードが編集中でなければ表示 */}
+            {!isEditPass && (
+              <div className={isEditInfo ? "pl-4" : "pl-0"}>
+                <button
+                  className={
+                    isEditInfo
+                      ? "font-bold rounded border border-gray-500 w-30 h-10 shadow-lg bg-green-400"
+                      : "font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
+                  }
+                  onClick={() => {
+                    if (isEditPass === false) {
+                      //パスワードが編集中でなければ押下可能
+                      if (isEditInfo === true) {
+                        //更新ボタン押下時のみ実行
+                        //api送信処理
+                        console.log("ユーザー情報変更api送信");
+                      }
+                      setIsEditInfo(!isEditInfo);
+                    }
+                  }}
+                >
+                  {isEditInfo ? "更新" : "編集"}
+                </button>
+              </div>
+            )}
+
+            {/* ユーザー情報が編集中でなければ表示 */}
+            {!isEditInfo && (
+              <div className="pl-4">
+                <button
+                  className={
+                    isEditPass
+                      ? "font-bold rounded border border-gray-500 w-30 h-10 shadow-lg bg-green-400"
+                      : "font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
+                  }
+                  onClick={() => {
+                    if (isEditInfo === false) {
+                      //ユーザー情報が編集中でなければ押下可能
+                      if (isEditPass === true) {
+                        //更新ボタン押下時のみ実行
+                        //api送信処理
+                        console.log("パスワード変更api送信");
+                      }
+                      setIsEditPass(!isEditPass);
+                    }
+                  }}
+                >
+                  {isEditPass ? "更新" : "パスワード変更"}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

@@ -1,5 +1,8 @@
 "use client";
 
+//src/app/account/AccountInfo.tsx
+
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 //src/app/auth/page.tsx
@@ -19,10 +22,43 @@ type Props = {
 };
 
 export default function AccountInfo({ userInfo }: Props) {
+  const router = useRouter();
   const [isEditInfo, setIsEditInfo] = useState<boolean>(false);
   const [isEditPass, setIsEditPass] = useState<boolean>(false);
   const [editUserInfo, setEditUserInfo] = useState<User>(userInfo);
   const [editPassword, setEditPassword] = useState("");
+
+  const userInfoUpdate = async () => {
+    console.log(userInfo.nickname);
+    console.log(editUserInfo.nickname);
+    if (
+      userInfo.username === editUserInfo.username &&
+      userInfo.nickname === editUserInfo.nickname &&
+      userInfo.email === editUserInfo.email
+    ) {
+      console.log("変更がされていません");
+      return;
+    }
+
+    try {
+      const body = {
+        userId: String(userInfo.id),
+        username: String(editUserInfo.username),
+        nickname: String(editUserInfo.nickname),
+        email: String(editUserInfo.email),
+      };
+
+      const res = await fetch("api/account", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      router.refresh();
+    } catch (error) {
+      console.error("通信に失敗しました");
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -60,7 +96,7 @@ export default function AccountInfo({ userInfo }: Props) {
                   onChange={(e) =>
                     setEditUserInfo({
                       ...editUserInfo,
-                      username: e.target.value,
+                      nickname: e.target.value,
                     })
                   }
                 />
@@ -79,7 +115,7 @@ export default function AccountInfo({ userInfo }: Props) {
                   onChange={(e) =>
                     setEditUserInfo({
                       ...editUserInfo,
-                      username: e.target.value,
+                      email: e.target.value,
                     })
                   }
                 />
@@ -118,7 +154,7 @@ export default function AccountInfo({ userInfo }: Props) {
                       if (isEditInfo === true) {
                         //更新ボタン押下時のみ実行
                         //api送信処理
-                        console.log("ユーザー情報変更api送信");
+                        userInfoUpdate();
                       }
                       setIsEditInfo(!isEditInfo);
                     }

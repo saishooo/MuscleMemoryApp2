@@ -16,13 +16,13 @@ export default async function Header() {
     { id: 3, href: "/account", label: "アカウント" },
   ];
 
-  let username = "ゲスト";
+  let nickname = "ゲスト";
   let isLogin = false;
 
   const userInfo = await getUserInfoByUserId(userId);
 
   if (userInfo) {
-    username = userInfo.username;
+    nickname = userInfo.nickname;
     isLogin = true;
   }
 
@@ -36,7 +36,7 @@ export default async function Header() {
         </div>
 
         <div className="mt-4">
-          <p className="font-bold text-base">{username}</p>
+          <p className="font-bold text-base">{nickname}</p>
         </div>
 
         <div className="flex mt-5">

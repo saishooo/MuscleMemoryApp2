@@ -115,53 +115,53 @@ export default function SignUpForm() {
       {loading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="rounded-xl bg-gray-500">
-            <p className="flex items-center justify-center h-[50px] w-[100px] text-sm font-bold text-white">
+            <p className="flex items-center justify-center h-12 w-25 text-sm font-bold text-white">
               登録中...
             </p>
           </div>
         </div>
       )}
-      <div className="flex flex-col items-center mt-[40px]">
+      <div className="flex flex-col items-center mt-10">
         <a className="font-bold text-xl">新規ユーザー登録</a>
 
         <form onSubmit={handleSubmit}>
-          <div className="relative w-[380px] h-[500px] mt-[20px] rounded border border-gray-500">
-            <div className="flex items-center mt-[35px] ml-[10px]">
+          <div className="relative w-95 h-125 mt-5 rounded border border-gray-500">
+            <div className="flex items-center mt-8 ml-2">
               <a className="font-bold w-[px]">ユーザーID</a>
               <input
                 name="username"
                 type="text"
                 placeholder=" ユーザーIDを設定"
-                className="w-[200px] mr-[10px] ml-auto border rounded"
+                className="w-50 mr-2 ml-auto border rounded"
               />
             </div>
 
-            <div className="flex items-center mt-[35px] ml-[10px]">
+            <div className="flex items-center mt-8 ml-2">
               <a className="font-bold w-[px]">ニックネーム</a>
               <input
                 name="nickname"
                 type="text"
                 placeholder=" 山田太郎"
-                className="w-[200px] mr-[10px] ml-auto border rounded"
+                className="w-50 mr-2 ml-auto border rounded"
               />
             </div>
 
-            <div className="flex items-center mt-[60px] ml-[10px]">
+            <div className="flex items-center mt-15 ml-2">
               <a className="font-bold">メールアドレス</a>
               <input
                 name="email"
                 type="text"
                 placeholder=" @email.com"
-                className="w-[200px] mr-[10px] ml-auto border rounded"
+                className="w-50 mr-2 ml-auto border rounded"
               />
             </div>
 
-            <div className="relative flex items-center mt-[60px] ml-[10px]">
+            <div className="relative flex items-center mt-15 ml-2">
               <a className="font-bold">パスワード</a>
               <input
                 name="password"
                 type={show ? "text" : "password"}
-                className="w-[200px] mr-[10px] ml-auto border rounded"
+                className="w-50 mr-2 ml-auto border rounded"
               />
               <button
                 type="button"
@@ -172,12 +172,12 @@ export default function SignUpForm() {
               </button>
             </div>
 
-            <div className="relative flex items-center mt-[60px] ml-[10px]">
+            <div className="relative flex items-center mt-15 ml-2">
               <a className="font-bold">パスワードの確認</a>
               <input
                 name="confirm_password"
                 type={show ? "text" : "password"}
-                className="w-[200px] mr-[10px] ml-auto border rounded"
+                className="w-50 mr-2 ml-auto border rounded"
               />
               <button
                 type="button"
@@ -188,8 +188,11 @@ export default function SignUpForm() {
               </button>
             </div>
 
-            <div className="flex justify-end mt-[60px] mr-[20px]">
-              <button type="submit" className="font-bold">
+            <div className="flex justify-end mt-15 mr-2">
+              <button
+                type="submit"
+                className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
+              >
                 登録
               </button>
             </div>

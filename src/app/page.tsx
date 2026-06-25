@@ -42,7 +42,7 @@ export default async function Home() {
                 <Link
                   key={item.id}
                   href={item.href}
-                  className="flex justify-center items-center w-30 h-10 rounded-lg font-bold text-white bg-gray-500"
+                  className="flex items-center justify-center rounded border border-gray-500 w-30 h-10 shadow-lg font-bold"
                 >
                   {item.label}
                 </Link>

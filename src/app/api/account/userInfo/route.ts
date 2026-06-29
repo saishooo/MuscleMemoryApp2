@@ -14,7 +14,7 @@ export async function PATCH(req: Request) {
 
     if (userId === "" || username === "" || nickname === "" || email === "") {
       return NextResponse.json(
-        { error: "空白の項目があります" },
+        { error: "未入力の項目があります" },
         { status: 400 }
       );
     }

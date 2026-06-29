@@ -3,7 +3,7 @@
 //src/app/account/AccountInfo.tsx
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 //src/app/auth/page.tsx
@@ -27,11 +27,22 @@ export default function AccountInfo({ userInfo }: Props) {
   const [isEditInfo, setIsEditInfo] = useState<boolean>(false);
   const [isEditPass, setIsEditPass] = useState<boolean>(false);
   const [editUserInfo, setEditUserInfo] = useState<User>(userInfo);
-  const [editPassword, setEditPassword] = useState<User>(userInfo);
 
+  const [nowPass, setNowPass] = useState<string>("");
+  const [newPass, setNewPass] = useState<string>("");
+  const [newPassConf, setNewPassConf] = useState<string>("");
+
+  //新しいパスワードがあっているかの確認
+  useEffect(() => {
+    if (newPass === newPassConf) {
+      console.log("同じ");
+    } else {
+      console.log("違う");
+    }
+  }, [newPass, newPassConf]);
+
+  //ユーザー情報アップデート処理
   const userInfoUpdate = async () => {
-    console.log(userInfo.nickname);
-    console.log(editUserInfo.nickname);
     if (
       userInfo.username === editUserInfo.username &&
       userInfo.nickname === editUserInfo.nickname &&
@@ -61,7 +72,36 @@ export default function AccountInfo({ userInfo }: Props) {
     }
   };
 
-  const passwordUpdate = async () => {};
+  //パスワード更新処理
+  const passwordUpdate = async () => {
+    if (newPass !== newPassConf) {
+      console.log("新しいパスワードと確認パスワードが異なります");
+      return;
+    }
+    if (nowPass === "" || newPass === "" || newPassConf === "") {
+      console.log("未入力の項目があります");
+      return;
+    }
+
+    try {
+      const body = {
+        userId: String(userInfo.id),
+        nowPass: String(nowPass),
+        newPass: String(newPass),
+        newPassConf: String(newPassConf),
+      };
+
+      const res = await fetch("api/account/password", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      router.refresh();
+    } catch (error) {
+      console.error("通信に失敗しました");
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -73,18 +113,33 @@ export default function AccountInfo({ userInfo }: Props) {
               <div className="flex flex-col mt-8 ml-2">
                 <div className="flex">
                   <p className="font-bold w-38">現在のパスワード</p>
-                  <input type="text" className="border rounded w-50" />
+                  <input
+                    type="password"
+                    className="border rounded w-50"
+                    onChange={(e) => {
+                      setNowPass(e.target.value);
+                    }}
+                  />
                 </div>
                 <div className="flex mt-10">
                   <p className="font-bold w-38">新しいパスワード</p>
-                  <input type="text" className="border rounded w-50" />
+                  <input
+                    type="password"
+                    className="border rounded w-50"
+                    onChange={(e) => {
+                      setNewPass(e.target.value);
+                    }}
+                  />
                 </div>
                 <div className="flex mt-4">
-                  <p className="font-bold w-38">確認</p>
+                  <p className="font-bold w-38">確認用パスワード</p>
                   <input
-                    type="text"
+                    type="password"
                     className="border rounded w-50"
                     placeholder="新しいパスワードをもう一度入力"
+                    onChange={(e) => {
+                      setNewPassConf(e.target.value);
+                    }}
                   />
                 </div>
               </div>
@@ -104,10 +159,9 @@ export default function AccountInfo({ userInfo }: Props) {
 
                     <div className="pl-4">
                       <button
-                        className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
+                        className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg bg-green-400"
                         onClick={() => {
-                          setIsEditInfo(false);
-                          setIsEditPass(false);
+                          passwordUpdate();
                         }}
                       >
                         更新

@@ -32,6 +32,8 @@ export default function AccountInfo({ userInfo }: Props) {
   const [newPass, setNewPass] = useState<string>("");
   const [newPassConf, setNewPassConf] = useState<string>("");
 
+  const [show, setShow] = useState(false);
+
   //新しいパスワードがあっているかの確認
   useEffect(() => {
     if (newPass === newPassConf) {
@@ -111,36 +113,59 @@ export default function AccountInfo({ userInfo }: Props) {
             <a className="font-bold text-xl">ユーザー情報</a>
             <div className="relative w-95 h-65 mt-5 rounded border border-gray-500">
               <div className="flex flex-col mt-8 ml-2">
-                <div className="flex">
+                <div className="relative flex">
                   <p className="font-bold w-38">現在のパスワード</p>
                   <input
-                    type="password"
+                    type={show ? "text" : "password"}
                     className="border rounded w-50"
                     onChange={(e) => {
                       setNowPass(e.target.value);
                     }}
                   />
+                  <button
+                    type="button"
+                    className="absolute right-6 text-gray-500"
+                    onClick={() => setShow(!show)}
+                  >
+                    {show ? "非表示" : "表示"}
+                  </button>
                 </div>
-                <div className="flex mt-10">
+
+                <div className="relative flex mt-10">
                   <p className="font-bold w-38">新しいパスワード</p>
                   <input
-                    type="password"
+                    type={show ? "text" : "password"}
                     className="border rounded w-50"
                     onChange={(e) => {
                       setNewPass(e.target.value);
                     }}
                   />
+                  <button
+                    type="button"
+                    className="absolute right-6 text-gray-500"
+                    onClick={() => setShow(!show)}
+                  >
+                    {show ? "非表示" : "表示"}
+                  </button>
                 </div>
-                <div className="flex mt-4">
+
+                <div className="relative flex mt-4">
                   <p className="font-bold w-38">確認用パスワード</p>
                   <input
-                    type="password"
+                    type={show ? "text" : "password"}
                     className="border rounded w-50"
-                    placeholder="新しいパスワードをもう一度入力"
+                    placeholder="もう一度入力"
                     onChange={(e) => {
                       setNewPassConf(e.target.value);
                     }}
                   />
+                  <button
+                    type="button"
+                    className="absolute right-6 text-gray-500"
+                    onClick={() => setShow(!show)}
+                  >
+                    {show ? "非表示" : "表示"}
+                  </button>
                 </div>
               </div>
               <div className="flex justify-center pt-8">

@@ -3,6 +3,7 @@
 //src/app/auth/login/page.tsx
 //ログインページ
 
+import Link from "next/link";
 import { useRouter } from "next/navigation"; //⚫︎ページ遷移を操作するためのフック
 import { useEffect, useState } from "react"; //⚫︎状態を保存し、画面を更新する
 
@@ -127,13 +128,22 @@ export default function LoginForm() {
               </button>
             </div>
 
-            <div className="flex justify-end mt-15 mr-4">
-              <button
-                type="submit"
-                className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
+            <div className="flex justify-center pt-15">
+              <Link
+                href="/"
+                className="flex items-center justify-center font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
               >
-                ログイン
-              </button>
+                戻る
+              </Link>
+
+              <div className="pl-4">
+                <button
+                  type="submit"
+                  className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg bg-green-400"
+                >
+                  ログイン
+                </button>
+              </div>
             </div>
 
             {message && (

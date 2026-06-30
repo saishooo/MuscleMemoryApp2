@@ -4,7 +4,6 @@
 import { NextResponse } from "next/server";
 import { getPrisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
-import { error } from "console";
 
 export async function PATCH(req: Request) {
   const prisma = getPrisma();

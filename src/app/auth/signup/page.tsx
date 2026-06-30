@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 // src/app/auth/signup/page.tsx
 // ユーザー登録ページ
@@ -188,14 +189,24 @@ export default function SignUpForm() {
               </button>
             </div>
 
-            <div className="flex justify-end mt-15 mr-2">
-              <button
-                type="submit"
-                className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
+            <div className="flex justify-center pt-15">
+              <Link
+                href="/"
+                className="flex items-center justify-center font-bold rounded border border-gray-500 w-30 h-10 shadow-lg"
               >
-                登録
-              </button>
+                戻る
+              </Link>
+
+              <div className="pl-4">
+                <button
+                  type="submit"
+                  className="font-bold rounded border border-gray-500 w-30 h-10 shadow-lg bg-green-400"
+                >
+                  登録
+                </button>
+              </div>
             </div>
+
             {message && (
               //⚫︎absolute relativeがついている親の中で自由に基準を決められる
               //⚫︎left-1/2 左から50%の位置に設置(開始位置が真ん中にくる)

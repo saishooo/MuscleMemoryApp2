@@ -101,7 +101,7 @@ export default function AccountInfo({ userInfo }: Props) {
 
       setLoading(true); //ローディング開始
 
-      const res = await fetch("api/account/userInfo", {
+      const res = await fetch("/api/account/userInfo", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -109,9 +109,11 @@ export default function AccountInfo({ userInfo }: Props) {
 
       const data = await res.json();
 
+      console.log(res);
       if (!res.ok) {
         setError(data.error ?? "更新に失敗しました");
         setLoading(false); //ローディング終了
+        return;
       }
 
       setError("");
@@ -150,7 +152,7 @@ export default function AccountInfo({ userInfo }: Props) {
 
       setLoading(true); //ローディング開始
 
-      const res = await fetch("api/account/password", {
+      const res = await fetch("/api/account/password", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -161,6 +163,7 @@ export default function AccountInfo({ userInfo }: Props) {
       if (!res.ok) {
         setError(data.error ?? "パスワード変更に失敗しました");
         setLoading(false); //ローディング終了
+        return;
       }
 
       setError("");

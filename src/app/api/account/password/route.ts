@@ -38,7 +38,10 @@ export async function PATCH(req: Request) {
       );
     }
 
+    console.log(`入力のパスワード: ${nowPass}`);
+    console.log(`保存のパスワード${user.password}`);
     const isMatch = await bcrypt.compare(nowPass, user.password);
+    console.log("isMatch:", isMatch);
 
     if (!isMatch) {
       console.log("古いパスワードが違います");
@@ -47,7 +50,6 @@ export async function PATCH(req: Request) {
         { status: 401 }
       );
     }
-
     const hashedPassword = await bcrypt.hash(newPass, 10);
 
     await prisma.user.update({

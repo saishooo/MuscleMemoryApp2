@@ -57,7 +57,7 @@ export default function SignUpForm() {
       //⚫︎正規表現 ^(先頭) $(末尾) a-zA-z0-9(英数字) +(1文字以上)
       const regex = /^[a-zA-Z0-9_.]+$/;
       if (!regex.test(l_username)) {
-        setError("ユーザーIDは英数字「.」「_」入力してください");
+        setError("ユーザーIDは英数字「.」「_」作成してください");
         return;
       }
 
@@ -67,6 +67,16 @@ export default function SignUpForm() {
       if (l_password !== l_confirm_password) {
         setError("パスワードが一致しません");
         console.log("パスワードが一致しません");
+        return;
+      }
+
+      //(?=.*[A-Za-z])：英字を1文字以上含む
+      //(?=.*\d)：数字を1文字以上含む
+      //[A-Za-z\d]{7,}：英字と数字のみで7文字以上
+      const regexPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d_.!&%$#]{7,}$/;
+
+      if (!regexPass.test(l_password)) {
+        setError("パスワードに英数字を1文字以上ずつ使用してください");
         return;
       }
 

@@ -3,6 +3,7 @@
 
 import { NextResponse } from "next/server";
 import { getPrisma } from "@/lib/prisma";
+import { error } from "console";
 
 export async function PATCH(req: Request) {
   const prisma = getPrisma();
@@ -15,6 +16,14 @@ export async function PATCH(req: Request) {
     if (userId === "" || username === "" || nickname === "" || email === "") {
       return NextResponse.json(
         { error: "未入力の項目があります" },
+        { status: 400 }
+      );
+    }
+
+    const regex = /^[A-Za-z0-9_.]+$/;
+    if (!regex.test(username)){
+      return NextResponse.json(
+        { error: "ユーザーIDは英数字「.」「_」作成してください" },
         { status: 400 }
       );
     }

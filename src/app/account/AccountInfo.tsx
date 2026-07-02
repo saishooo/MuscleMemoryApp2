@@ -91,6 +91,13 @@ export default function AccountInfo({ userInfo }: Props) {
       return;
     }
 
+    console.log(editUserInfo.username);
+    const regex = /^[A-Za-z0-9_.]+$/;
+    if (!regex.test(editUserInfo.username)){
+      setError("ユーザーIDは英数字「.」「_」で作成してください");
+      return;
+    }
+
     try {
       const body = {
         userId: String(userInfo.id),
@@ -139,6 +146,13 @@ export default function AccountInfo({ userInfo }: Props) {
     if (newPass !== newPassConf) {
       console.log("新しいパスワードと確認パスワードが異なります");
       setError("新しいパスワードと確認パスワードが異なります");
+      return;
+    }
+
+    const regexPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d_.!&%$#]{7,}$/;
+
+    if (!regexPass.test(newPass)) {
+      setError("パスワードに英数字などを組み合わせて7文字以上ずつ使用してください");
       return;
     }
 

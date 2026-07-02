@@ -19,9 +19,16 @@ export async function PATCH(req: Request) {
       newPass === "" ||
       newPassConf === ""
     ) {
-      console.log("未入力の項目があります");
       return NextResponse.json(
         { error: "未入力の項目があります" },
+        { status: 400 }
+      );
+    }
+
+    const regexPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d_.!&$#]{7,}$/;
+    if (!regexPass.test(newPass)) {
+      return NextResponse.json(
+        { error: "パスワードに英数字を1文字以上ずつ使用してください"},
         { status: 400 }
       );
     }

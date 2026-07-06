@@ -28,7 +28,7 @@ export async function PATCH(req: Request) {
     const regexPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d_.!&$#]{7,}$/;
     if (!regexPass.test(newPass)) {
       return NextResponse.json(
-        { error: "パスワードに英数字を1文字以上ずつ使用してください"},
+        { error: "パスワードに英数字を1文字以上ずつ使用してください" },
         { status: 400 }
       );
     }
@@ -45,10 +45,10 @@ export async function PATCH(req: Request) {
       );
     }
 
-    console.log(`入力のパスワード: ${nowPass}`);
-    console.log(`保存のパスワード${user.password}`);
+    //console.log(`入力のパスワード: ${nowPass}`);
+    //console.log(`保存のパスワード${user.password}`);
     const isMatch = await bcrypt.compare(nowPass, user.password);
-    console.log("isMatch:", isMatch);
+    //console.log("isMatch:", isMatch);
 
     if (!isMatch) {
       console.log("古いパスワードが違います");

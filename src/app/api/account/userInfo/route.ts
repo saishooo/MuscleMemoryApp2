@@ -21,7 +21,7 @@ export async function PATCH(req: Request) {
     }
 
     const regex = /^[A-Za-z0-9_.]+$/;
-    if (!regex.test(username)){
+    if (!regex.test(username)) {
       return NextResponse.json(
         { error: "ユーザーIDは英数字「.」「_」作成してください" },
         { status: 400 }

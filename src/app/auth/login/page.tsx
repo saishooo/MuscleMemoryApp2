@@ -163,6 +163,12 @@ export default function LoginForm() {
             )}
           </div>
         </form>
+
+        <div className="flex justify-center items-center mt-10 w-60 h-10 rounded border border-gray-500 shadow-lg">
+          <a href="/password" className="flex items-center font-bold">
+            パスワードを忘れた場合
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -93,7 +93,7 @@ export default function AccountInfo({ userInfo }: Props) {
 
     console.log(editUserInfo.username);
     const regex = /^[A-Za-z0-9_.]+$/;
-    if (!regex.test(editUserInfo.username)){
+    if (!regex.test(editUserInfo.username)) {
       setError("ユーザーIDは英数字「.」「_」で作成してください");
       return;
     }
@@ -152,7 +152,9 @@ export default function AccountInfo({ userInfo }: Props) {
     const regexPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d_.!&%$#]{7,}$/;
 
     if (!regexPass.test(newPass)) {
-      setError("パスワードに英数字などを組み合わせて7文字以上ずつ使用してください");
+      setError(
+        "パスワードに英数字などを組み合わせて7文字以上ずつ使用してください"
+      );
       return;
     }
 
@@ -166,7 +168,7 @@ export default function AccountInfo({ userInfo }: Props) {
 
       setLoading(true); //ローディング開始
 
-      const res = await fetch("/api/account/password", {
+      const res = await fetch("/api/account/password/update", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -202,7 +204,7 @@ export default function AccountInfo({ userInfo }: Props) {
       <div className="flex flex-col items-center mt-10">
         {isEditPass ? (
           <>
-            <a className="font-bold text-xl">ユーザー情報</a>
+            <p className="font-bold text-xl">ユーザー情報</p>
             <div className="relative w-95 h-65 mt-5 rounded border border-gray-500">
               <form onSubmit={passwordUpdate}>
                 <div className="flex flex-col mt-8 ml-2">
@@ -291,7 +293,7 @@ export default function AccountInfo({ userInfo }: Props) {
           </>
         ) : (
           <>
-            <a className="font-bold text-xl">ユーザー情報</a>
+            <p className="font-bold text-xl">ユーザー情報</p>
             <div className="relative w-95 h-55 mt-5 rounded border border-gray-500">
               <div className="flex flex-col mt-8 ml-2">
                 <div className="flex">

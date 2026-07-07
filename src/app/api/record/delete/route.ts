@@ -119,7 +119,7 @@ export async function DELETE(req: Request) {
 
       const response = NextResponse.json(
         { message: "削除成功" },
-        { status: 200 }
+        { status: 204 }
       );
 
       return response;
@@ -159,7 +159,7 @@ export async function DELETE(req: Request) {
 
       const response = NextResponse.json(
         { message: "削除成功" },
-        { status: 200 }
+        { status: 204 }
       );
 
       return response;

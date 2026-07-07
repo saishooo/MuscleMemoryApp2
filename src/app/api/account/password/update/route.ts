@@ -68,7 +68,7 @@ export async function PATCH(req: Request) {
 
     const response = NextResponse.json(
       { message: "パスワードを更新しました" },
-      { status: 201 }
+      { status: 200 }
     );
 
     return response;

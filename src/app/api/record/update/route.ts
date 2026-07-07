@@ -102,7 +102,7 @@ export async function PATCH(req: Request) {
 
       const response = NextResponse.json(
         { message: "編集成功" },
-        { status: 201 }
+        { status: 200 }
       );
 
       return response;
@@ -177,7 +177,7 @@ export async function PATCH(req: Request) {
 
       const response = NextResponse.json(
         { message: "編集成功" },
-        { status: 201 }
+        { status: 200 }
       );
 
       return response;

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 //パスワードを忘れた場合の処理
 
 //src/app/password/page.tsx
@@ -60,9 +62,9 @@ export default function PasswordForget_page() {
 
             <div className="flex justify-center pt-8">
               <div className="flex justify-center items-center rounded border border-gray-500 w-30 h-10 shadow-lg">
-                <a href="/auth/login" className="font-bold">
+                <Link href="/auth/login" className="font-bold">
                   戻る
-                </a>
+                </Link>
               </div>
 
               <div className="pl-4">

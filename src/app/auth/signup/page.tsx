@@ -133,12 +133,12 @@ export default function SignUpForm() {
         </div>
       )}
       <div className="flex flex-col items-center mt-10">
-        <a className="font-bold text-xl">新規ユーザー登録</a>
+        <p className="font-bold text-xl">新規ユーザー登録</p>
 
         <form onSubmit={handleSubmit}>
           <div className="relative w-95 h-125 mt-5 rounded border border-gray-500">
             <div className="flex items-center mt-8 ml-2">
-              <a className="font-bold w-[px]">ユーザーID</a>
+              <p className="font-bold w-[px]">ユーザーID</p>
               <input
                 name="username"
                 type="text"
@@ -148,7 +148,7 @@ export default function SignUpForm() {
             </div>
 
             <div className="flex items-center mt-8 ml-2">
-              <a className="font-bold w-[px]">ニックネーム</a>
+              <p className="font-bold w-[px]">ニックネーム</p>
               <input
                 name="nickname"
                 type="text"
@@ -158,7 +158,7 @@ export default function SignUpForm() {
             </div>
 
             <div className="flex items-center mt-15 ml-2">
-              <a className="font-bold">メールアドレス</a>
+              <p className="font-bold">メールアドレス</p>
               <input
                 name="email"
                 type="text"
@@ -168,7 +168,7 @@ export default function SignUpForm() {
             </div>
 
             <div className="relative flex items-center mt-15 ml-2">
-              <a className="font-bold">パスワード</a>
+              <p className="font-bold">パスワード</p>
               <input
                 name="password"
                 type={show ? "text" : "password"}
@@ -184,7 +184,7 @@ export default function SignUpForm() {
             </div>
 
             <div className="relative flex items-center mt-15 ml-2">
-              <a className="font-bold">パスワードの確認</a>
+              <p className="font-bold">パスワードの確認</p>
               <input
                 name="confirm_password"
                 type={show ? "text" : "password"}

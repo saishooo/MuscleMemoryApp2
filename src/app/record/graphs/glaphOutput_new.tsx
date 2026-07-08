@@ -101,7 +101,7 @@ export default function GlaphOutput({
       <div className="flex flex-col pl-3 pt-2">
         <form onSubmit={handleSubmit}>
           <div className="flex">
-            <a className="w-12">部位:</a>
+            <p className="w-12">部位:</p>
             <select
               name="exerciseCategory"
               className="w-53 rounded border border-gray-300 px-2 text-sm"
@@ -117,7 +117,7 @@ export default function GlaphOutput({
           </div>
 
           <div className="flex pt-2">
-            <a className="w-12">種目:</a>
+            <p className="w-12">種目:</p>
             <select
               name="exercise"
               className="w-53 rounded border border-gray-300 px-2 text-sm"
@@ -165,12 +165,12 @@ export default function GlaphOutput({
       )}
       {graphSwitch === 0 && (
         <div className="flex justify-center pt-15">
-          <a>部位と種目を入れてください</a>
+          <p>部位と種目を入れてください</p>
         </div>
       )}
       {graphSwitch === 2 && (
         <div className="flex justify-center pt-15">
-          <a>選択された種目での記録がありません</a>
+          <p>選択された種目での記録がありません</p>
         </div>
       )}
     </div>

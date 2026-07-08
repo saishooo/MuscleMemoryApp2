@@ -98,12 +98,12 @@ export default function LoginForm() {
         </div>
       )}
       <div className="flex flex-col items-center mt-10">
-        <a className="font-bold text-xl">ログイン</a>
+        <p className="font-bold text-xl">ログイン</p>
 
         <form onSubmit={handleSubmit}>
           <div className="relative w-87 h-67 mt-5 rounded border border-gray-500">
             <div className="flex items-center mt-8 ml-2">
-              <a className="font-bold w-[px]">ユーザーID</a>
+              <p className="font-bold w-[px]">ユーザーID</p>
               <input
                 name="username"
                 type="text"
@@ -113,7 +113,7 @@ export default function LoginForm() {
             </div>
 
             <div className="relative flex items-center mt-15 ml-2">
-              <a className="font-bold">パスワード</a>
+              <p className="font-bold">パスワード</p>
               <input
                 name="password"
                 type={show ? "text" : "password"}
@@ -165,9 +165,9 @@ export default function LoginForm() {
         </form>
 
         <div className="flex justify-center items-center mt-10 w-60 h-10 rounded border border-gray-500 shadow-lg">
-          <a href="/password" className="flex items-center font-bold">
+          <Link href="/password" className="flex items-center font-bold">
             パスワードを忘れた場合
-          </a>
+          </Link>
         </div>
       </div>
     </div>

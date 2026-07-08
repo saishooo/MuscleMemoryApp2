@@ -23,20 +23,20 @@ export async function POST(req: Request) {
       );
     }
 
-    // const resetToken = crypto.randomBytes(32).toString("hex");
-    // const resetTokenExpire = new Date(Date.now() +1000 * 60 * 30);  //30分後に期限切れ
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetTokenExpire = new Date(Date.now() + 1000 * 60 * 30); //30分後に期限切れ
 
-    // await prisma.user.update({
-    //     where: { id: user.id },
-    //     data: {
-    //         resetToken,
-    //         resetTokenExpire,
-    //     },
-    // });
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        resetToken,
+        resetTokenExpire,
+      },
+    });
 
-    //const resetUrl = `https//localhost:3000/reset-password?token=${resetToken}`;
+    const resetUrl = `https//localhost:3000/reset-password?token=${resetToken}`;
 
-    //console.log(resetUrl);  //本番ではここでメール送信
+    console.log(resetUrl); //本番ではここでメール送信
 
     const response = NextResponse.json(
       { message: "再設定用メールを送信しました" },

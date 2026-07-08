@@ -167,7 +167,7 @@ export default function GoalInputForm({
               <input type="hidden" name="userId" value={userId ?? ""} />
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">部位</a>
+                <p className="pb-1 block text-sm font-medium">部位</p>
                 <select
                   name="exerciseCategory"
                   className="block w-full min-w-0 max-w-full appearance-none rounded border border-gray-300 px-3 py-2 text-sm"
@@ -183,7 +183,7 @@ export default function GoalInputForm({
               </div>
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">種目</a>
+                <p className="pb-1 block text-sm font-medium">種目</p>
                 <select
                   name="exercise"
                   className="w-full rounded border border-gray-300 px-3 py-2"
@@ -203,7 +203,7 @@ export default function GoalInputForm({
               </div>
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">重量</a>
+                <p className="pb-1 block text-sm font-medium">重量</p>
                 <input
                   name="targetWeight"
                   type="number"
@@ -215,7 +215,7 @@ export default function GoalInputForm({
               </div>
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">回数</a>
+                <p className="pb-1 block text-sm font-medium">回数</p>
                 <select
                   name="targetReps"
                   className="w-full rounded border border-gray-300 px-3 py-2"
@@ -228,7 +228,7 @@ export default function GoalInputForm({
               </div>
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">期限</a>
+                <p className="pb-1 block text-sm font-medium">期限</p>
                 <input
                   name="deadline"
                   type="date"

@@ -165,7 +165,7 @@ export default function RecordInputform({
               <input type="hidden" name="userId" value={userId ?? ""} />
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">部位</a>
+                <p className="pb-1 block text-sm font-medium">部位</p>
                 <select
                   name="exerciseCategory"
                   className="block w-full min-w-0 max-w-full appearance-none rounded border border-gray-300 px-3 py-2 text-sm"
@@ -181,7 +181,7 @@ export default function RecordInputform({
               </div>
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">種目</a>
+                <p className="pb-1 block text-sm font-medium">種目</p>
                 <select
                   name="exercises"
                   className="w-full rounded border border-gray-300 px-3 py-2"
@@ -201,7 +201,7 @@ export default function RecordInputform({
               </div>
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">重量</a>
+                <p className="pb-1 block text-sm font-medium">重量</p>
                 <input
                   name="weight"
                   type="number"
@@ -214,7 +214,7 @@ export default function RecordInputform({
               </div>
 
               <div className="pb-3">
-                <a className="pb-1 block text-sm font-medium">回数</a>
+                <p className="pb-1 block text-sm font-medium">回数</p>
                 <select
                   name="reps"
                   className="w-full rounded border border-gray-300 px-3 py-2"

@@ -36,7 +36,7 @@ export default function SignUpForm() {
 
     const timeoutId = window.setTimeout(() => {
       setError("");
-    }, 600);
+    }, 1200);
 
     return () => window.clearTimeout(timeoutId);
   }, [error]);
@@ -61,7 +61,7 @@ export default function SignUpForm() {
         return;
       }
 
-      //passwordとconfigpasswordが一致しているかの確認
+      //passwordとconfirmpasswordが一致しているかの確認
       const l_password = String(formData.get("password"));
       const l_confirm_password = String(formData.get("confirm_password"));
       if (l_password !== l_confirm_password) {
@@ -109,6 +109,7 @@ export default function SignUpForm() {
 
       //resがなければ登録失敗
       if (!res.ok) {
+        setLoading(false);
         setError("新規登録に失敗しました");
         return;
       }

@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       },
     });
 
-    const resetUrl = `https//localhost:3000/reset-password?token=${resetToken}`;
+    const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
 
     console.log(resetUrl); //本番ではここでメール送信
 

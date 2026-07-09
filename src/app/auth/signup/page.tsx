@@ -36,7 +36,7 @@ export default function SignUpForm() {
 
     const timeoutId = window.setTimeout(() => {
       setError("");
-    }, 600);
+    }, 1200);
 
     return () => window.clearTimeout(timeoutId);
   }, [error]);

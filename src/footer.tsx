@@ -31,7 +31,7 @@ export default async function Footer() {
           {items.map((item) => (
             <div key={item.id}>
               <Link href={item.href}>
-                <Image src={item.src} alt={item.alt} width={50} height={50} />
+                <Image src={item.src} alt={item.alt} width={40} height={40} />
               </Link>
             </div>
           ))}

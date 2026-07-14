@@ -34,7 +34,7 @@ export default async function Home() {
 
   if (!userId) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen mt-20">
         <div className="flex justify-center items-center pt-20">
           <div className="flex flex-col">
             {items.map((item) => (

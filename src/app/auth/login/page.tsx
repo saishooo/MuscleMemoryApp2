@@ -87,7 +87,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen mt-20">
       {loading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="rounded-xl bg-gray-500">

@@ -27,32 +27,35 @@ export default async function Header() {
   }
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col w-full pl-3">
-        <div className="h-7 mt-4">
-          <Link href="/" className="font-bold text-2xl">
-            MUSCLE MEMORY
-          </Link>
+    <div className="fixed top-0 left-0 w-full z-50">
+      <div className="max-w-[600px] mx-auto w-full bg-white">
+        <div className="pl-4">
+          <div className="h-7 pt-4">
+            <Link href="/" className="font-bold text-2xl">
+              MUSCLE MEMORY
+            </Link>
+          </div>
+
+          <div className="mt-6">
+            <p className="font-bold text-base">{nickname}</p>
+          </div>
         </div>
 
-        <div className="mt-4">
-          <p className="font-bold text-base">{nickname}</p>
-        </div>
-
-        <div className="flex mt-5">
-          {isLogin && (
-            <>
-              <Link href="/" className="border-b">
-                ホーム
-              </Link>
-              {items.map((item) => (
-                <Link key={item.id} href={item.href} className="ml-3 border-b">
-                  {item.label}
+        <div className="mt-3 border-[0.25px]"></div>
+        {/* <div className="flex mt-5">
+            {isLogin && (
+              <>
+                <Link href="/" className="border-b">
+                  ホーム
                 </Link>
-              ))}
-            </>
-          )}
-        </div>
+                {items.map((item) => (
+                  <Link key={item.id} href={item.href} className="ml-3 border-b">
+                    {item.label}
+                  </Link>
+                ))}
+              </>
+            )}
+          </div> */}
       </div>
     </div>
   );

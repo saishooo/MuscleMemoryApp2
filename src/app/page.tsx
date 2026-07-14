@@ -59,7 +59,7 @@ export default async function Home() {
   const goals = await getGoalRecordsByUserId(userId);
 
   return (
-    <div className="min-h-screen min-w-full">
+    <div className="min-h-screen min-w-full mt-20">
       <div className="flex flex-col justify-center items-center mx-auto">
         <div className="pt-14">
           <div className="flex justify-center rounded border border-gray-500">
@@ -122,7 +122,7 @@ export default async function Home() {
             <AllRecordsList trainings={trainings} />
           </div>
         </div>
-        <div className="pt-12"></div>
+        <div className="h-40"></div>
       </div>
     </div>
   );

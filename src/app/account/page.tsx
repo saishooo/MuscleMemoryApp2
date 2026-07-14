@@ -20,7 +20,7 @@ export default async function AccountPage() {
 
   if (userInfo) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen mt-20">
         <AccountInfo userInfo={userInfo} />
       </div>
     );

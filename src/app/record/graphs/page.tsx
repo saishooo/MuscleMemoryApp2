@@ -46,7 +46,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen min-w-full">
+    <div className="min-h-screen min-w-full mt-20">
       <div className="flex flex-col justify-center items-center mx-auto">
         <div className="flex justify-center pt-14">
           <div className="rounded border border-gray-500 w-96 h-130 shadow-lg">

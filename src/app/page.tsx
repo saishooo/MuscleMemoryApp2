@@ -122,7 +122,7 @@ export default async function Home() {
             <AllRecordsList trainings={trainings} />
           </div>
         </div>
-        <div className="h-40"></div>
+        <div className="h-30"></div>
       </div>
     </div>
   );

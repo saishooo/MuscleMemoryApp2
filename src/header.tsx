@@ -10,12 +10,6 @@ export default async function Header() {
   const cookiesStore = await cookies(); //cookieに保存されているものを全て取得
   const userId = cookiesStore.get("userId")?.value; //cookieで保存されたuserIDを取得
 
-  const items = [
-    { id: 1, href: "/record", label: "トレーニング" },
-    { id: 2, href: "/record/graphs", label: "グラフ" },
-    { id: 3, href: "/account", label: "アカウント" },
-  ];
-
   let nickname = "ゲスト";
   let isLogin = false;
 
@@ -42,20 +36,6 @@ export default async function Header() {
         </div>
 
         <div className="mt-3 border-[0.25px]"></div>
-        {/* <div className="flex mt-5">
-            {isLogin && (
-              <>
-                <Link href="/" className="border-b">
-                  ホーム
-                </Link>
-                {items.map((item) => (
-                  <Link key={item.id} href={item.href} className="ml-3 border-b">
-                    {item.label}
-                  </Link>
-                ))}
-              </>
-            )}
-          </div> */}
       </div>
     </div>
   );

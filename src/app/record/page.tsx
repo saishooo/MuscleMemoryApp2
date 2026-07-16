@@ -105,7 +105,7 @@ export default async function TrainigPage() {
             <AllRecordsList trainings={trainings} />
           </div>
         </div>
-        <div className="h-5"></div>
+        <div className="h-30"></div>
       </div>
     </div>
   );

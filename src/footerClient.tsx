@@ -10,8 +10,9 @@ export default function FooterClient() {
   const items = [
     { id: 1, href: "/", alt: "ホーム", src: "/home.png" },
     { id: 2, href: "/record", alt: "トレーニング", src: "/record.png" },
-    { id: 3, href: "/record/graphs", alt: "グラフ", src: "/graph.png" },
-    { id: 4, href: "/account", alt: "アカウント", src: "/account.png" },
+    { id: 3, href: "/record/calendar", alt: "カレンダー", src: "/calendar.png",},
+    { id: 4, href: "/record/graphs", alt: "グラフ", src: "/graph.png" },
+    { id: 5, href: "/account", alt: "アカウント", src: "/account.png" },
   ];
 
   return (
@@ -34,7 +35,7 @@ export default function FooterClient() {
                 href={item.href}
                 className="flex h-full w-full items-center justify-center"
               >
-                <Image src={item.src} alt={item.alt} width={40} height={40} />
+                <Image src={item.src} alt={item.alt} width={35} height={35} />
               </Link>
             </div>
           ))}

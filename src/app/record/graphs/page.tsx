@@ -1,7 +1,6 @@
 //グラフページ
 
-// src/app/page.tsx
-//初期ページ
+// src/app/record/graphs/glaphOutput_new.tsx
 
 import Link from "next/link";
 import { getPrisma } from "@/lib/prisma";
@@ -9,7 +8,7 @@ import { cookies } from "next/headers";
 import { unstable_noStore as noStore } from "next/cache";
 import GlaphOutput from "./glaphOutput_new";
 
-export default async function Home() {
+export default async function Glaph() {
   noStore();
   const prisma = getPrisma();
   const exerciseCategory = await prisma.exerciseCategory.findMany();

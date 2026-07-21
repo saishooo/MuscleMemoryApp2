@@ -154,7 +154,7 @@ export default function RecordInputform({
         </div>
       )}
       <button onClick={handleClick_true} className="font-bold">
-        記録する🖊️
+        ＋ 今日の記録を追加🖊️
       </button>
 
       {inputTraining && (

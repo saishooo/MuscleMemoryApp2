@@ -26,7 +26,7 @@ export default function FooterClient() {
               className={`flex h-14 w-14 rounded-xl items-center justify-center
                 ${
                   pathname === item.href
-                    ? "border-3 border-blue-500"
+                    ? "border-3 border-yellow-300"
                     : "border border-white"
                 }
                 `}

@@ -74,7 +74,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center pt-14">
+        <div className="flex justify-center items-center pt-8">
           <WeekTraining workoutSessions={workoutSessions} />
         </div>
 

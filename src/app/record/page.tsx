@@ -62,23 +62,29 @@ export default async function TrainigPage() {
     <div className="min-h-screen min-w-full mt-20">
       <div className="flex flex-col justify-center items-center mx-auto">
         <div className="flex justify-center items-center pt-14 w-full">
-          <div className="flex items-center justify-center rounded border border-gray-500 w-30 h-10 shadow-lg">
+          <div className="flex items-center justify-center rounded border border-gray-500 w-80 h-10 shadow-lg bg-yellow-300">
             <RecordInputform
               exerciseCategory={exerciseCategory}
               exercises={exercise}
               userId={userId}
             />
           </div>
+        </div>
 
-          <div className="pl-6">
-            <div className="flex items-center justify-center rounded border border-gray-500 w-30 h-10 shadow-lg">
+        <div className="flex justify-center items-center pt-8 w-full">
+          <div className="flex items-center justify-center rounded border border-gray-500 w-80 h-10 shadow-lg bg-yellow-300">
+            <Link href="/record/input" className="font-bold">記録の登録2</Link>
+          </div>
+        </div>
+
+        <div className="flex justify-center items-center pt-8 w-full">
+          <div className="flex items-center justify-center rounded border border-gray-500 w-80 h-10 shadow-lg bg-yellow-300">
               <GoalInputForm
                 exerciseCategory={exerciseCategory}
                 exercises={exercise}
                 userId={userId}
               />
             </div>
-          </div>
         </div>
 
         <div className="flex justify-center pt-5">

@@ -7,15 +7,11 @@ import { usePathname } from "next/navigation";
 
 export default function FooterClient() {
   const pathname = usePathname();
+  console.log(pathname);
   const items = [
     { id: 1, href: "/", alt: "ホーム", src: "/home.png" },
     { id: 2, href: "/record", alt: "トレーニング", src: "/record.png" },
-    {
-      id: 3,
-      href: "/record/calendar",
-      alt: "カレンダー",
-      src: "/calendar.png",
-    },
+    { id: 3, href: "/record/calendar", alt: "カレンダー", src: "/calendar.png" },
     { id: 4, href: "/record/graphs", alt: "グラフ", src: "/graph.png" },
     { id: 5, href: "/account", alt: "アカウント", src: "/account.png" },
   ];

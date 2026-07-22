@@ -1,112 +1,74 @@
-"use client"
+"use client";
 
+import { getDate, getDay } from "date-fns";
+import { Istok_Web } from "next/font/google";
 import Image from "next/image";
 
 //Recordテーブルの型定義
-type Record = {
+type workoutSessions = {
   id: string;
   userId: string | null;
-  exercise: {
-    id: string;
-    name: string;
-  };
-  exerciseId: string;
-  maxWeight: number;
-  maxReps: number;
-  createdAt: Date;
-  updatedAt: Date;
+  date: Date;
 };
 
 type Props = {
-    records: Record[],
+  workoutSessions: workoutSessions[] | null;
 };
 
-export default function WeekTraining({ records }: Props){
+export default function WeekTraining({ workoutSessions }: Props) {
+  //workoutSessionsに格納されているdateを取り出す
+  const dates = workoutSessions?.map((session) => {
+    const date = new Date(session.date);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  });
+  console.log(dates);
 
-    return (
-        <div className="h-45 w-110 border rounded-xl shadow">
-            <p className="w-full h-10 pl-4 pt-4 font-bold">今週のトレーニング</p>
-            <div className="flex justify-evenly pt-7">
+  const today = new Date(); //今日の日付
+  const monday = new Date(today); //月曜日の定義をDateで作成
+  const day = today.getDay(); //今日の曜日を取得
 
-                <div className="text-center">
-                    <p>月</p>
-                    <Image
-                        src="/check.png"
-                        alt="check"
-                        width={40}
-                        height={40}
-                        className="pt-2"
-                    />
-                </div>
+  const diff = day === 0 ? -6 : 1 - day; //月曜日の日付を割り出すための、今日の日付からの差分を出す
 
-                <div className="text-center">
-                    <p>火</p>
-                    <Image
-                        src="/checked.png"
-                        alt="check"
-                        width={40}
-                        height={40}
-                        className="pt-2"
-                    />
-                </div>
+  monday.setDate(today.getDate() + diff); //今日の日付に差分を加算し、月曜日を特定
 
-                <div className="text-center">
-                    <p>水</p>
-                    <Image
-                        src="/check.png"
-                        alt="check"
-                        width={40}
-                        height={40}
-                        className="pt-2"
-                    />
-                </div>
+  //月曜日から日曜日までの日付を配列に格納
+  const week = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + i);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  });
 
-                <div className="text-center">
-                    <p>木</p>
-                    <Image
-                        src="/checked.png"
-                        alt="check"
-                        width={40}
-                        height={40}
-                        className="pt-2"
-                    />
-                </div>
+  console.log(week);
 
-                <div className="text-center">
-                    <p>金</p>
-                    <Image
-                        src="/check.png"
-                        alt="check"
-                        width={40}
-                        height={40}
-                        className="pt-2"
-                    />
-                </div>
+  const weekLabels = ["月", "火", "水", "木", "金", "土", "日"];
 
-                <div className="text-center">
-                    <p>土</p>
-                    <Image
-                        src="/checked.png"
-                        alt="check"
-                        width={40}
-                        height={40}
-                        className="pt-2"
-                    />
-                </div>
+  return (
+    <div className="h-45 w-110 border rounded-xl shadow">
+      <p className="w-full h-10 pl-4 pt-4 font-bold">今週のトレーニング</p>
+      <div className="flex justify-evenly pt-7">
+        {week.map((day, index) => {
+          const isTrained = dates?.some((date) => {
+            return date.getTime() === day.getTime();
+          });
 
-                <div className="text-center">
-                    <p>日</p>
-                    <Image
-                        src="/checked.png"
-                        alt="check"
-                        width={40}
-                        height={40}
-                        className="pt-2"
-                    />
-                </div>
-                
+          return (
+            <div
+              key={day.toISOString()}
+              className="flex flex-col items-center gap-2"
+            >
+              <p>{weekLabels[index]}</p>
+              <Image
+                src={isTrained ? "/check2.png" : "/uncheck.png"}
+                alt={isTrained ? "トレーニング済み" : "未実施"}
+                width={40}
+                height={40}
+              />
             </div>
-
-        </div>
-    );
+          );
+        })}
+      </div>
+    </div>
+  );
 }

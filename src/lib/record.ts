@@ -99,15 +99,29 @@ export async function getBestRecordsByUserId(userId: string | null) {
 
 //ユーザー情報を取得する関数
 export async function getUserInfoByUserId(userId: string | null | undefined) {
+  const prisma = getPrisma();
+
   if (!userId) {
     return null;
   }
 
-  const prisma = getPrisma();
-
   return await prisma.user.findUnique({
     where: {
       id: userId,
+    },
+  });
+}
+
+export async function getWorkoutSessionByUserId(userId: string | null) {
+  const prisma = getPrisma();
+
+  if (!userId) {
+    return null;
+  }
+
+  return await prisma.workoutSession.findMany({
+    where: {
+      userId: userId,
     },
   });
 }

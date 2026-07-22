@@ -9,6 +9,7 @@ import {
   getAllRecordsByUserId,
   getBestRecordsByUserId,
   getGoalRecordsByUserId,
+  getWorkoutSessionByUserId,
 } from "@/lib/record";
 import GlaphOutput from "./record/graphs/glaphOutput_new";
 import BestRecordsList from "./record/best-records/bestRecordsList_new";
@@ -17,6 +18,7 @@ import AllRecordsList from "./record/all-records/allRecordsList_new";
 import RecordInputform from "./record/input/recordInputForm_new";
 import GoalInputForm from "./record/goal/input/goalInputForm_new";
 import RecordsCalendar from "./record/calendar/RecordsCalendar";
+import WeekTraining from "./record/week/weekTraining";
 
 export default async function Home() {
   noStore();
@@ -57,10 +59,25 @@ export default async function Home() {
   const trainings = await getAllRecordsByUserId(userId);
   const records = await getBestRecordsByUserId(userId);
   const goals = await getGoalRecordsByUserId(userId);
+  const workoutSessions = await getWorkoutSessionByUserId(userId);
 
   return (
     <div className="min-h-screen min-w-full mt-20">
       <div className="flex flex-col justify-center items-center mx-auto">
+        <div className="flex justify-center items-center pt-14 w-full">
+          <div className="flex items-center justify-center rounded border border-gray-500 w-80 h-10 shadow-lg bg-yellow-300">
+            <RecordInputform
+              exerciseCategory={exerciseCategory}
+              exercises={exercise}
+              userId={userId}
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-center items-center pt-14">
+          <WeekTraining workoutSessions={workoutSessions} />
+        </div>
+
         <div className="pt-14">
           <div className="flex justify-center rounded border border-gray-500">
             <RecordsCalendar userId={userId} />
@@ -68,14 +85,6 @@ export default async function Home() {
         </div>
 
         <div className="flex justify-center items-center pt-5 w-full">
-          <div className="flex items-center justify-center rounded border border-gray-500 w-30 h-10 shadow-lg">
-            <RecordInputform
-              exerciseCategory={exerciseCategory}
-              exercises={exercise}
-              userId={userId}
-            />
-          </div>
-
           <div className="pl-6">
             <div className="flex items-center justify-center rounded border border-gray-500 w-30 h-10 shadow-lg">
               <GoalInputForm

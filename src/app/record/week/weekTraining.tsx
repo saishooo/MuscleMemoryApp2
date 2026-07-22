@@ -45,7 +45,7 @@ export default function WeekTraining({ workoutSessions }: Props) {
   const weekLabels = ["月", "火", "水", "木", "金", "土", "日"];
 
   return (
-    <div className="h-45 w-110 border rounded-xl shadow">
+    <div className="h-45 w-100 border rounded-xl shadow">
       <p className="w-full h-10 pl-4 pt-4 font-bold">今週のトレーニング</p>
       <div className="flex justify-evenly pt-7">
         {week.map((day, index) => {

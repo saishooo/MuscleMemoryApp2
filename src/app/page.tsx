@@ -78,7 +78,7 @@ export default async function Home() {
           <WeekTraining workoutSessions={workoutSessions} />
         </div>
 
-        <div className="pt-14">
+        {/* <div className="pt-14">
           <div className="flex justify-center rounded border border-gray-500">
             <RecordsCalendar userId={userId} />
           </div>
@@ -131,7 +131,7 @@ export default async function Home() {
             <AllRecordsList trainings={trainings} />
           </div>
         </div>
-        <div className="h-30"></div>
+        <div className="h-30"></div> */}
       </div>
     </div>
   );
